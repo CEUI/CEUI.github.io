@@ -1,343 +1,2382 @@
 ---
-layout: default
-title: ENEE602004 — Algoritma Pemrograman
-description: C/C++ programming fundamentals covering data structures, searching, sorting, OOP, and network sockets for Electrical Engineering students at Universitas Indonesia.
+layout: false
 ---
+{% raw %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENEE602004 — Algoritma Pemrograman dan Praktikum</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
-/* ── Course page extras ─────────────────────────── */
-.course-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:#f5f5f5;color:#1e293b;line-height:1.75}
+a{color:#2563eb;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;display:block}
+
+.site-header{background:#1e293b;color:#f8fafc;padding:2rem 2rem 1.75rem}
+.header-inner{max-width:1280px;margin:auto}
+.course-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#93c5fd;background:rgba(147,197,253,.1);border:1px solid rgba(147,197,253,.25);padding:.3rem .85rem;border-radius:4px;margin-bottom:.9rem}
+.site-header h1{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:700;letter-spacing:-.025em;line-height:1.2;margin-bottom:.5rem}
+.site-header h1 em{font-style:normal;color:#93c5fd}
+.header-sub{font-size:.88rem;color:#94a3b8;margin-bottom:1.25rem}
+.header-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.76rem;font-weight:500;color:#cbd5e1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:.28rem .75rem;border-radius:20px}
+
+.layout{display:flex;max-width:1280px;margin:0 auto;gap:0}
+
+.sidebar{width:240px;flex-shrink:0;background:#fff;border-right:1px solid #e2e8f0}
+.sidebar-sticky{position:sticky;top:0;height:100vh;overflow-y:auto;padding:1.5rem 0}
+.sidebar-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#94a3b8;padding:.5rem 1.25rem;display:block;margin-bottom:.25rem}
+.sidebar-nav{list-style:none}
+.nav-link{display:flex;align-items:center;gap:.65rem;padding:.55rem 1.25rem;font-size:.82rem;font-weight:500;color:#475569;border-left:3px solid transparent;transition:all .15s;text-decoration:none;cursor:pointer}
+.nav-link:hover{background:#f8fafc;color:#1e293b;text-decoration:none}
+.nav-link.active{background:#eff6ff;color:#2563eb;border-left-color:#2563eb;font-weight:600}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sidebar-divider{border:none;border-top:1px solid #e2e8f0;margin:1rem 1.25rem}
+.sidebar-gh{display:flex;align-items:center;gap:.5rem;padding:.55rem 1.25rem;font-size:.78rem;font-weight:600;color:#2563eb;text-decoration:none}
+.sidebar-gh:hover{text-decoration:underline}
+
+main{flex:1;min-width:0;background:#f5f5f5}
+
+.tab-bar{background:#fff;border-bottom:1px solid #e2e8f0;padding:.75rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tab-btn{font-size:.78rem;font-weight:600;padding:.42rem .9rem;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;color:#64748b;cursor:pointer;transition:all .15s;font-family:inherit}
+.tab-btn:hover{background:#f1f5f9;color:#1e293b}
+.tab-btn.active{background:var(--wc);border-color:var(--wc);color:#fff}
+
+.week-panel{display:none;padding:2rem 2.5rem 4rem}
+.week-panel.active{display:block}
+
+.week-title-bar{margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0}
+.week-num-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .75rem;border-radius:4px;color:#fff;margin-bottom:.65rem}
+.week-title-bar h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-.02em;color:#0f172a;line-height:1.25}
+
+.md-content{max-width:860px}
+
+.md-content .slide-break{margin:2.5rem 0;border:none;height:0;border-top:1px dashed #cbd5e1;position:relative}
+.md-content .slide-break::before{content:'';position:absolute;left:0;right:0;top:-1px}
+
+.md-content h1{font-size:1.35rem;font-weight:700;color:#0f172a;margin:2rem 0 .9rem;padding-bottom:.5rem;border-bottom:2px solid #f1f5f9;letter-spacing:-.02em}
+.md-content h1:first-child{margin-top:0}
+.md-content h2{font-size:1.05rem;font-weight:600;color:#1e293b;margin:1.5rem 0 .65rem;font-style:italic}
+.md-content h3{font-size:.88rem;font-weight:700;color:#334155;margin:1.25rem 0 .55rem;text-transform:uppercase;letter-spacing:.05em}
+
+.md-content p{margin:.7rem 0;color:#334155;font-size:.91rem}
+.md-content strong{font-weight:700;color:#0f172a}
+.md-content em{font-style:italic;color:#475569}
+
+.md-content ul,.md-content ol{margin:.65rem 0 .65rem 1.5rem;color:#334155;font-size:.91rem}
+.md-content li{margin:.3rem 0;line-height:1.65}
+
+.md-content code{font-family:'JetBrains Mono',monospace;font-size:.78em;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:.1em .35em;color:#be185d}
+
+.md-content pre{margin:1rem 0;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;background:#fff}
+.md-content pre code{font-family:'JetBrains Mono',monospace!important;font-size:.8rem!important;line-height:1.7!important;padding:1.1rem 1.25rem!important;background:#fff!important;color:#1e293b!important;border:none!important;border-radius:0!important;display:block;overflow-x:auto}
+.hljs{background:#fff!important;padding:1.1rem 1.25rem!important}
+
+.md-content blockquote{margin:1rem 0;padding:.85rem 1.25rem;background:#eff6ff;border-left:3px solid #2563eb;border-radius:0 8px 8px 0}
+.md-content blockquote p{margin:0;color:#1d4ed8;font-size:.88rem}
+
+.md-content table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+.md-content th{background:#f8fafc;font-weight:700;color:#374151;text-align:left;padding:.55rem .9rem;border:1px solid #e2e8f0}
+.md-content td{padding:.5rem .9rem;border:1px solid #e2e8f0;color:#374151;vertical-align:top;font-size:.84rem}
+.md-content tr:nth-child(even) td{background:#fafafa}
+.md-content td code,.md-content th code{font-size:.77em}
+
+.md-content img{max-width:100%;border-radius:8px;border:1px solid #e2e8f0;margin:1rem 0;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.md-content hr{display:none}
+
+@media(max-width:900px){
+  .sidebar{display:none}
+  .week-panel{padding:1.5rem 1.25rem 3rem}
+  .tab-bar{padding:.5rem 1rem}
+}
+@media(max-width:600px){
+  .site-header h1{font-size:1.35rem}
+  .tab-btn{font-size:.72rem;padding:.35rem .65rem}
+  .md-content pre code{font-size:.73rem!important}
 }
 
-.meta-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.35rem 0.9rem;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-muted);
-}
+.site-footer{background:#1e293b;color:#94a3b8;text-align:center;padding:2rem;font-size:.8rem}
+.site-footer a{color:#93c5fd}
 
-.meta-badge.accent {
-  color: var(--gold);
-  background: rgba(251, 191, 36, 0.08);
-  border-color: rgba(251, 191, 36, 0.25);
-}
-
-/* Week cards grid — 2 cols on wide, 1 col on narrow */
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.25rem;
-  margin-top: 2rem;
-}
-
-/* Week number badge inside card */
-.week-num {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-glow);
-  padding: 0.25rem 0.7rem;
-  border-radius: 4px;
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  display: inline-block;
-  margin-bottom: 0.9rem;
-}
-
-/* Topics mini-list */
-.topics {
-  list-style: none;
-  margin: 0.75rem 0 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.topics li {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  padding-left: 1rem;
-  position: relative;
-}
-
-.topics li::before {
-  content: '·';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-/* Stagger animations for up to 7 week cards */
-.week-grid .card.fade-up:nth-child(2) { transition-delay: 0.06s; }
-.week-grid .card.fade-up:nth-child(3) { transition-delay: 0.12s; }
-.week-grid .card.fade-up:nth-child(4) { transition-delay: 0.18s; }
-.week-grid .card.fade-up:nth-child(5) { transition-delay: 0.24s; }
-.week-grid .card.fade-up:nth-child(6) { transition-delay: 0.30s; }
-.week-grid .card.fade-up:nth-child(7) { transition-delay: 0.36s; }
-
-/* Divider between sections */
-.section-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 3rem 0;
-}
-
-/* Getting started box */
-.start-box {
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius);
-  padding: 1.75rem 2rem;
-  margin-top: 2rem;
-}
-
-.start-box h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: var(--accent);
-}
-
-.start-box code {
-  display: block;
-  font-family: 'Courier New', monospace;
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.85rem 1rem;
-  margin-top: 0.5rem;
-  white-space: pre;
-  overflow-x: auto;
-}
 </style>
 
-<!-- ══════════════════════════════════════════
-     PAGE HERO
-══════════════════════════════════════════ -->
-<section class="page-hero fade-up">
-  <div class="section-label">ENEE602004</div>
-  <h1 class="section-title">Algoritma Pemrograman <em>dan Praktikum</em></h1>
-  <p class="section-desc">
-    Fundamental programming algorithms and data structures using C/C++,
-    with hands-on applications for Electrical Engineering systems.
-  </p>
 
-  <div class="course-meta">
-    <span class="meta-badge accent">Semester Ganjil 2025/2026</span>
-    <span class="meta-badge">👨‍🏫 Dr. Alfan Presekal</span>
-    <span class="meta-badge">⚡ Teknik Elektro · UI</span>
-    <span class="meta-badge">7 Weeks · C++17</span>
-  </div>
+</head>
+<body>
 
-  <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.75rem;">
-    <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" class="btn btn-primary">
-      View on GitHub →
-    </a>
-    <a href="#weeks" class="btn btn-outline">Jump to Syllabus ↓</a>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     CONTENT
-══════════════════════════════════════════ -->
-<section class="page-content">
-
-  <!-- About -->
-  <div class="fade-up">
-    <div class="section-label">About This Course</div>
-    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">What You Will Learn</h2>
-    <p class="section-desc" style="max-width:720px;">
-      From low-level pointer manipulation and linked lists to object-oriented design and
-      real-time network communication — all grounded in Electrical Engineering applications
-      such as sensor logging, ADC calibration, BOM analysis, and embedded control.
-    </p>
-  </div>
-
-  <div class="cards fade-up" style="margin-bottom:0;">
-    <article class="card">
-      <div class="card-icon" aria-hidden="true">🗂️</div>
-      <h3>Data Structures</h3>
-      <p>Linked lists, arrays, and pointer arithmetic for managing sensor data and embedded system state.</p>
-    </article>
-    <article class="card">
-      <div class="card-icon" aria-hidden="true">⚡</div>
-      <h3>Algorithms</h3>
-      <p>Linear &amp; binary search, bubble/insertion/selection sort, complexity analysis O(n) vs O(log n).</p>
-    </article>
-    <article class="card">
-      <div class="card-icon" aria-hidden="true">🏗️</div>
-      <h3>Object-Oriented C++</h3>
-      <p>Encapsulation, inheritance, polymorphism, virtual dispatch, and smart pointers (unique_ptr).</p>
-    </article>
-  </div>
-
-  <hr class="section-divider">
-
-  <!-- Weekly Syllabus -->
-  <div id="weeks" class="fade-up">
-    <div class="section-label">Syllabus</div>
-    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">Weekly Topics</h2>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0;">
-      Each week: slide notes · C++ demo code · EE application · Makefile
-    </p>
-  </div>
-
-  <div class="week-grid">
-
-    <!-- Week 09 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 09</span>
-      <div class="card-icon" aria-hidden="true">🔗</div>
-      <h3>Linked List</h3>
-      <ul class="topics">
-        <li>Node structure &amp; pointer chaining</li>
-        <li>Append, prepend, insert, delete</li>
-        <li>Traversal &amp; search</li>
-        <li>EE: temperature sensor log</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week09_linked_list"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 10 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 10</span>
-      <div class="card-icon" aria-hidden="true">🔍</div>
-      <h3>Searching Algorithms</h3>
-      <ul class="topics">
-        <li>Linear Search — O(n)</li>
-        <li>Binary Search — O(log n)</li>
-        <li>STL: find, binary_search, lower_bound</li>
-        <li>EE: ADC calibration table lookup</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week10_searching"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 11 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 11</span>
-      <div class="card-icon" aria-hidden="true">📊</div>
-      <h3>Sorting Algorithms</h3>
-      <ul class="topics">
-        <li>Bubble Sort &amp; Insertion Sort</li>
-        <li>Selection Sort &amp; std::sort</li>
-        <li>Complexity comparison</li>
-        <li>EE: median filter for ADC signal</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week11_sorting"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 12 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 12</span>
-      <div class="card-icon" aria-hidden="true">🏗️</div>
-      <h3>OOP (1) — Class &amp; Encapsulation</h3>
-      <ul class="topics">
-        <li>Class blueprint vs object instance</li>
-        <li>Abstraction &amp; encapsulation</li>
-        <li>Constructor, member-init list</li>
-        <li>EE: Resistor, Capacitor classes</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week12_oop1"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 13 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 13</span>
-      <div class="card-icon" aria-hidden="true">🧬</div>
-      <h3>OOP (2) — Inheritance</h3>
-      <ul class="topics">
-        <li>IS-A relationship &amp; base/derived class</li>
-        <li>public / protected / private access</li>
-        <li>Constructor &amp; destructor chain</li>
-        <li>EE: Potentiometer 3-level hierarchy</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week13_oop2"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 14 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 14</span>
-      <div class="card-icon" aria-hidden="true">🔮</div>
-      <h3>OOP (3) — Polymorphism</h3>
-      <ul class="topics">
-        <li>virtual keyword &amp; vtable dispatch</li>
-        <li>Abstract class &amp; pure virtual (= 0)</li>
-        <li>Virtual destructor &amp; memory safety</li>
-        <li>EE: BOM analyzer (Resistor/Cap/Inductor)</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week14_oop3"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-    <!-- Week 15 -->
-    <article class="card fade-up">
-      <span class="week-num">Week 15</span>
-      <div class="card-icon" aria-hidden="true">🌐</div>
-      <h3>Network Sockets</h3>
-      <ul class="topics">
-        <li>TCP vs UDP protocols</li>
-        <li>POSIX socket API: bind, listen, connect</li>
-        <li>Client–server architecture</li>
-        <li>EE: remote sensor data streaming</li>
-      </ul>
-      <a href="https://github.com/CEUI/ENEE602004/tree/main/week15_sockets"
-         target="_blank" rel="noopener" class="card-link">View Materials →</a>
-    </article>
-
-  </div><!-- /week-grid -->
-
-  <hr class="section-divider">
-
-  <!-- Getting Started -->
-  <div class="fade-up">
-    <div class="section-label">Getting Started</div>
-    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">Run the Demo Code</h2>
-    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0;">
-      Requires <strong style="color:var(--text);">g++ with C++17</strong>.
-      Each week is self-contained — clone and compile with <code style="font-size:0.82rem; background:var(--surface); padding:0.1rem 0.4rem; border-radius:4px; border:1px solid var(--border);">make</code>.
-    </p>
-
-    <div class="start-box">
-      <h3>Clone &amp; compile</h3>
-      <code>git clone https://github.com/CEUI/ENEE602004.git
-cd ENEE602004/week09_linked_list
-make          # compile all demos
-./demo01      # run demo 1</code>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="course-badge">ENEE602004</div>
+    <h1>Algoritma Pemrograman <em>dan Praktikum</em></h1>
+    <p class="header-sub">Teknik Elektro · Universitas Indonesia · Semester Ganjil 2025/2026</p>
+    <div class="header-chips">
+      <span class="chip">👨‍🏫 Dr. Alfan Presekal</span>
+      <span class="chip">⚡ Electrical Engineering</span>
+      <span class="chip">🛠 C++17</span>
+      <span class="chip">📅 Week 09 – 15</span>
+      <span class="chip"><a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" style="color:#93c5fd">github.com/CEUI/ENEE602004</a></span>
     </div>
+  </div>
+</header>
 
-    <div class="start-box" style="margin-top:1rem;">
-      <h3>Manual compilation</h3>
-      <code>g++ -std=c++17 -Wall -Isrc -o demo01 src/01_append_prepend.cpp src/sll_ops.cpp
-./demo01</code>
-    </div>
+<div class="layout">
 
-    <div style="margin-top:1.75rem; display:flex; gap:1rem; flex-wrap:wrap;">
-      <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" class="btn btn-primary">
-        Open Repository →
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      <span class="sidebar-label">Materi Kuliah</span>
+      <ul class="sidebar-nav">
+        <li><a href="#week09" class="nav-link" data-week="week09"><span class="nav-dot" style="background:#2563eb"></span><span>Week 09 · Linked List</span></a></li>
+        <li><a href="#week10" class="nav-link" data-week="week10"><span class="nav-dot" style="background:#059669"></span><span>Week 10 · Searching Algorithms</span></a></li>
+        <li><a href="#week11" class="nav-link" data-week="week11"><span class="nav-dot" style="background:#7c3aed"></span><span>Week 11 · Sorting Algorithms</span></a></li>
+        <li><a href="#week12" class="nav-link" data-week="week12"><span class="nav-dot" style="background:#dc2626"></span><span>Week 12 · OOP (1)</span></a></li>
+        <li><a href="#week13" class="nav-link" data-week="week13"><span class="nav-dot" style="background:#d97706"></span><span>Week 13 · OOP (2)</span></a></li>
+        <li><a href="#week14" class="nav-link" data-week="week14"><span class="nav-dot" style="background:#0891b2"></span><span>Week 14 · OOP (3)</span></a></li>
+        <li><a href="#week15" class="nav-link" data-week="week15"><span class="nav-dot" style="background:#be185d"></span><span>Week 15 · Network Sockets</span></a></li>
+      </ul>
+      <hr class="sidebar-divider">
+      <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" class="sidebar-gh">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 6.1 18 6.4 18 6.4c.7 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.9 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+        Source Code
       </a>
-      <a href="/courses/" class="btn btn-outline">← All Courses</a>
     </div>
-  </div>
+  </aside>
 
-</section>
+  <main>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-week="week09" style="--wc:#2563eb">🔗 Week 09</button>
+      <button class="tab-btn" data-week="week10" style="--wc:#059669">🔍 Week 10</button>
+      <button class="tab-btn" data-week="week11" style="--wc:#7c3aed">📊 Week 11</button>
+      <button class="tab-btn" data-week="week12" style="--wc:#dc2626">🏗️ Week 12</button>
+      <button class="tab-btn" data-week="week13" style="--wc:#d97706">🧬 Week 13</button>
+      <button class="tab-btn" data-week="week14" style="--wc:#0891b2">🔮 Week 14</button>
+      <button class="tab-btn" data-week="week15" style="--wc:#be185d">🌐 Week 15</button>
+    </div>
+
+    <div class="week-panel" id="panel-week09">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#2563eb;">Week 09</div>
+        <h1>Linked List</h1>
+      </div>
+      <div class="md-content" id="content-week09"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week10">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#059669;">Week 10</div>
+        <h1>Searching Algorithms</h1>
+      </div>
+      <div class="md-content" id="content-week10"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week11">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#7c3aed;">Week 11</div>
+        <h1>Sorting Algorithms</h1>
+      </div>
+      <div class="md-content" id="content-week11"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week12">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#dc2626;">Week 12</div>
+        <h1>OOP (1) — Encapsulation</h1>
+      </div>
+      <div class="md-content" id="content-week12"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week13">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#d97706;">Week 13</div>
+        <h1>OOP (2) — Inheritance</h1>
+      </div>
+      <div class="md-content" id="content-week13"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week14">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#0891b2;">Week 14</div>
+        <h1>OOP (3) — Polymorphism</h1>
+      </div>
+      <div class="md-content" id="content-week14"></div>
+    </div>
+
+    <div class="week-panel" id="panel-week15">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#be185d;">Week 15</div>
+        <h1>Network Sockets</h1>
+      </div>
+      <div class="md-content" id="content-week15"></div>
+    </div>
+
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <strong style="color:#f1f5f9;">ENEE602004 — Algoritma Pemrograman dan Praktikum</strong><br>
+  Teknik Elektro · Universitas Indonesia · Dr. Alfan Presekal<br>
+  <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener">github.com/CEUI/ENEE602004</a>
+</footer>
+
+<script type="text/markdown" id="md-week09">
+# Lecture 9 — Linked List
+## *Dynamic Pointer-Based Data Structures in C++*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Electrical Engineering · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Keterbatasan array dan mengapa Linked List dibutuhkan
+- Definisi `struct Node` dan cara kerja pointer
+- Empat operasi utama: `prepend`, `append`, `insertAfter`, `deleteNode`
+- Manajemen memori: Stack vs Heap, `new` dan `delete`
+- Perbandingan Array vs Linked List
+- Aplikasi EE: Buffer log sensor ADC
+
+### File Demo
+
+| File | Topik |
+|------|-------|
+| `src/01_append_prepend.cpp` | Membangun list: append dan prepend |
+| `src/02_search.cpp` | Pencarian nilai dalam list |
+| `src/03_insert_delete.cpp` | insertAfter dan deleteNode |
+| `src/04_ee_sensor.cpp` | Aplikasi: log sensor ADC |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 1 — Mengapa Array Tidak Cukup?
+
+Array memiliki keterbatasan fundamental untuk operasi insert dan delete.
+
+```cpp
+// Insert nilai 30 di posisi indeks 2 — O(n)
+int arr[6] = {10, 20, 40, 50, 0, 0};
+int n = 4, pos = 2, val = 30;
+for (int i = n; i > pos; i--)
+    arr[i] = arr[i-1];   // geser semua elemen → O(n)!
+arr[pos] = val;
+n++;
+// Hasil: {10, 20, 30, 40, 50}
+```
+
+| Masalah Array | Dampak |
+|---------------|--------|
+| Insert di tengah | O(n) — semua elemen setelah posisi harus digeser |
+| Hapus elemen | O(n) — semua elemen setelah posisi harus digeser |
+| Ukuran tetap | Harus dideklarasikan dari awal, tidak bisa berkembang |
+
+> **Solusi → Linked List:** node terhubung lewat pointer, tidak perlu menggeser memori.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 2 — Anatomi Node
+
+![Anatomi sebuah Node](img/img_01_node_anatomy.png)
+
+| Field | Tipe | Isi |
+|-------|------|-----|
+| `data` | `int` | Nilai yang disimpan pada node ini |
+| `next` | `Node*` | Alamat node berikutnya (`nullptr` = akhir list) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 3 — struct Node dan Singly Linked List
+
+```cpp
+struct Node {
+    int   data;   // nilai yang disimpan
+    Node* next;   // pointer ke node selanjutnya
+
+    Node(int val) : data(val), next(nullptr) {}
+};
+```
+
+![Struktur Singly Linked List](img/img_02_sll_overview.png)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 4 — Operasi: append
+
+![Operasi append](img/img_03_append.png)
+
+```cpp
+void append(Node*& head, int val) {
+    Node* n = new Node(val);
+    if (head == nullptr) { head = n; return; }
+    Node* curr = head;
+    while (curr->next != nullptr) curr = curr->next;
+    curr->next = n;
+}
+```
+
+> **O(n)** — harus menelusuri sampai node terakhir setiap kali dipanggil.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 5 — Operasi: prepend
+
+![Operasi prepend](img/img_04_prepend.png)
+
+```cpp
+void prepend(Node*& head, int val) {
+    Node* n = new Node(val);
+    n->next  = head;   // (1) sambung ke head lama
+    head     = n;      // (2) head sekarang = node baru
+}
+```
+
+> **O(1)** — hanya 2 operasi pointer, tidak perlu menelusuri list.  
+> Mengapa `Node*& head`? Agar perubahan `head` di dalam fungsi terlihat di pemanggil.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 6 — Operasi: search
+
+```cpp
+// Kembalikan pointer ke node, atau nullptr jika tidak ditemukan — O(n)
+Node* search(Node* head, int target) {
+    Node* curr = head;
+    while (curr != nullptr) {
+        if (curr->data == target) return curr;
+        curr = curr->next;
+    }
+    return nullptr;
+}
+```
+
+**Output Demo 02:**
+```
+List awal: 10 -> 20 -> 30 -> 40 -> 50 -> NULL
+
+search(30): Ditemukan! Nilai: 30  (next → 40)
+search(99): Tidak ditemukan. Fungsi mengembalikan nullptr.
+
+// Pola umum: hasil search digunakan langsung sebagai input insertAfter
+Node* p = search(head, 20);
+insertAfter(p, 25);   // → 10 -> 20 -> 25 -> 30 -> 40 -> 50 -> NULL
+```
+
+| Kondisi | Kompleksitas |
+|---------|:---:|
+| Best case (node pertama) | O(1) |
+| Average case | O(n/2) |
+| Worst case (tidak ditemukan) | O(n) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 7 — Operasi: insertAfter
+
+![Operasi insertAfter](img/img_05_insert_after.png)
+
+```cpp
+void insertAfter(Node* prev, int val) {
+    if (prev == nullptr) return;
+    Node* n    = new Node(val);
+    n->next    = prev->next;   // (1) sambung ke DEPAN dulu
+    prev->next = n;            // (2) sambung ke belakang
+}
+```
+
+> ⚠️ **Urutan penting!** Jika langkah (2) dilakukan dulu, pointer ke node selanjutnya hilang → list terputus.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 8 — Operasi: deleteNode
+
+![Tiga kasus deleteNode](img/img_06_delete.png)
+
+```cpp
+bool deleteNode(Node*& head, int val) {
+    Node* prev = nullptr, *curr = head;
+    while (curr && curr->data != val) { prev = curr; curr = curr->next; }
+    if (!curr) return false;
+    if (!prev) head = curr->next;   // hapus head
+    else prev->next = curr->next;   // hapus tengah / ekor
+    delete curr;                    // WAJIB bebaskan memori!
+    return true;
+}
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 9 — printList dan freeList
+
+```cpp
+void printList(Node* head) {
+    for (Node* c = head; c != nullptr; c = c->next) {
+        cout << c->data;
+        if (c->next) cout << " -> ";
+    }
+    cout << " -> NULL" << endl;
+}
+
+void freeList(Node*& head) {
+    while (head != nullptr) {
+        Node* tmp = head->next;  // simpan dulu pointer berikutnya
+        delete head;             // hapus node sekarang
+        head = tmp;
+    }
+}
+```
+
+> **`freeList` wajib dipanggil** di akhir program.  
+> Jika tidak dipanggil → semua node di heap tidak dibebaskan → **memory leak**.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 10 — Manajemen Memori: Stack vs Heap
+
+![Stack vs Heap](img/img_07_memory.png)
+
+| Area | Isi | Dibuat dengan |
+|------|-----|---------------|
+| **Stack** | Variabel lokal: `head`, `curr`, `prev` | Otomatis saat fungsi dipanggil |
+| **Heap** | Semua objek `Node` | `new Node(val)` — harus di-`delete` manual |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 11 — Aplikasi EE: Log Sensor ADC
+
+![Sensor Log ADC](img/img_08_sensor_log.png)
+
+```cpp
+// Setiap pembacaan di-prepend → kepala list = data terbaru
+for (int i = 0; i < 5; i++) {
+    SensorNode* n = new SensorNode(readings[i], channels[i]);
+    n->next  = log_head;
+    log_head = n;        // head = node terbaru
+}
+```
+
+> Pola ini umum di sistem *embedded*: buffer dinamis, akses data terbaru O(1).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 12 — Cara Kompilasi
+
+Ganti `<path>` dengan lokasi folder di komputer masing-masing.
+
+**Menggunakan Makefile (direkomendasikan):**
+```bash
+cd <path>/week09_linked_list
+make            # kompilasi semua demo sekaligus
+make run01      # demo append & prepend
+make run02      # demo search
+make run03      # demo insertAfter & deleteNode
+make run04      # demo EE sensor log
+```
+
+**Kompilasi manual:**
+```bash
+g++ -std=c++17 -Wall -Isrc -o demo01 src/sll_ops.cpp src/01_append_prepend.cpp
+./demo01
+```
+
+**Struktur folder:**
+```
+week09_linked_list/
+├── src/   node.h  sll_ops.h  sll_ops.cpp
+│          01_append_prepend.cpp  02_search.cpp
+│          03_insert_delete.cpp   04_ee_sensor.cpp
+├── img/   (ilustrasi)
+└── Makefile
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 13 — Array vs Linked List
+
+| Operasi | Array | Linked List |
+|---------|:-----:|:-----------:|
+| Akses elemen ke-i | **O(1)** — via indeks | O(n) — dari head |
+| Insert di awal | O(n) — geser semua | **O(1)** — prepend |
+| Insert di tengah | O(n) — geser sebagian | O(1)* — setelah pointer diketahui |
+| Insert di akhir | O(1) jika ada ruang | O(n) — append |
+| Hapus elemen | O(n) — geser | O(n) — cari + O(1) hapus |
+| Ukuran | Tetap | **Dinamis** |
+| Cache-friendly | **Ya** | Tidak |
+
+*\*O(1) setelah pointer `prev` diketahui dari `search` sebelumnya.*
+
+**Pilih Linked List jika:** ukuran tidak diketahui saat compile, sering insert/delete di awal, tidak butuh akses acak.
+
+**Pilih Array jika:** butuh akses via indeks, ukuran tetap, performa cache penting (DSP, real-time).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 14 — Ringkasan Kompleksitas
+
+| Operasi | Kompleksitas | Keterangan |
+|---------|:---:|------------|
+| `search(val)` | O(n) | Telusuri dari head |
+| `prepend(val)` | **O(1)** | Update head saja — konstan |
+| `append(val)` | O(n) | Jalan ke node terakhir |
+| `insertAfter(prev, val)` | **O(1)** | prev sudah diketahui, 2 pointer |
+| `deleteNode(val)` | O(n) | Cari dulu, hapus O(1) |
+| `printList()` | O(n) | Kunjungi setiap node |
+| `freeList()` | O(n) | Hapus setiap node |
+
+> **O(1)** = waktu konstan, tidak bergantung jumlah node.  
+> **O(n)** = waktu linear, bertambah seiring jumlah node **n**.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Slide 15 — Latihan Mandiri
+
+**Latihan 1** — Buat `int countNodes(Node* head)` yang mengembalikan jumlah node.
+
+**Latihan 2** — Modifikasi `printList` agar mencetak indeks: `[0]10 -> [1]20 -> NULL`
+
+**Latihan 3** — Buat `void reverseList(Node*& head)` yang membalik urutan *in-place*.  
+Petunjuk: gunakan tiga pointer — `prev`, `curr`, `next`.
+
+**Latihan 4** — Buat `void insertSorted(Node*& head, int val)` yang menyisipkan nilai ke list terurut sehingga tetap terurut setelah insert.
+
+**Latihan 5 (EE)** — Modifikasi `SensorNode` pada Demo 04 agar buffer dibatasi maksimum `N = 4` node. Jika penuh saat prepend, hapus otomatis node ekor (data terlama).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi dan Eksplorasi Lebih Lanjut
+
+**Visualisasi Interaktif:**
+- [VisuAlgo — Linked List](https://visualgo.net/en/list) — animasi step-by-step setiap operasi
+
+**Tutorial:**
+- [GeeksforGeeks — Linked List](https://www.geeksforgeeks.org/data-structures/linked-list/) — tutorial lengkap
+- [cppreference — Pointers](https://en.cppreference.com/w/cpp/language/pointer)
+- [cppreference — std::list](https://en.cppreference.com/w/cpp/container/list) — doubly linked list STL
+
+**Video:**
+- [CS50x Week 5 — Data Structures (Harvard)](https://cs50.harvard.edu/x/2024/weeks/5/)
+
+**Praktik Online:**
+- [OnlineGDB C++ Compiler](https://www.onlinegdb.com/online_c++_compiler)
+
+**Buku:**
+- Cormen et al., *Introduction to Algorithms*, 4th ed. — MIT Press, 2022
+</script>
+
+<script type="text/markdown" id="md-week10">
+# Lecture 10 — Searching Algorithms
+## *Linear Search · Binary Search · C++ STL*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Electrical Engineering · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Linear Search — O(n), memeriksa setiap elemen satu per satu
+- Binary Search — O(log n), divide-and-conquer (data harus terurut)
+- Perbandingan performa: O(n) vs O(log n)
+- C++ STL: `std::find`, `std::binary_search`, `std::lower_bound`
+- Kapan menggunakan masing-masing algoritma
+
+### File Demo
+
+| File | Topik |
+|------|-------|
+| `src/01_linear_search.cpp` | Linear search pada data sensor |
+| `src/02_binary_search.cpp` | Binary search + trace langkah |
+| `src/03_stl_search.cpp` | STL: find, binary_search, lower_bound |
+| `src/04_ee_adc_calibration.cpp` | Aplikasi EE: tabel kalibrasi ADC |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Motivasi: Mengapa Pencarian Penting?
+
+Pencarian (searching) adalah operasi fundamental dalam sistem embedded dan pengolahan data:
+
+- **Sensor lookup**: temukan nilai kalibrasi untuk pembacaan ADC tertentu
+- **Threshold detection**: apakah tegangan melebihi batas aman?
+- **Protocol parsing**: temukan header paket dalam buffer data serial
+- **Control tables**: lookup PID gain berdasarkan kondisi sistem
+
+### Dampak Performa pada Sistem Real-Time
+
+- Linear Search O(n): n = 1.000 → ~1.000 langkah; n = 1.000.000 → ~1.000.000 langkah
+- Binary Search O(log n): n = 1.000 → ~10 langkah; n = 1.000.000 → ~20 langkah
+
+> Pada sistem embedded dengan clock 16 MHz, perbedaan O(n) vs O(log n) bisa berarti **real-time** vs **terlambat**.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Linear Search — O(n)
+
+**Prinsip**: periksa setiap elemen dari kiri ke kanan hingga target ditemukan.
+
+![Linear Search](img/img_01_linear_search.png)
+
+- Tidak memerlukan data terurut
+- Kompleksitas waktu: **O(n)**
+- Kasus terbaik: O(1) — target di index pertama
+- Kasus terburuk: O(n) — target di akhir atau tidak ada
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Linear Search — Implementasi
+
+```cpp
+// Memeriksa setiap elemen dari kiri ke kanan
+// Mengembalikan index jika ditemukan, -1 jika tidak
+int linearSearch(const vector<int>& arr, int target) {
+    for (int i = 0; i < (int)arr.size(); i++) {
+        if (arr[i] == target)
+            return i;   // elemen ditemukan pada index i
+    }
+    return -1;          // elemen tidak ditemukan
+}
+
+// Penggunaan
+vector<int> sensorData = {312, 876, 145, 654, 423, 789};
+int idx = linearSearch(sensorData, 654);
+// idx = 3 (index ke-3)
+
+idx = linearSearch(sensorData, 999);
+// idx = -1 (tidak ditemukan)
+```
+
+**Kapan gunakan linear search?**
+- Data tidak terurut dan tidak perlu diurutkan
+- Array kecil (n < 50) — overhead sorting tidak sepadan
+- Pencarian satu kali saja (one-shot)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Binary Search — Konsep Divide-and-Conquer
+
+**Prinsip**: bandingkan target dengan elemen tengah, eliminasi setengah array yang tidak relevan.
+
+![Binary Search](img/img_02_binary_search.png)
+
+**Syarat wajib**: data **harus terurut** sebelum binary search.
+
+- Setiap langkah mengeliminasi **setengah** data yang tersisa
+- n = 1.000.000 hanya butuh maksimum **~20 langkah**
+- Kompleksitas: **O(log n)**
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Binary Search — Implementasi
+
+```cpp
+// Divide-and-conquer: memerlukan data terurut!
+// Mengembalikan index jika ditemukan, -1 jika tidak
+int binarySearch(const vector<int>& arr, int target) {
+    int low = 0, high = (int)arr.size() - 1;
+
+    while (low <= high) {
+        // Hindari integer overflow dengan rumus ini
+        int mid = low + (high - low) / 2;
+
+        if      (arr[mid] == target) return mid;      // ditemukan!
+        else if (arr[mid]  < target) low  = mid + 1;  // cari di kanan
+        else                         high = mid - 1;  // cari di kiri
+    }
+    return -1; // tidak ditemukan
+}
+
+// Penggunaan — data HARUS diurutkan terlebih dahulu
+vector<int> data = {312, 876, 145, 654, 423};
+sort(data.begin(), data.end());
+// data = {145, 312, 423, 654, 876}
+int idx = binarySearch(data, 423);
+// idx = 2
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Binary Search — Trace Langkah Demi Langkah
+
+![Binary Search Trace](img/img_03_binary_search_trace.png)
+
+**Penjelasan langkah**:
+- `low` = batas kiri pencarian saat ini
+- `high` = batas kanan pencarian saat ini
+- `mid = low + (high - low) / 2` — hindari overflow
+- Jika `arr[mid] < target` → geser `low = mid + 1`
+- Jika `arr[mid] > target` → geser `high = mid - 1`
+- Jika `low > high` → elemen tidak ada
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# STL Search Functions
+
+![STL Comparison](img/img_04_stl_comparison.png)
+
+- `std::find` — linear search, tidak memerlukan data terurut, mengembalikan iterator
+- `std::binary_search` — hanya pada data terurut, mengembalikan `bool`
+- `std::lower_bound` — hanya pada data terurut, mengembalikan iterator ke elemen >= target
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# STL Search Functions — Contoh Kode
+
+```cpp
+vector<int> data   = {312, 876, 145, 654, 423};
+vector<int> sorted = {145, 312, 423, 654, 876};
+
+// std::find — linear search, tidak perlu terurut
+auto it = find(data.begin(), data.end(), 654);
+if (it != data.end())
+    cout << "index: " << distance(data.begin(), it); // 3
+
+// std::binary_search — mengembalikan bool
+bool found = binary_search(sorted.begin(), sorted.end(), 423);
+// found = true
+
+// std::lower_bound — iterator ke elemen pertama >= target
+auto pos = lower_bound(sorted.begin(), sorted.end(), 400);
+cout << "nilai pertama >= 400: " << *pos; // 423
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Perbandingan Performa O(n) vs O(log n)
+
+![Complexity Chart](img/img_05_complexity.png)
+
+Pada n = 1.000.000: Linear Search membutuhkan ~1.000.000 langkah, Binary Search hanya ~20 langkah.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi dan Menjalankan Demo
+
+### Kompilasi semua demo sekaligus
+```bash
+cd program/week10_searching
+make
+```
+
+### Kompilasi dan jalankan satu per satu
+```bash
+# Demo 01 — linear search
+g++ -std=c++17 -Wall -Isrc -o demo01 src/search_ops.cpp src/01_linear_search.cpp
+./demo01
+
+# Demo 02 — binary search + trace
+g++ -std=c++17 -Wall -Isrc -o demo02 src/search_ops.cpp src/02_binary_search.cpp
+./demo02
+
+# Demo 03 — STL search functions
+g++ -std=c++17 -Wall -Isrc -o demo03 src/search_ops.cpp src/03_stl_search.cpp
+./demo03
+
+# Demo 04 — EE ADC calibration
+g++ -std=c++17 -Wall -Isrc -o demo04 src/search_ops.cpp src/04_ee_adc_calibration.cpp
+./demo04
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Perbandingan Linear vs Binary Search
+
+| Kriteria | Linear Search | Binary Search |
+|----------|--------------|---------------|
+| **Kompleksitas** | O(n) | O(log n) |
+| **Data terurut?** | Tidak perlu | Wajib |
+| **Kasus terbaik** | O(1) | O(1) |
+| **Kasus terburuk** | O(n) | O(log n) |
+| **Implementasi** | Sangat sederhana | Lebih kompleks |
+| **Cocok untuk** | Data kecil/tidak terurut | Data besar/sering dicari |
+| **STL** | `std::find` | `std::binary_search` |
+
+### Aturan Praktis
+
+- n < 50: gunakan **linear search** (overhead sorting tidak sepadan)
+- n > 1000 dan sering dicari: **urutkan sekali**, gunakan binary search
+- Data berubah terus: pertimbangkan `std::set` atau `std::map` (O(log n) otomatis)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Ringkasan Kompleksitas
+
+| Algoritma | Best | Average | Worst | Space |
+|-----------|------|---------|-------|-------|
+| Linear Search | O(1) | O(n) | O(n) | O(1) |
+| Binary Search | O(1) | O(log n) | O(log n) | O(1) |
+| `std::find` | O(1) | O(n) | O(n) | O(1) |
+| `std::binary_search` | O(1) | O(log n) | O(log n) | O(1) |
+| `std::lower_bound` | O(1) | O(log n) | O(log n) | O(1) |
+
+> **Catatan**: Binary search memerlukan data terurut. Biaya sorting O(n log n) perlu diperhitungkan jika data belum terurut dan hanya dicari sekali.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+**1.** Modifikasi `linearSearch` untuk mengembalikan **semua** index di mana target ditemukan (bukan hanya yang pertama). Gunakan `vector<int>` sebagai return type.
+
+**2.** Implementasikan binary search secara **rekursif** (bukan iteratif). Bandingkan kedalaman rekursi untuk n = 1024.
+
+**3.** Gunakan `std::lower_bound` untuk mengimplementasikan fungsi `insertSorted(vector<int>& arr, int val)` yang menyisipkan nilai ke posisi yang tepat agar array tetap terurut.
+
+**4.** Buat fungsi `countOccurrences(vector<int>& sorted_arr, int target)` menggunakan `std::lower_bound` dan `std::upper_bound` untuk menghitung berapa kali target muncul dalam O(log n).
+
+**5. (EE)** Perluas `04_ee_adc_calibration.cpp`: tambahkan fungsi `findVoltageRange(float v_min, float v_max)` yang mengembalikan semua titik kalibrasi yang tegangannya berada dalam rentang [v_min, v_max] menggunakan `std::lower_bound` dan `std::upper_bound`.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi
+
+- Stroustrup, B. (2013). *The C++ Programming Language*, 4th Ed. — Chapter 31 (STL Algorithms)
+- Sedgewick, R. & Wayne, K. (2011). *Algorithms*, 4th Ed. — Chapter 3 (Searching)
+- cppreference.com — [`std::find`](https://en.cppreference.com/w/cpp/algorithm/find), [`std::binary_search`](https://en.cppreference.com/w/cpp/algorithm/binary_search), [`std::lower_bound`](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
+- Cormen, T.H. et al. (2022). *Introduction to Algorithms*, 4th Ed. — Chapter 2 (Searching & Sorting)
+
+### Materi Minggu Depan
+
+**Week 11 — Sorting Algorithms**: Bubble Sort, Insertion Sort, Selection Sort, `std::sort`, dan aplikasi EE: median filter untuk sinyal ADC.
+</script>
+
+<script type="text/markdown" id="md-week11">
+# Lecture 11 — Sorting Algorithms
+## *Bubble Sort · Insertion Sort · Selection Sort · std::sort*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Electrical Engineering · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Bubble Sort — O(n²), dengan optimasi early exit
+- Insertion Sort — O(n²) rata-rata, O(n) untuk data hampir terurut
+- Selection Sort — O(n²), swap minimal O(n), cocok untuk flash
+- `std::sort` — O(n log n) Introsort, gunakan di produksi
+- Aplikasi EE: median filter untuk noise impulsif sinyal ADC
+
+### File Demo
+
+| File | Topik |
+|------|-------|
+| `src/01_bubble_sort.cpp` | Bubble sort + trace langkah per pass |
+| `src/02_insertion_sort.cpp` | Insertion sort + kasus hampir terurut |
+| `src/03_selection_sort.cpp` | Selection sort + hitung swap |
+| `src/04_ee_median_filter.cpp` | Aplikasi EE: median filter sinyal ADC |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Motivasi: Mengapa Sorting Penting?
+
+Sorting adalah prasyarat untuk banyak algoritma efisien:
+
+- **Binary search** memerlukan data terurut — O(log n) vs O(n)
+- **Median filter** (EE): temukan nilai tengah dengan sorting window
+- **Data visualization**: tampilkan pembacaan sensor dari kecil ke besar
+- **Komunikasi**: transmit data terkompresi (data terurut lebih mudah dikompres)
+
+### Klasifikasi Algoritma Sorting
+
+| Kategori | Algoritma | Kompleksitas |
+|----------|-----------|-------------|
+| Simple sorts | Bubble, Insertion, Selection | O(n²) |
+| Efficient sorts | Merge Sort, Quick Sort | O(n log n) |
+| Non-comparison | Counting Sort, Radix Sort | O(n) |
+| STL C++ | `std::sort` (Introsort) | O(n log n) |
+
+> **Aturan praktis**: selalu gunakan `std::sort` di produksi. Pelajari O(n²) sorts untuk memahami prinsip dasarnya.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Bubble Sort — Algoritma
+
+**Prinsip**: tukar pasangan elemen bersebelahan yang tidak terurut. Elemen terbesar "menggelembung" ke ujung kanan di setiap pass.
+
+![Bubble Sort Pass](img/img_01_bubble_sort_pass.png)
+
+**Optimasi early exit**: jika tidak ada swap dalam satu pass, array sudah terurut — berhenti lebih awal.
+
+- Kompleksitas rata-rata: **O(n²)**
+- Kompleksitas terbaik: **O(n)** — data sudah terurut, satu pass tanpa swap
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Bubble Sort — Implementasi
+
+```cpp
+// Tukar pasangan elemen bersebelahan yang tidak terurut
+// Elemen terbesar "menggelembung" ke akhir di setiap pass
+void bubbleSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; i++) {
+        bool swapped = false;  // optimasi: tandai apakah ada pertukaran
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        if (!swapped) break;   // array sudah terurut, hentikan lebih awal
+    }
+}
+
+// Trace output untuk {5,3,1,4,2}:
+// Awal    : 5 3 1 4 2
+// Pass 1  : 3 1 4 2 5   <- 5 ke akhir
+// Pass 2  : 1 3 2 4 5   <- 4 ke posisi
+// Pass 3  : 1 2 3 4 5   <- selesai
+// (early exit — sudah terurut)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Insertion Sort — Konsep
+
+**Prinsip**: kembangkan partisi terurut dari kiri. Ambil elemen berikutnya (key), sisipkan ke posisi yang tepat dalam partisi terurut.
+
+![Insertion Sort](img/img_02_insertion_sort.png)
+
+- Partisi hijau (kiri): sudah terurut
+- Elemen kuning: sedang disisipkan (key)
+- Bagian abu-abu (kanan): belum diproses
+- Elemen digeser ke kanan untuk membuat ruang bagi key
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Insertion Sort — Implementasi
+
+```cpp
+// Kembangkan partisi terurut dari kiri satu per satu
+// Ambil elemen berikutnya, geser yang lebih besar ke kanan
+void insertionSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];  // elemen yang akan disisipkan
+        int j   = i - 1;
+        // Geser elemen yang lebih besar dari key ke kanan
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;   // tempatkan key di posisi yang tepat
+    }
+}
+```
+
+**Keunggulan insertion sort**:
+- **O(n) pada data hampir terurut** — inner loop jarang berjalan
+- Ideal untuk data stream real-time: tambah elemen baru ke array terurut
+- **Stabil**: urutan elemen dengan nilai sama tetap terjaga
+- Efisien untuk n kecil (n < 20): digunakan sebagai base case di std::sort
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Selection Sort — Swap Minimal untuk Flash Memory
+
+**Prinsip**: temukan elemen minimum di bagian tidak terurut, tukar ke posisi depan.
+
+![Selection Sort](img/img_03_selection_sort.png)
+
+```cpp
+// Temukan minimum, tukar ke depan — hanya O(n) swap total
+void selectionSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++)
+            if (arr[j] < arr[min_idx]) min_idx = j;
+        if (min_idx != i)
+            swap(arr[i], arr[min_idx]);
+    }
+}
+```
+
+**Mengapa swap minimal penting?**
+Flash/EEPROM memiliki batas siklus tulis (ATmega: ~100.000 write/byte). Selection sort menjamin maksimum **(n-1) swap** — paling sedikit dari semua O(n²) sort.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# std::sort — O(n log n) Introsort
+
+`std::sort` menggunakan **Introsort**: kombinasi Quicksort + Heapsort + Insertion Sort.
+
+```cpp
+#include <algorithm>
+using namespace std;
+
+vector<float> voltage = {3.2f, 1.5f, 4.8f, 2.1f, 3.9f, 0.7f};
+
+// Urutan menaik (ascending)
+sort(voltage.begin(), voltage.end());
+
+// Urutan menurun (descending)
+sort(voltage.begin(), voltage.end(), greater<float>());
+
+// Custom comparator — urutkan struct berdasarkan field
+struct Reading { int channel; float value; };
+vector<Reading> readings = {{2,3.1f},{0,1.5f},{4,4.8f},{1,2.2f}};
+sort(readings.begin(), readings.end(),
+     [](const Reading& a, const Reading& b){
+         return a.value < b.value;
+     });
+```
+
+**Selalu gunakan `std::sort` di kode produksi** — O(n log n) worst case, dioptimasi untuk cache CPU modern.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi dan Menjalankan Demo
+
+### Kompilasi semua demo sekaligus
+```bash
+cd program/week11_sorting
+make
+```
+
+### Kompilasi dan jalankan satu per satu
+```bash
+# Demo 01 — bubble sort + trace
+g++ -std=c++17 -Wall -Isrc -o demo01 src/sort_ops.cpp src/01_bubble_sort.cpp
+./demo01
+
+# Demo 02 — insertion sort
+g++ -std=c++17 -Wall -Isrc -o demo02 src/sort_ops.cpp src/02_insertion_sort.cpp
+./demo02
+
+# Demo 03 — selection sort + hitung swap
+g++ -std=c++17 -Wall -Isrc -o demo03 src/sort_ops.cpp src/03_selection_sort.cpp
+./demo03
+
+# Demo 04 — EE median filter
+g++ -std=c++17 -Wall -Isrc -o demo04 src/sort_ops.cpp src/04_ee_median_filter.cpp
+./demo04
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Aplikasi EE: Median Filter
+
+**Masalah**: sinyal ADC terkontaminasi noise impulsif (spike) dari interferensi elektromagnetik atau koneksi longgar.
+
+**Solusi**: Median filter — urutkan window sliding, ambil nilai tengah (median).
+
+![Median Filter](img/img_04_median_filter.png)
+
+**Algoritma**: untuk setiap sampel i, ambil window [i-1, i, i+1], urutkan, kembalikan nilai tengah. Spike dieliminasi karena nilai ekstrem selalu di ujung array terurut.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Perbandingan Algoritma Sorting
+
+![Complexity Table](img/img_05_complexity.png)
+
+| Kapan gunakan |  |
+|---------------|--|
+| **Bubble Sort** | Edukasi, data sangat kecil, deteksi "sudah terurut" |
+| **Insertion Sort** | Data hampir terurut, stream data, n < 20 |
+| **Selection Sort** | Flash/EEPROM embedded, jumlah swap kritis |
+| **std::sort** | Semua kasus produksi — selalu pilihan pertama |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Ringkasan Kompleksitas
+
+| Algoritma | Best | Average | Worst | Swap | Stabil? |
+|-----------|------|---------|-------|------|---------|
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(n²) | Ya |
+| Insertion Sort | O(n) | O(n²) | O(n²) | O(n²) | Ya |
+| Selection Sort | O(n²) | O(n²) | O(n²) | **O(n)** | Tidak |
+| `std::sort` | O(n log n) | O(n log n) | O(n log n) | O(n log n) | Tidak |
+| `std::stable_sort` | O(n log n) | O(n log n) | O(n log n) | O(n log n) | **Ya** |
+
+> **Catatan**: Gunakan `std::stable_sort` jika stabilitas diperlukan (urutan elemen sama tetap terjaga) dengan performa O(n log n).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+**1.** Modifikasi `bubbleSort` untuk mengurutkan secara **menurun** (descending). Uji dengan vector `{3, 1, 4, 1, 5, 9, 2, 6}`.
+
+**2.** Implementasikan **counting sort** untuk array integer dengan nilai 0–255 (representasi data ADC 8-bit). Bandingkan kecepatannya dengan `std::sort`.
+
+**3.** Buat fungsi `sortByField` yang menggunakan `std::sort` dengan lambda untuk mengurutkan `vector<struct>` berdasarkan field yang dipilih saat runtime.
+
+**4.** Ukur dan bandingkan waktu eksekusi keempat algoritma (bubble, insertion, selection, std::sort) untuk n = {100, 1000, 5000} menggunakan `std::chrono`. Buat tabel hasilnya.
+
+**5. (EE)** Perluas `04_ee_median_filter.cpp`: implementasikan median filter dengan **window size variabel** (3, 5, 7). Bandingkan hasilnya pada sinyal ADC yang sama dan diskusikan trade-off antara efektivitas penghilangan noise dan latensi.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi
+
+- Stroustrup, B. (2013). *The C++ Programming Language*, 4th Ed. — Chapter 31 (STL Algorithms)
+- Sedgewick, R. & Wayne, K. (2011). *Algorithms*, 4th Ed. — Chapter 2 (Sorting)
+- cppreference.com — [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`std::stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
+- Cormen, T.H. et al. (2022). *Introduction to Algorithms*, 4th Ed. — Chapter 2 & 6 (Sorting)
+
+### Materi Minggu Depan
+
+**Week 12 — Object-Oriented Programming I**: Class, object, encapsulation, constructor, destructor, dan penerapannya dalam sistem embedded.
+</script>
+
+<script type="text/markdown" id="md-week12">
+# Lecture 12 — Object-Oriented Programming (1)
+## *Abstraction · Encapsulation · Constructors · C++ class*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Electrical Engineering · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Prosedural vs OOP — mengapa kita membutuhkan class
+- Keyword `class` — mendefinisikan blueprint
+- **Abstraction** — menyembunyikan kompleksitas, antarmuka publik
+- **Encapsulation** — data private + getter/setter + validasi
+- **Constructor** — inisialisasi otomatis saat objek dibuat
+- **Method overloading** — nama sama, parameter berbeda
+
+### File Demo
+| File | Topik |
+|------|-------|
+| `src/01_basic_class.cpp` | Basic class — public members, silent bug |
+| `src/02_encapsulation.cpp` | Encapsulation: private + constructor + setter |
+| `src/03_overloading.cpp` | Constructor dan method overloading |
+| `src/04_ee_voltage_divider.cpp` | Aplikasi EE: voltage divider |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Mengapa OOP? Prosedural vs OOP
+
+![Prosedural vs OOP](img/img_01_procedural_vs_oop.png)
+
+**Masalah prosedural:** data dapat diubah langsung dari luar tanpa validasi.
+
+**Solusi OOP:** sembunyikan data, ekspos hanya interface yang aman.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Anatomi Class: Blueprint vs Object
+
+![Anatomi Class](img/img_02_class_anatomy.png)
+
+- **Class** = blueprint (cetakan). **Object** = instansi dari blueprint.
+- Setiap class punya **private section** (data) dan **public section** (interface).
+- Batas akses dijaga oleh compiler — pelanggaran = compile error.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Encapsulation: Data Private + Interface Public
+
+![Enkapsulasi](img/img_03_encapsulation.png)
+
+**Tiga aturan enkapsulasi:**
+1. Data field → **private** (tidak bisa diakses langsung dari luar)
+2. Akses data → melalui **setter** (dengan validasi) dan **getter** (baca saja)
+3. Inisialisasi → melalui **constructor**
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Encapsulation — Kode Resistor
+
+```cpp
+class Resistor {
+private:                             //  <-- data terlindungi
+    string partNumber;
+    double resistance;  // selalu > 0, dijaga setter
+    double tolerance;
+public:                              //  <-- interface publik
+    Resistor(const string& pn, double r, double tol = 5.0)
+        : partNumber(pn), resistance(0.0), tolerance(tol)
+    { setResistance(r); }            // validasi lewat setter
+    void setResistance(double r) {   // setter + validasi
+        if (r > 0) resistance = r;
+        else cout << "WARNING: nilai tidak valid\n";
+    }
+    double getResistance() const { return resistance; }
+    void printInfo() const;
+};
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Constructor: Inisialisasi Otomatis
+
+```cpp
+// Member-initializer list (:) lebih efisien dari assignment di body
+Resistor(const string& pn, double r, double tol = 5.0)
+    : partNumber(pn),   // 1. inisialisasi partNumber
+      resistance(0.0),  // 2. inisialisasi resistance (divalidasi kemudian)
+      tolerance(tol)    // 3. inisialisasi tolerance
+{
+    setResistance(r);   // validasi melalui setter
+}
+
+// Penggunaan:
+Resistor r1("R-470",  470.0, 1.0);   // OK
+Resistor r2("R-1k",  1000.0);         // OK, tolerance default = 5%
+Resistor r3("R-BAD",   -50.0);        // WARNING: nilai negatif diabaikan
+// r3.resistance = 100;               // ERROR: 'resistance' is private
+```
+
+> **Aturan:** Jika class memiliki data yang perlu validasi, selalu gunakan constructor — jangan biarkan objek dibuat dalam kondisi tidak valid.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Constructor Overloading: Kapasitor
+
+```cpp
+class Capacitor {
+private:
+    string partNumber;
+    double capacitance;    // Farads
+    double voltageRating;  // Volts
+public:
+    // Overload 1: 3 argumen (pn, c, vRating)
+    Capacitor(const string& pn, double c, double vR)
+        : partNumber(pn), capacitance(c), voltageRating(vR) {}
+    // Overload 2: 2 argumen — voltageRating = 50V (default)
+    Capacitor(const string& pn, double c)
+        : partNumber(pn), capacitance(c), voltageRating(50.0) {}
+    // Overload 3: 0 argumen — semua default
+    Capacitor() : partNumber("C-?"), capacitance(0), voltageRating(50) {}
+    void printInfo() const;  // output: pn, uF, V
+};
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Method Overloading: ADCSensor
+
+```cpp
+class ADCSensor {
+private:
+    int   resolution;  // bit — misal 12 untuk ADC 12-bit
+    float vRef;        // tegangan referensi (Volt)
+public:
+    ADCSensor(int res, float vref) : resolution(res), vRef(vref) {}
+    // Overload 1: raw int (tanpa argumen)
+    int readRaw() const { return 2048; }  // simulasi
+    // Overload 2: ke Volt, pakai vRef tersimpan
+    float readVoltage() const
+        { return readRaw()/float((1<<resolution)-1)*vRef; }
+    // Overload 3: ke Volt, vRef kustom dari pemanggil
+    float readVoltage(float vRef2) const
+        { return readRaw()/float((1<<resolution)-1)*vRef2; }
+};
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi
+
+**Menggunakan Makefile (direkomendasikan):**
+```bash
+cd <path>/week12_oop1
+make            # kompilasi semua demo
+make run01      # demo basic class
+make run02      # demo encapsulation
+make run03      # demo overloading
+make run04      # demo EE voltage divider
+```
+
+**Kompilasi manual (masing-masing demo tidak memerlukan ops.cpp):**
+```bash
+g++ -std=c++17 -Wall -Isrc -o demo02 src/02_encapsulation.cpp
+./demo02
+```
+
+**Struktur folder:**
+```
+week12_oop1/
+├── src/   oop1.h  01_basic_class.cpp  02_encapsulation.cpp
+│          03_overloading.cpp  04_ee_voltage_divider.cpp
+└── Makefile
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Ringkasan: Aturan Enkapsulasi
+
+| Konsep | Keterangan | Contoh |
+|--------|-----------|--------|
+| Data `private` | Tidak bisa diakses dari luar class | `resistance`, `tolerance` |
+| Constructor | Inisialisasi objek secara otomatis | `Resistor("R-470", 470.0)` |
+| Member-init list | Lebih efisien dari assignment di body | `: partNumber(pn)` |
+| Setter + validasi | Satu-satunya cara mengubah data | `setResistance(r)` |
+| Getter `const` | Baca data, tidak mengubah objek | `getResistance()` |
+| `printInfo() const` | Method yang tidak mengubah state | Aman pada const object |
+| Overloading | Nama sama, parameter berbeda | 3 versi `readVoltage()` |
+| Compile error | Akses private dari luar diblokir | `r.resistance = 100` |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+**1.** Buat class `Inductor` dengan data private `inductance` (Henry) dan `current` (Ampere). Tambahkan constructor, setter dengan validasi, getter, dan `printInfo()`.
+
+**2.** Buat class `Battery` dengan `voltage` dan `capacity` (mAh). Tambahkan method `getEnergy()` yang menghitung energi dalam Joule (V * capacity * 3.6).
+
+**3.** Buat class `LED` dengan 3 constructor overload: spesifikasi lengkap, default brightness=100%, dan default semua.
+
+**4.** Buat class `Converter` dengan method overloading `convert()`: Celsius→Fahrenheit (C*9/5+32), dan Celsius→Kelvin (C+273.15).
+
+**5. [EE]** Buat class `VoltageSource` (tegangan & impedansi internal). Implementasikan `getTerminalVoltage(double loadR)` menggunakan pembagi tegangan dengan impedansi internal.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi dan Eksplorasi Lebih Lanjut
+
+- Stroustrup, B. (2013). *The C++ Programming Language* (4th ed.). Addison-Wesley.
+- Lippman, Lajoie, Moo. (2012). *C++ Primer* (5th ed.). Addison-Wesley.
+- [LearnCpp.com — Chapter 13: OOP Introduction](https://www.learncpp.com/cpp-tutorial/introduction-to-object-oriented-programming/)
+- [cppreference — class declaration](https://en.cppreference.com/w/cpp/language/class)
+- [GeeksforGeeks — OOP in C++](https://www.geeksforgeeks.org/object-oriented-programming-in-cpp/)
+</script>
+
+<script type="text/markdown" id="md-week13">
+# Lecture 13 — Object-Oriented Programming (2)
+## *Inheritance — Code Reuse Through Class Hierarchies*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Electrical Engineering · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Konsep **inheritance** — hubungan IS-A
+- Sintaks base class dan derived class di C++
+- Access specifiers: `public` / `protected` / `private`
+- Constructor chain — parent selalu dikonstruksi lebih dulu
+- Destructor chain — child didestruksi lebih dulu
+- Method overriding dengan keyword `override`
+- Multi-level inheritance
+
+### File Demo
+| File | Topik |
+|------|-------|
+| `src/01_basic_inheritance.cpp` | Inheritance dasar, override |
+| `src/02_constructor_chain.cpp` | Urutan ctor/dtor |
+| `src/03_access_specifiers.cpp` | public/protected/private, upcasting |
+| `src/04_ee_potentiometer.cpp` | EE: Potentiometer 3-level inheritance |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Konsep Inheritance: Hubungan IS-A
+
+![IS-A Relationship](img/img_01_is_a_relationship.png)
+
+- **Inheritance:** derived class mewarisi member dari base class.
+- Hubungan **IS-A**: Resistor IS-A Component, Potentiometer IS-A Resistor.
+- Kode yang sudah ditulis di base class tidak perlu ditulis ulang.
+- Uji IS-A: "Potentiometer adalah sebuah Resistor" ✓ → gunakan inheritance
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Sintaks Inheritance di C++
+
+```cpp
+// BASE CLASS — Component
+class Component {
+protected:
+    string partNumber;   // 'protected': accessible di derived class
+public:
+    Component(const string& pn) : partNumber(pn) {}
+    virtual void printInfo() const {
+        cout << "Komponen: " << partNumber << endl;
+    }
+    virtual ~Component() {}  // virtual destructor WAJIB!
+};
+
+// DERIVED CLASS — Resistor : public Component
+class Resistor : public Component {
+protected:
+    double resistance;
+public:
+    Resistor(const string& pn, double r)
+        : Component(pn),    // panggil ctor parent lebih dulu!
+          resistance(r) {}
+
+    void printInfo() const override {   // override method parent
+        cout << "Resistor [" << partNumber << "]: "
+             << resistance << " Ohm\n";
+    }
+};
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Anggota yang Diwarisi
+
+![Inheritance Members](img/img_02_inheritance_members.png)
+
+- Anggota `protected` Component (`partNumber`, `manufacturer`) dapat diakses di Resistor.
+- Anggota `public` Component (`printPartNumber()`, `getPartNumber()`) tersedia di Resistor tanpa ditulis ulang.
+- Resistor menambah anggotanya sendiri: `resistance`, `tolerance`, `setResistance()`, dll.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Constructor & Destructor Chain
+
+![Constructor Chain](img/img_03_constructor_chain.png)
+
+**Aturan urutan:**
+- **Constructor:** dari class paling ATAS ke bawah — Component → Resistor → Potentiometer
+- **Destructor:** dari class paling BAWAH ke atas, urutan **TERBALIK** — ~Potentiometer → ~Resistor → ~Component
+
+Setiap constructor memanggil constructor parent di **initializer list**.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Constructor Chain — Kode
+
+```cpp
+class Base {
+public:
+    Base()  { cout << "Base ctor\n";  }
+    ~Base() { cout << "Base dtor\n";  }
+};
+
+class Child : public Base {
+public:
+    Child()  : Base() { cout << "Child ctor\n"; }  // Base dipanggil dulu!
+    ~Child()          { cout << "Child dtor\n"; }
+};
+
+// Output saat: { Child c; }
+// Base ctor       <- ctor dari atas
+// Child ctor
+// (scope exit)
+// Child dtor      <- dtor dari bawah
+// Base dtor
+```
+
+> Destructor berjalan **terbalik** dari constructor. Ini memastikan resource yang dialokasikan oleh parent dibersihkan **setelah** child selesai.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Access Specifiers: public / protected / private
+
+![Access Specifiers](img/img_04_access_specifiers.png)
+
+| Specifier | Dalam class | Di derived class | Luar class |
+|-----------|------------|------------------|------------|
+| `public`    | Ya | Ya | Ya |
+| `protected` | Ya | Ya | **Tidak** |
+| `private`   | Ya | **Tidak** | **Tidak** |
+
+- `partNumber`, `manufacturer` → **`protected`** (bisa diakses di derived class)
+- Data sensitif / detail implementasi → **`private`**
+- Interface (constructor, getter, `printInfo`) → **`public`**
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Upcasting: Component*
+
+![Upcasting](img/img_05_upcasting.png)
+
+```cpp
+// Upcasting: base class pointer ke derived object
+Component* parts[3];
+parts[0] = new Resistor("R-220", 220.0);
+parts[1] = new Capacitor("C-47uF", 47e-6, 25.0);
+parts[2] = new Potentiometer("POT-1k", 1000.0, 0.3);
+
+// Virtual dispatch: memanggil versi yang tepat secara otomatis
+for (int i = 0; i < 3; i++) {
+    parts[i]->printInfo();   // Resistor::printInfo() dll.
+}
+
+// Virtual destructor: memastikan ~Resistor, ~Capacitor, ~Potentiometer
+// dipanggil (bukan hanya ~Component)
+for (int i = 0; i < 3; i++) {
+    delete parts[i];
+}
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Multi-Level Inheritance: Potentiometer
+
+```cpp
+// Potentiometer : Resistor : Component  (3 level)
+class Potentiometer : public Resistor {
+private:
+    double wiperPosition;  // 0.0 (GND) sampai 1.0 (VCC)
+public:
+    Potentiometer(const string& pn, double r, double wiper = 0.5)
+        : Resistor(pn, r),     // Resistor memanggil Component secara internal
+          wiperPosition(wiper) {}
+
+    void setWiper(double pos) {
+        if (pos >= 0.0 && pos <= 1.0) wiperPosition = pos;
+    }
+    double getEffectiveResistance() const {
+        return resistance * wiperPosition;  // 'resistance' diwarisi dari Resistor
+    }
+    void printInfo() const override {
+        Resistor::printInfo();  // panggil versi parent dulu
+        cout << "  Wiper: " << wiperPosition * 100 << "% -> "
+             << getEffectiveResistance() << " Ohm efektif\n";
+    }
+};
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi
+
+**Menggunakan Makefile:**
+```bash
+cd <path>/week13_oop2
+make            # kompilasi semua demo
+make run01      # inheritance dasar
+make run02      # constructor chain
+make run03      # access specifiers + upcasting
+make run04      # EE: potentiometer voltage divider
+```
+
+**Kompilasi manual (setiap demo self-contained):**
+```bash
+g++ -std=c++17 -Wall -Isrc -o demo01 src/01_basic_inheritance.cpp
+./demo01
+```
+
+**Struktur folder:**
+```
+week13_oop2/
+├── src/   oop2.h  01_basic_inheritance.cpp  02_constructor_chain.cpp
+│          03_access_specifiers.cpp  04_ee_potentiometer.cpp
+└── Makefile
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Ringkasan Inheritance
+
+| Konsep | Penjelasan | Contoh |
+|--------|-----------|--------|
+| Inheritance | Derived mewarisi base class | `class Resistor : public Component` |
+| IS-A | Hubungan turunan ke dasar | Resistor IS-A Component |
+| `override` | Ganti virtual method | `void printInfo() const override` |
+| Constructor chain | Ctor dari atas ke bawah | Component → Resistor → Pot |
+| Destructor chain | Dtor dari bawah ke atas | ~Pot → ~Resistor → ~Component |
+| `protected` | Accessible dari derived | `partNumber` bisa diakses Resistor |
+| Upcasting | `Base*` ke derived object | `Component* p = new Resistor(...)` |
+| Virtual dispatch | Memanggil override tepat | `p->printInfo()` → Resistor versi |
+| Virtual dtor | Cleanup benar via base ptr | `virtual ~Component()` |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+**1.** Buat class `Sensor` (base, `sensorName` protected). Turunkan `TemperatureSensor` dengan `temperature` dan `unit`. Override `printInfo()`.
+
+**2.** Tambahkan pesan ctor/dtor ke `Sensor` dan `TemperatureSensor`. Amati urutan output ctor dan dtor.
+
+**3.** Buat class `DigitalSensor : TemperatureSensor` dengan state `isCalibrated` (bool). Tambahkan method `calibrate()`. Akses protected member dari base.
+
+**4.** Buat array `Sensor*` berisi 3 object berbeda. Panggil `printInfo()` via pointer. Hapus semua dengan `delete`.
+
+**5. [EE]** Buat class `LoadedVoltageSource`. Tambahkan `Resistor` sebagai member (komposisi). Implementasikan `getVout(double loadR)` yang menghitung Vout dengan loading effect.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi dan Eksplorasi Lebih Lanjut
+
+- Stroustrup, B. (2013). *The C++ Programming Language* (4th ed.). Addison-Wesley.
+- Lippman, Lajoie, Moo. (2012). *C++ Primer* (5th ed.). Addison-Wesley.
+- [LearnCpp.com — Chapter 17: Inheritance](https://www.learncpp.com/cpp-tutorial/introduction-to-inheritance/)
+- [cppreference — Derived classes, access specifiers](https://en.cppreference.com/w/cpp/language/derived_class)
+- [GeeksforGeeks — Inheritance in C++](https://www.geeksforgeeks.org/inheritance-in-c/)
+- [VisuAlgo — tidak tersedia untuk OOP, gunakan: programiz.com C++ Inheritance]
+</script>
+
+<script type="text/markdown" id="md-week14">
+# Week 14 — Object-Oriented Programming (3)
+## *Virtual, Abstract Class, dan Polymorphism dalam C++*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Teknik Elektro · Universitas Indonesia
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Masalah tanpa `virtual`: base pointer memanggil versi salah
+- Keyword `virtual` dan mekanisme vtable (runtime dispatch)
+- Abstract class: pure virtual function (`= 0`)
+- Polymorphism: satu loop untuk banyak tipe komponen
+- Virtual destructor: mencegah memory leak
+- Modern C++: `unique_ptr` dan `make_unique`
+- Aplikasi EE: Bill of Materials (BOM) analyzer
+
+### File Demo
+
+| File | Topik |
+|------|-------|
+| `src/01_virtual_dispatch.cpp` | Without vs with `virtual`: perbedaan dispatch |
+| `src/02_abstract_class.cpp` | Pure virtual, abstract class, array polimorfik |
+| `src/03_unique_ptr.cpp` | `unique_ptr` + polymorphism, auto-delete |
+| `src/04_ee_bom_analyzer.cpp` | Aplikasi: BOM analyzer (Resistor/Capacitor/Inductor) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Masalah: Satu Loop, Banyak Tipe
+
+Dalam rangkaian elektronik, kita memiliki banyak jenis komponen: Resistor, Kapasitor, Induktor. Semua perlu diproses dalam satu loop yang sama.
+
+**Tanpa polymorphism:** perlu `if/else` per tipe — tidak skalabel:
+
+```cpp
+// Cara lama — tidak skalabel
+for (int i = 0; i < n; i++) {
+    if (type[i] == "R")
+        printResistor(circuit[i]);
+    else if (type[i] == "C")
+        printCapacitor(circuit[i]);
+    // tambah tipe baru = ubah semua loop
+}
+```
+
+**Dengan polymorphism** — satu baris, semua tipe: `circuit[i]->printInfo();`
+
+**Solusi:** Abstract base class + virtual function → satu antarmuka, banyak implementasi.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Virtual Keyword: Runtime Dispatch
+
+![Without vs With Virtual](img/img_01_without_vs_with_virtual.png)
+
+**Tanpa `virtual`:** pointer base selalu memanggil metode base, meskipun objek sebenarnya adalah turunan.
+
+**Dengan `virtual`:** compiler membuat **vtable** — tabel pointer ke fungsi yang tepat. Dipilih saat runtime sesuai tipe objek sebenarnya.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Mekanisme vtable
+
+![Mekanisme vtable](img/img_02_vtable.png)
+
+Setiap objek dengan `virtual` method menyimpan pointer tersembunyi `_vptr` yang menunjuk ke **vtable** kelasnya. Saat `ptr->printInfo()` dipanggil, CPU membaca `_vptr` → cari `printInfo` di vtable → lompat ke implementasi yang tepat. Inilah **runtime dispatch**.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Abstract Class: Pure Virtual Function
+
+![Abstract Class](img/img_03_abstract_class.png)
+
+Pure virtual (`= 0`) menjadikan kelas **abstrak**: tidak bisa diinstansiasi, hanya bisa diwariskan. Kelas turunan **wajib** mengimplementasi semua pure virtual, jika tidak → kelas turunan juga abstrak.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Abstract Class — Kode
+
+```cpp
+// Kelas abstrak: mendefinisikan kontrak komponen EE
+class Component {
+protected:
+    string partNumber;
+public:
+    explicit Component(const string& pn) : partNumber(pn) {}
+    virtual void   printInfo() const = 0;  // pure virtual
+    virtual double getValue()  const = 0;
+    virtual string getUnit()   const = 0;
+    virtual ~Component() = default;        // virtual destructor wajib!
+};
+
+// Kelas konkret: WAJIB implementasi semua pure virtual
+class Resistor : public Component {
+    double resistance;
+public:
+    Resistor(const string& pn, double r) : Component(pn), resistance(r) {}
+    void   printInfo() const override {
+        cout << "Resistor [" << partNumber << "]: " << resistance << " Ohm\n";
+    }
+    double getValue() const override { return resistance; }
+    string getUnit()  const override { return "Ohm"; }
+};
+// Component c("X");  // ERROR: abstract class tidak bisa diinstansiasi
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Polymorphism in Action
+
+Kunci polymorphism: **pointer base menunjuk ke objek turunan**, panggil metode → vtable dispatch ke implementasi yang tepat.
+
+```cpp
+// Array pointer base — menyimpan berbagai tipe turunan
+Component* circuit[3];
+circuit[0] = new Resistor ("R1", 470.0);
+circuit[1] = new Capacitor("C1", 100e-6);
+circuit[2] = new Inductor ("L1",  10e-3);
+
+// Satu loop — tidak peduli tipe spesifik
+cout << "Bill of Materials:" << endl;
+for (int i = 0; i < 3; i++)
+    circuit[i]->printInfo();  // runtime dispatch via vtable
+
+// Akses nilai secara generik — kontrak dari abstract class
+for (int i = 0; i < 3; i++) {
+    cout << circuit[i]->getPartNumber()
+         << " = " << circuit[i]->getValue()
+         << " " << circuit[i]->getUnit() << endl;
+}
+
+// Cleanup — virtual destructor memastikan dtor turunan dipanggil
+for (int i = 0; i < 3; i++) delete circuit[i];
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Virtual Destructor: Mencegah Memory Leak
+
+Tanpa `virtual` destructor, `delete` lewat pointer base hanya memanggil destruktor base — destruktor turunan **tidak dipanggil** → **memory leak!**
+
+```cpp
+class Base {
+public:
+    ~Base() { cout << "~Base()\n"; }   // TANPA virtual — BAHAYA!
+};
+class Derived : public Base {
+    int* data;
+public:
+    Derived() : data(new int[100]) {}
+    ~Derived() {
+        delete[] data;                 // TIDAK dipanggil jika delete Base*
+        cout << "~Derived()\n";
+    }
+};
+Base* p = new Derived();
+delete p;  // tanpa virtual: hanya ~Base() → data BOCOR!
+```
+
+**Solusi:** tambahkan `virtual ~ClassName() = default;` di kelas base:
+
+```cpp
+class SafeBase {
+public:
+    virtual ~SafeBase() = default;     // virtual destructor — AMAN
+};
+// delete SafeBase* → ~Derived() + ~SafeBase() keduanya dipanggil ✓
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Modern C++: unique_ptr
+
+![unique_ptr dan Vector Polimorfik](img/img_04_unique_ptr.png)
+
+`unique_ptr<T>` adalah **smart pointer**: memiliki objek secara eksklusif dan **otomatis menghapus** saat keluar scope. Tidak perlu `delete` manual → tidak ada memory leak.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi
+
+Setiap demo bersifat self-contained. Compile dari direktori `week14_oop3/`:
+
+```bash
+# Compile semua sekaligus
+make
+
+# Atau compile dan jalankan satu per satu
+g++ -std=c++17 -Wall -Isrc -o demo01 src/01_virtual_dispatch.cpp
+./demo01
+
+g++ -std=c++17 -Wall -Isrc -o demo02 src/02_abstract_class.cpp
+./demo02
+
+g++ -std=c++17 -Wall -Isrc -o demo03 src/03_unique_ptr.cpp
+./demo03
+
+g++ -std=c++17 -Wall -Isrc -o demo04 src/04_ee_bom_analyzer.cpp
+./demo04
+
+# Bersihkan binary
+make clean
+```
+
+Flag `-Isrc` diperlukan agar compiler menemukan `oop3.h` di folder `src/`.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Empat Pilar OOP
+
+![Empat Pilar OOP](img/img_05_four_pillars.png)
+
+Week 14 berfokus pada **Abstraction** (abstract class, pure virtual) dan **Polymorphism** (virtual dispatch, vtable). **Inheritance** sudah dibahas di Week 13. **Encapsulation** (Week 12) menjadi fondasi untuk semuanya.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Ringkasan
+
+| Keyword / Konsep | Fungsi | Contoh |
+|------------------|--------|--------|
+| `virtual` | Aktifkan runtime dispatch via vtable | `virtual void printInfo()` |
+| `= 0` | Pure virtual: kelas jadi abstract | `virtual void f() = 0;` |
+| `override` | Tandai eksplisit bahwa fungsi meng-override | `void f() override` |
+| `virtual ~T()` | Pastikan dtor turunan dipanggil saat delete | `virtual ~Component() = default` |
+| `unique_ptr<T>` | Smart pointer: auto-delete, no manual delete | `make_unique<Resistor>("R1", 100)` |
+| Abstract class | Tidak bisa diinstansiasi, mendefinisikan kontrak | `class Component { ... = 0; }` |
+| Polymorphism | Satu pointer base → banyak perilaku berbeda | `Component* p = new Resistor(...)` |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+1. **Virtual vs Non-Virtual:** Tambahkan metode `getType()` di `Component` sebagai metode biasa (non-virtual) yang mengembalikan `"Component"`. Override di `Resistor` mengembalikan `"Resistor"`. Apa hasilnya jika dipanggil lewat `Component*`? Bandingkan dengan membuat `getType()` `virtual`.
+
+2. **Interface Pattern:** Buat interface `ISerializable` dengan pure virtual `serialize() const` yang mengembalikan `string`. Buat `LoggedResistor` yang mewarisi dari `Component` DAN `ISerializable`. Implementasi `serialize()` menghasilkan string `{"part":"R1","ohm":470.0}`.
+
+3. **BOM Filter:** Modifikasi `04_ee_bom_analyzer.cpp` untuk menambahkan fungsi `filterByValue(vector<unique_ptr<Component>>& bom, double minVal, double maxVal)` yang mencetak hanya komponen dengan `getValue()` dalam rentang tertentu.
+
+4. **Kelas Baru:** Tambahkan kelas `Transistor` yang mewarisi `Component`. Atribut: `vce` (tegangan kolektor-emitor), `ic` (arus kolektor). Unit: `"V"`. Implementasi semua pure virtual. Tambahkan ke BOM.
+
+5. **Virtual Destructor Test:** Buat kelas `Base` dengan destruktor non-virtual dan kelas `Child` dengan destruktor yang mencetak pesan dan membebaskan memori heap. Buktikan dengan kode bahwa tanpa `virtual` ada memory leak (destruktor Child tidak dipanggil). Perbaiki dengan menambahkan `virtual`.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi
+
+- Stroustrup, B. (2013). *The C++ Programming Language* (4th ed.). Addison-Wesley. Chapter 20–21: Virtual Functions, Abstract Classes.
+- Meyers, S. (2005). *Effective C++* (3rd ed.). Addison-Wesley. Item 7: Declare destructors virtual in polymorphic base classes.
+- cppreference.com — Virtual functions: https://en.cppreference.com/w/cpp/language/virtual
+- cppreference.com — unique_ptr: https://en.cppreference.com/w/cpp/memory/unique_ptr
+- ISO C++ FAQ — Inheritance and virtual functions: https://isocpp.org/wiki/faq/virtual-functions
+</script>
+
+<script type="text/markdown" id="md-week15">
+# Week 15 — Socket Programming & Network Communication
+## *TCP, UDP, dan POSIX Socket API dalam C++*
+
+**ENEE602004 · Algoritma Pemrograman dan Praktikum**
+Dr. Alfan Presekal · Teknik Elektro · Universitas Indonesia
+
+> **Penting:** Demo ini menggunakan POSIX socket API — hanya berjalan di Linux/WSL, bukan Windows native.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Topik yang Dibahas
+
+- Konsep socket: endpoint komunikasi jaringan (IP:port)
+- Model client-server: peran dan alur komunikasi
+- TCP: connection-oriented, reliable, ordered
+- UDP: connectionless, cepat, tanpa ACK
+- POSIX Socket API: `socket`, `bind`, `listen`, `accept`, `connect`, `send`, `recv`
+- TCP 3-way handshake (SYN, SYN-ACK, ACK)
+- Aplikasi EE: sensor data server dengan protokol terstruktur
+
+### File Demo
+
+| File | Topik |
+|------|-------|
+| `src/01_tcp_server.cpp` | TCP echo server: socket, bind, listen, accept, recv/send |
+| `src/02_tcp_client.cpp` | TCP client: socket, connect, send, recv |
+| `src/03_udp_demo.cpp` | UDP demo: SOCK_DGRAM, sendto, recvfrom |
+| `src/04_ee_sensor_server.cpp` | Aplikasi: sensor data server (protokol CH0:3.14V) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Apa itu Socket?
+
+![Client-Server Model](img/img_01_client_server.png)
+
+**Socket** adalah endpoint komunikasi dua arah antara dua proses melalui jaringan. Setiap socket diidentifikasi oleh pasangan **(IP address : port number)**. Socket menjadi antarmuka antara program dan protokol jaringan (TCP/IP) yang dikelola oleh sistem operasi.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# TCP vs UDP: Kapan Menggunakan?
+
+![TCP vs UDP](img/img_03_tcp_vs_udp.png)
+
+**Pilih TCP** untuk: transfer file, login SSH, query database sensor, kontrol aktuator — di mana data tidak boleh hilang.
+
+**Pilih UDP** untuk: streaming data ADC real-time, broadcast status sensor, protokol discovery jaringan — di mana kecepatan lebih penting dari keandalan.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# TCP Server: Langkah-langkah
+
+![TCP Steps](img/img_02_tcp_steps.png)
+
+Server harus melewati 5 langkah sebelum bisa menerima data: `socket()` → `bind()` → `listen()` → `accept()` → `recv()/send()`. Client cukup: `socket()` → `connect()` → `send()/recv()`.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# TCP Server — Kode
+
+```cpp
+// Langkah 1: Buat socket TCP (IPv4, connection-oriented)
+int serverFd = socket(AF_INET, SOCK_STREAM, 0);
+
+// Langkah 2: Bind ke IP + port
+sockaddr_in addr{};
+addr.sin_family      = AF_INET;
+addr.sin_port        = htons(8080);  // konversi byte order
+addr.sin_addr.s_addr = INADDR_ANY;   // semua interface
+bind(serverFd, (sockaddr*)&addr, sizeof(addr));
+
+// Langkah 3: Tandai pasif, backlog = 5 koneksi antre
+listen(serverFd, 5);
+
+// Langkah 4: Accept loop — blokir sampai ada client
+while (true) {
+    int clientFd = accept(serverFd, nullptr, nullptr);
+
+    // Langkah 5: Terima data, kirim echo kembali
+    char buf[1024];
+    int n = recv(clientFd, buf, sizeof(buf)-1, 0);
+    send(clientFd, buf, n, 0);  // echo
+    close(clientFd);
+}
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# TCP Client — Kode
+
+```cpp
+// Langkah 1: Buat socket TCP
+int sock = socket(AF_INET, SOCK_STREAM, 0);
+
+// Langkah 2: Isi alamat server
+sockaddr_in server{};
+server.sin_family = AF_INET;
+server.sin_port   = htons(8080);
+inet_pton(AF_INET, "127.0.0.1", &server.sin_addr);
+
+// Langkah 3: Connect — 3-way handshake terjadi di sini
+// SYN -> SYN-ACK -> ACK (otomatis oleh kernel)
+connect(sock, (sockaddr*)&server, sizeof(server));
+
+// Langkah 4: Kirim dan terima data
+string msg = "Halo Server!\n";
+send(sock, msg.c_str(), msg.size(), 0);
+
+char buf[1024] = {};
+int n = recv(sock, buf, sizeof(buf)-1, 0);
+cout << "Echo: " << buf;
+
+// Langkah 5: Tutup koneksi
+close(sock);
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# TCP Handshake: Koneksi 3 Langkah
+
+![TCP 3-Way Handshake](img/img_04_tcp_handshake.png)
+
+`connect()` secara otomatis memicu 3-way handshake. Setelah ACK terakhir diterima server, koneksi terbentuk dan data bisa mengalir. Penutupan koneksi juga terstruktur: FIN → FIN-ACK (dikirim oleh `close()`).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# UDP: Connectionless
+
+UDP tidak perlu `connect()`, `listen()`, atau `accept()`. Kirim langsung ke alamat tujuan dengan `sendto()`, terima dengan `recvfrom()`.
+
+```cpp
+// Buat UDP socket — SOCK_DGRAM bukan SOCK_STREAM
+int sockFd = socket(AF_INET, SOCK_DGRAM, 0);
+
+// Bind ke port lokal (untuk recvfrom)
+sockaddr_in bindAddr{};
+bindAddr.sin_family      = AF_INET;
+bindAddr.sin_port        = htons(9090);
+bindAddr.sin_addr.s_addr = INADDR_ANY;
+bind(sockFd, (sockaddr*)&bindAddr, sizeof(bindAddr));
+
+// sendto: kirim datagram langsung ke alamat tujuan
+sockaddr_in dest{};
+dest.sin_family = AF_INET;
+dest.sin_port   = htons(9090);
+inet_pton(AF_INET, "127.0.0.1", &dest.sin_addr);
+const char* msg = "Sensor=3.14V";
+sendto(sockFd, msg, strlen(msg), 0, (sockaddr*)&dest, sizeof(dest));
+
+// recvfrom: terima datagram + catat alamat pengirim
+char buf[1024]; sockaddr_in from{}; socklen_t flen = sizeof(from);
+int n = recvfrom(sockFd, buf, sizeof(buf)-1, 0, (sockaddr*)&from, &flen);
+close(sockFd);
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cara Kompilasi dan Cara Menjalankan
+
+**PENTING:** Server harus dijalankan lebih dulu, baru client.
+
+```bash
+# Compile semua demo
+make
+
+# Demo 01 & 02: TCP server + client (dua terminal)
+# Terminal 1:
+./demo01              # TCP server menunggu di port 8080
+# Terminal 2:
+./demo02              # TCP client terhubung ke server
+# Atau test server dengan netcat:
+echo "halo" | nc localhost 8080
+
+# Demo 03: UDP (satu terminal, self-contained)
+./demo03              # kirim dan terima sendiri
+
+# Demo 04: EE Sensor Server
+# Terminal 1:
+./demo04              # sensor server menunggu di port 8080
+# Terminal 2 (test per channel):
+echo "0" | nc localhost 8080   # -> CH0:3.14V
+echo "3" | nc localhost 8080   # -> CH3:0.75V
+
+# Bersihkan binary
+make clean
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Socket API Reference
+
+![Socket API Reference](img/img_05_socket_api.png)
+
+Semua fungsi di atas berasal dari POSIX socket API. Header yang dibutuhkan:
+
+```cpp
+#include <sys/socket.h>   // socket, bind, listen, accept, connect, send, recv
+#include <netinet/in.h>   // sockaddr_in, INADDR_ANY, htons
+#include <arpa/inet.h>    // inet_pton, inet_ntop
+#include <unistd.h>       // close
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Aplikasi EE: Sensor Data Server
+
+Server menerima ID channel (0–5), membalas dengan pembacaan sensor terstruktur. Pola ini mencerminkan sistem SCADA/IoT nyata.
+
+```cpp
+// Protokol: client kirim "0\n" -> server balas "CH0:3.14V\n"
+// Data sensor simulasi (dalam sistem nyata: baca dari ADC/I2C)
+static double readSensor(int channel) {
+    double base[] = {3.14, 1.80, 2.50, 0.75, 5.00, 1.23};
+    if (channel < 0 || channel >= 6) return -1.0;
+    return base[channel];
+}
+
+// Di dalam accept loop:
+int n = recv(clientFd, buf, sizeof(buf)-1, 0);
+if (n > 0) {
+    int ch = atoi(buf);             // parse channel ID
+    double val = readSensor(ch);
+    char resp[64];
+    if (val < 0)
+        snprintf(resp, sizeof(resp), "ERROR:invalid_channel\n");
+    else
+        snprintf(resp, sizeof(resp), "CH%d:%.2fV\n", ch, val);
+    send(clientFd, resp, strlen(resp), 0);
+}
+// Test: echo "0" | nc localhost 8080  ->  CH0:3.14V
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Latihan Mandiri
+
+1. **Server Multi-pesan:** Modifikasi `01_tcp_server.cpp` agar setiap client bisa mengirim beberapa pesan (bukan hanya satu). Server terus menerima sampai client menutup koneksi. Uji dengan `nc localhost 8080` dan ketik beberapa baris.
+
+2. **Echo Server dengan Prefix:** Modifikasi TCP server agar mengembalikan pesan dengan prefix timestamp: `[12:34:56] Halo\n`. Gunakan `ctime()` atau `chrono` untuk mendapatkan waktu.
+
+3. **UDP Broadcast:** Buat program UDP yang mengirim pesan broadcast ke `255.255.255.255` (gunakan `SO_BROADCAST` socket option) dan program penerima yang mendengarkan di port yang sama. Jalankan keduanya di terminal terpisah.
+
+4. **Sensor Multi-Channel:** Modifikasi `04_ee_sensor_server.cpp` agar client bisa mengirim format `"CH0,CH2,CH4\n"` (beberapa channel sekaligus) dan server membalas dengan semua nilai: `"CH0:3.14V CH2:2.50V CH4:5.00V\n"`. Gunakan `strtok()` atau `stringstream`.
+
+5. **Koneksi Paralel:** Pelajari fungsi `fork()`. Modifikasi TCP server agar setiap koneksi masuk di-`fork()` ke proses baru, sehingga server dapat melayani banyak client secara bersamaan. Uji dengan membuka tiga terminal client sekaligus.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Referensi
+
+- Stevens, W.R., Fenner, B., Rudoff, A.M. (2004). *Unix Network Programming, Vol. 1* (3rd ed.). Prentice Hall. Chapter 4: Elementary TCP Sockets.
+- Beej's Guide to Network Programming: https://beej.us/guide/bgnet/ (sangat direkomendasikan untuk pemula)
+- cppreference.com — POSIX socket: https://en.cppreference.com/w/cpp/header/sys/socket.h
+- RFC 793 — Transmission Control Protocol (TCP): https://www.rfc-editor.org/rfc/rfc793
+- RFC 768 — User Datagram Protocol (UDP): https://www.rfc-editor.org/rfc/rfc768
+</script>
+
+<script>
+
+// Configure marked
+marked.setOptions({ breaks: true, gfm: true });
+
+const renderer = new marked.Renderer();
+
+renderer.image = function(href, title, text) {
+  return '<img src="' + href + '" alt="' + (text||'') + '" loading="lazy">';
+};
+
+renderer.code = function(code, lang) {
+  const l = (lang && hljs.getLanguage(lang)) ? lang : 'plaintext';
+  const h = hljs.highlight(code, {language: l}).value;
+  return '<pre><code class="hljs language-' + l + '">' + h + '</code></pre>';
+};
+
+marked.use({renderer});
+
+// Render each week
+const weekIds = ['week09', 'week10', 'week11', 'week12', 'week13', 'week14', 'week15'];
+
+weekIds.forEach(function(wid) {
+  const scriptEl  = document.getElementById('md-' + wid);
+  const contentEl = document.getElementById('content-' + wid);
+  if (!scriptEl || !contentEl) return;
+
+  let md = scriptEl.textContent;
+
+  // Mark slide breaks before parsing
+  md = md.replace(/<div style="page-break-after: always;"><\/div>/g, '\n\nPAGEBREAKMARKER\n\n');
+
+  let html = marked.parse(md);
+
+  // Replace the marker (rendered as <p>PAGEBREAKERMARKER</p>) with divider
+  html = html.replace(/<p>PAGEBREAKERMARKER<\/p>/g, '<div class="slide-break"></div>');
+
+  contentEl.innerHTML = html;
+});
+
+// Tab switching
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels  = document.querySelectorAll('.week-panel');
+const navLinks = document.querySelectorAll('.nav-link');
+
+function showWeek(wid) {
+  tabBtns.forEach(function(b) { b.classList.toggle('active', b.dataset.week === wid); });
+  panels.forEach(function(p)  { p.classList.toggle('active',  p.id === 'panel-' + wid); });
+  navLinks.forEach(function(a){ a.classList.toggle('active', a.dataset.week === wid); });
+  window.scrollTo(0, 0);
+}
+
+tabBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() { showWeek(btn.dataset.week); });
+});
+
+navLinks.forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    showWeek(a.dataset.week);
+  });
+});
+
+showWeek('week09');
+
+</script>
+
+</body>
+</html>
+
+{% endraw %}

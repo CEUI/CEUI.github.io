@@ -1,0 +1,23 @@
+---
+layout: default
+title: Research
+description: Exploring the frontiers of computer engineering through cutting-edge research in cybersecurity, AI, and intelligent systems.
+---
+
+<section class="page-hero fade-up">
+  <div class="section-label">Research</div>
+  <h1 class="section-title">Current Research Areas</h1>
+  <p class="section-desc">Exploring the frontiers of computer engineering through cutting-edge research in cybersecurity, AI, and networks.</p>
+</section>
+
+<section class="page-content">
+  <div class="cards">
+    {% for item in site.data.research %}
+    <article class="card fade-up">
+      <div class="card-icon" aria-hidden="true">{{ item.icon }}</div>
+      <h2>{{ item.title }}</h2>
+      <p>{{ item.description }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>

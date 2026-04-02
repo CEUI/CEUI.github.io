@@ -71,19 +71,46 @@ nav {
 }
 
 .logo {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.5rem;
-    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
     text-decoration: none;
-    letter-spacing: -0.02em;
+    color: var(--text);
 }
 
-.logo span {
-    color: var(--text-muted);
-    font-weight: 300;
+.logo-img {
+    height: 40px;
+    width: auto; /* preserves 1280:1399 ratio */
+    display: block;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    gap: 0.1rem;
+}
+
+.logo-text strong {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    margin-left: 0.75rem;
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.logo-text em {
+    display: block;
+    font-style: normal;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .nav-links {
@@ -169,10 +196,13 @@ nav {
 }
 
 .hero h1 {
-    font-family: 'Instrument Serif', serif;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 6vw, 4.8rem);
+    line-height: 1.1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     margin-bottom: 1.5rem;
 }
 
@@ -484,6 +514,32 @@ footer a {
 
 footer a:hover { text-decoration: underline; }
 
+/* === PAGE LAYOUT (non-hero pages) === */
+.page-hero {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: auto;
+    padding: 8rem 2rem 3rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-hero .section-title { margin-bottom: 0.75rem; }
+.page-hero .section-desc { margin-bottom: 0; }
+
+.page-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: auto;
+    padding: 3rem 2rem 5rem;
+}
+
+@media (max-width: 768px) {
+    .page-hero { padding: 7rem 1.5rem 2.5rem; }
+    .page-content { padding: 2.5rem 1.5rem 4rem; }
+}
+
 /* === SCROLL ANIMATIONS === */
 .fade-up {
     opacity: 0;
@@ -565,7 +621,7 @@ footer a:hover { text-decoration: underline; }
 }
 
 @media (max-width: 480px) {
-    .logo span { display: none; }
+    .logo-text { display: none; }
     .hero h1 { font-size: 2.75rem; }
     .btn { width: 100%; justify-content: center; }
     .hero-btns { flex-direction: column; }

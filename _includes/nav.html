@@ -1,16 +1,16 @@
 <nav>
   <div class="nav-inner">
     <a href="{{ '/' | relative_url }}" class="logo">
-      {{ site.data.site.name }}
-      <span>{{ site.data.site.tagline }}</span>
+      <img src="{{ '/assets/img/Makara.png' | relative_url }}" alt="Makara CEUI" class="logo-img">
+      <span class="logo-text"><strong>Computer Engineering</strong><em>Universitas Indonesia</em></span>
     </a>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
-      <li><a href="#courses">Courses</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="{{ site.data.site.github }}" target="_blank" rel="noopener">GitHub ↗</a></li>
+      <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Home</a></li>
+      <li><a href="{{ '/courses/' | relative_url }}"{% if page.url contains '/courses' %} class="active"{% endif %}>Courses</a></li>
+      <li><a href="{{ '/research/' | relative_url }}"{% if page.url contains '/research' %} class="active"{% endif %}>Research</a></li>
     </ul>
   </div>
 </nav>

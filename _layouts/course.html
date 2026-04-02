@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ site.title }}</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+
+  <!-- Shared site fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Site nav CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  <!-- Syntax highlighting + Markdown renderer for course content -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+
+  <style>
+    /* Course pages use light theme — override site dark theme */
+    body { background: #f5f5f5; color: #1e293b; }
+    body::before { display: none; } /* hide dark grid bg */
+
+    /* Offset the course header for the fixed site nav (64px) + breadcrumb (36px) */
+    .site-header { padding-top: 6.5rem; }
+
+    /* The tab-bar and sidebar-sticky must sit below nav + breadcrumb */
+    .tab-bar { top: 100px; }
+    .sidebar-sticky { top: 100px; height: calc(100vh - 100px); }
+
+    /* Breadcrumb bar */
+    .course-breadcrumb {
+      position: sticky;
+      top: 64px;
+      z-index: 90;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.55rem 2rem;
+    }
+    .course-breadcrumb a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #2563eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .course-breadcrumb a:hover { text-decoration: underline; }
+    .course-breadcrumb span {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin: 0 0.35rem;
+    }
+  </style>
+</head>
+<body>
+
+{% include nav.html %}
+
+<div class="course-breadcrumb">
+  <a href="{{ '/courses/' | relative_url }}">← Courses</a>
+  <span>/</span>
+  <span style="font-size:0.8rem;color:#475569;font-weight:500;">{{ page.course_code }}</span>
+</div>
+
+{{ content }}
+
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
