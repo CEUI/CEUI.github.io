@@ -1,0 +1,20 @@
+# Edit this file to add, remove, or update research areas.
+# Each entry: icon (emoji), title, description
+
+- icon: "🛡️"
+  title: APT Detection with AI/ML
+  description: >
+    Correlation-based methods for advanced persistent threat detection
+    using machine learning and deep learning approaches.
+
+- icon: "🧠"
+  title: Adversarial Machine Learning
+  description: >
+    Privacy-preserving adversarial techniques against social media political
+    profiling using Value Sensitive Design.
+
+- icon: "🔍"
+  title: IDS under Data Scarcity
+  description: >
+    Zero-shot learning, GAN augmentation, and federated learning for
+    intrusion detection in low-data scenarios.

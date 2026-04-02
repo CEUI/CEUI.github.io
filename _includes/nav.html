@@ -1,0 +1,16 @@
+<nav>
+  <div class="nav-inner">
+    <a href="{{ '/' | relative_url }}" class="logo">
+      {{ site.data.site.name }}
+      <span>{{ site.data.site.tagline }}</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="{{ site.data.site.github }}" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>

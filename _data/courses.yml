@@ -1,0 +1,18 @@
+# Edit this file to add, remove, or update courses.
+# Each entry: code, title, description
+
+- code: ENEE602004
+  title: Algoritma Pemrograman
+  description: Fundamentals of programming algorithms using C/C++
+
+- code: ENCE604XXX
+  title: Data Science for Engineering
+  description: Feature selection, PCA, scaling, and machine learning pipelines
+
+- code: ENCE604XXX
+  title: Computer Networks & Cybersecurity
+  description: Network protocols, security architectures, and threat detection
+
+- code: ENCE604XXX
+  title: Capstone Project
+  description: Interdisciplinary engineering project with industry applications
