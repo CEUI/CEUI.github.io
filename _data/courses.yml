@@ -10,6 +10,11 @@
   title: Data Science for Engineering
   description: Feature selection, PCA, scaling, and machine learning pipelines
 
+- code: ENCE614016
+  title: Database System and Laboratory
+  description: Relational & NoSQL databases, distributed systems, vector databases, and AI storage
+  url: /courses/ENCE614016/
+
 - code: ENCE604XXX
   title: Computer Networks & Cybersecurity
   description: Network protocols, security architectures, and threat detection

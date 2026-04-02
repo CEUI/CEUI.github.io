@@ -1,0 +1,4004 @@
+---
+layout: false
+---
+{% raw %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENCE614016 — Database System and Laboratory</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',system-ui,sans-serif;background:#f5f5f5;color:#1e293b;line-height:1.75}
+a{color:#2563eb;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;display:block}
+
+.site-header{background:#1e293b;color:#f8fafc;padding:2rem 2rem 1.75rem}
+.header-inner{max-width:1280px;margin:auto}
+.course-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#93c5fd;background:rgba(147,197,253,.1);border:1px solid rgba(147,197,253,.25);padding:.3rem .85rem;border-radius:4px;margin-bottom:.9rem}
+.site-header h1{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:700;letter-spacing:-.025em;line-height:1.2;margin-bottom:.5rem}
+.site-header h1 em{font-style:normal;color:#93c5fd}
+.header-sub{font-size:.88rem;color:#94a3b8;margin-bottom:1.25rem}
+.header-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{display:inline-flex;align-items:center;gap:.3rem;font-size:.76rem;font-weight:500;color:#cbd5e1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:.28rem .75rem;border-radius:20px}
+
+.layout{display:flex;max-width:1280px;margin:0 auto;gap:0}
+
+.sidebar{width:260px;flex-shrink:0;background:#fff;border-right:1px solid #e2e8f0}
+.sidebar-sticky{position:sticky;top:0;height:100vh;overflow-y:auto;padding:1.5rem 0}
+.sidebar-label{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#94a3b8;padding:.5rem 1.25rem;display:block;margin-bottom:.25rem}
+.sidebar-nav{list-style:none}
+.nav-link{display:flex;align-items:center;gap:.65rem;padding:.55rem 1.25rem;font-size:.82rem;font-weight:500;color:#475569;border-left:3px solid transparent;transition:all .15s;text-decoration:none;cursor:pointer}
+.nav-link:hover{background:#f8fafc;color:#1e293b;text-decoration:none}
+.nav-link.active{background:#eff6ff;color:#2563eb;border-left-color:#2563eb;font-weight:600}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sidebar-divider{border:none;border-top:1px solid #e2e8f0;margin:1rem 1.25rem}
+
+main{flex:1;min-width:0;background:#f5f5f5}
+
+.tab-bar{background:#fff;border-bottom:1px solid #e2e8f0;padding:.75rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;position:sticky;top:0;z-index:10;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tab-btn{font-size:.78rem;font-weight:600;padding:.42rem .9rem;border-radius:6px;border:1px solid #e2e8f0;background:#f8fafc;color:#64748b;cursor:pointer;transition:all .15s;font-family:inherit}
+.tab-btn:hover{background:#f1f5f9;color:#1e293b}
+.tab-btn.active{background:var(--wc);border-color:var(--wc);color:#fff}
+
+.week-panel{display:none;padding:2rem 2.5rem 4rem}
+.week-panel.active{display:block}
+
+.week-title-bar{margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0}
+.week-num-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .75rem;border-radius:4px;color:#fff;margin-bottom:.65rem}
+.week-title-bar h1{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;letter-spacing:-.02em;color:#0f172a;line-height:1.25}
+
+.md-content{max-width:860px}
+
+.md-content h1{font-size:1.35rem;font-weight:700;color:#0f172a;margin:2rem 0 .9rem;padding-bottom:.5rem;border-bottom:2px solid #f1f5f9;letter-spacing:-.02em}
+.md-content h1:first-child{margin-top:0}
+.md-content h2{font-size:1.05rem;font-weight:600;color:#1e293b;margin:1.5rem 0 .65rem;font-style:italic}
+.md-content h3{font-size:.88rem;font-weight:700;color:#334155;margin:1.25rem 0 .55rem;text-transform:uppercase;letter-spacing:.05em}
+
+.md-content p{margin:.7rem 0;color:#334155;font-size:.91rem}
+.md-content strong{font-weight:700;color:#0f172a}
+.md-content em{font-style:italic;color:#475569}
+
+.md-content ul,.md-content ol{margin:.65rem 0 .65rem 1.5rem;color:#334155;font-size:.91rem}
+.md-content li{margin:.3rem 0;line-height:1.65}
+
+.md-content code{font-family:'JetBrains Mono',monospace;font-size:.78em;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:4px;padding:.1em .35em;color:#be185d}
+
+.md-content pre{margin:1rem 0;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;background:#fff}
+.md-content pre code{font-family:'JetBrains Mono',monospace!important;font-size:.8rem!important;line-height:1.7!important;padding:1.1rem 1.25rem!important;background:#fff!important;color:#1e293b!important;border:none!important;border-radius:0!important;display:block;overflow-x:auto}
+.hljs{background:#fff!important;padding:1.1rem 1.25rem!important}
+
+.md-content blockquote{margin:1rem 0;padding:.85rem 1.25rem;background:#eff6ff;border-left:3px solid #2563eb;border-radius:0 8px 8px 0}
+.md-content blockquote p{margin:0;color:#1d4ed8;font-size:.88rem}
+
+.md-content table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+.md-content th{background:#f8fafc;font-weight:700;color:#374151;text-align:left;padding:.55rem .9rem;border:1px solid #e2e8f0}
+.md-content td{padding:.5rem .9rem;border:1px solid #e2e8f0;color:#374151;vertical-align:top;font-size:.84rem}
+.md-content tr:nth-child(even) td{background:#fafafa}
+.md-content td code,.md-content th code{font-size:.77em}
+
+.md-content hr{display:none}
+
+@media(max-width:900px){
+  .sidebar{display:none}
+  .week-panel{padding:1.5rem 1.25rem 3rem}
+  .tab-bar{padding:.5rem 1rem}
+}
+@media(max-width:600px){
+  .site-header h1{font-size:1.35rem}
+  .tab-btn{font-size:.72rem;padding:.35rem .65rem}
+  .md-content pre code{font-size:.73rem!important}
+}
+
+.site-footer{background:#1e293b;color:#94a3b8;text-align:center;padding:2rem;font-size:.8rem}
+.site-footer a{color:#93c5fd}
+
+</style>
+
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="course-badge">ENCE614016</div>
+    <h1>Database System <em>and Laboratory</em></h1>
+    <p class="header-sub">Computer Engineering · Universitas Indonesia · Even Semester 2025/2026</p>
+    <div class="header-chips">
+      <span class="chip">🗄️ Database Systems</span>
+      <span class="chip">📊 NoSQL · Distributed Systems</span>
+      <span class="chip">🤖 Vector Databases · AI Storage</span>
+      <span class="chip">📅 Lectures 7 – 13</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-sticky">
+      <span class="sidebar-label">Lecture Materials</span>
+      <ul class="sidebar-nav">
+        <li><a href="#week07" class="nav-link active" data-week="week07"><span class="nav-dot" style="background:#2563eb"></span><span>Lecture 7 · Introduction to NoSQL Databases</span></a></li>
+        <li><a href="#week08" class="nav-link" data-week="week08"><span class="nav-dot" style="background:#059669"></span><span>Lecture 8 · Document Databases</span></a></li>
+        <li><a href="#week09" class="nav-link" data-week="week09"><span class="nav-dot" style="background:#7c3aed"></span><span>Lecture 9 · Key-Value Stores</span></a></li>
+        <li><a href="#week10" class="nav-link" data-week="week10"><span class="nav-dot" style="background:#dc2626"></span><span>Lecture 10 · Wide-Column Stores</span></a></li>
+        <li><a href="#week11" class="nav-link" data-week="week11"><span class="nav-dot" style="background:#d97706"></span><span>Lecture 11 · Graph Databases</span></a></li>
+        <li><a href="#week12" class="nav-link" data-week="week12"><span class="nav-dot" style="background:#0891b2"></span><span>Lecture 12 · Distributed Systems & Performance</span></a></li>
+        <li><a href="#week13" class="nav-link" data-week="week13"><span class="nav-dot" style="background:#be185d"></span><span>Lecture 13 · Emerging Trends & Vector Databases</span></a></li>
+      </ul>
+      <hr class="sidebar-divider">
+    </div>
+  </aside>
+
+  <main>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-week="week07" style="--wc:#2563eb">🗄️ Lecture 7</button>
+      <button class="tab-btn " data-week="week08" style="--wc:#059669">📄 Lecture 8</button>
+      <button class="tab-btn " data-week="week09" style="--wc:#7c3aed">⚡ Lecture 9</button>
+      <button class="tab-btn " data-week="week10" style="--wc:#dc2626">🏛️ Lecture 10</button>
+      <button class="tab-btn " data-week="week11" style="--wc:#d97706">🕸️ Lecture 11</button>
+      <button class="tab-btn " data-week="week12" style="--wc:#0891b2">🌐 Lecture 12</button>
+      <button class="tab-btn " data-week="week13" style="--wc:#be185d">🤖 Lecture 13</button>
+    </div>
+
+    <div class="week-panel active" id="panel-week07">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#2563eb;">Lecture 7</div>
+        <h1>Introduction to NoSQL Databases</h1>
+      </div>
+      <div class="md-content" id="content-week07"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week08">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#059669;">Lecture 8</div>
+        <h1>Document Databases</h1>
+      </div>
+      <div class="md-content" id="content-week08"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week09">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#7c3aed;">Lecture 9</div>
+        <h1>Key-Value Stores</h1>
+      </div>
+      <div class="md-content" id="content-week09"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week10">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#dc2626;">Lecture 10</div>
+        <h1>Wide-Column Stores</h1>
+      </div>
+      <div class="md-content" id="content-week10"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week11">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#d97706;">Lecture 11</div>
+        <h1>Graph Databases</h1>
+      </div>
+      <div class="md-content" id="content-week11"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week12">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#0891b2;">Lecture 12</div>
+        <h1>Distributed Systems & Performance</h1>
+      </div>
+      <div class="md-content" id="content-week12"></div>
+    </div>
+
+    <div class="week-panel " id="panel-week13">
+      <div class="week-title-bar">
+        <div class="week-num-tag" style="background:#be185d;">Lecture 13</div>
+        <h1>Emerging Trends & Vector Databases</h1>
+      </div>
+      <div class="md-content" id="content-week13"></div>
+    </div>
+
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <strong style="color:#f1f5f9;">ENCE614016 — Database System and Laboratory</strong><br>
+  Computer Engineering · Universitas Indonesia · Even Semester 2025/2026<br>
+  Lectures 7–13 · NoSQL, Distributed Systems &amp; Emerging Trends
+</footer>
+
+<script type="text/markdown" id="md-week07">
+# L07: Introduction to NoSQL Databases
+## *Introduction to NoSQL Databases*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain what NoSQL means and why it emerged from web-scale demands.
+- Describe limitations of relational databases at scale.
+- Distinguish between the four NoSQL data model families.
+- Apply the CAP theorem to database selection decisions.
+- Contrast ACID and BASE consistency models.
+- Identify the right database type for a given use case.
+
+> **Prerequisite:** Students must know basic SQL and relational modeling (tables, joins, normalization to 3NF).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 7: Introduction to NoSQL Databases
+- Subtitle: From Relational to Polyglot Persistence
+- Key topic areas: Scale, flexibility, consistency models, four families
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain the emergence and meaning of "NoSQL"
+- Describe RDBMS scale limitations (joins, sharding, schema rigidity)
+- Distinguish the four NoSQL families by data model
+- Apply CAP theorem to database selection
+- Contrast ACID and BASE consistency guarantees
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Lecture Roadmap
+
+- Section A: The Data Revolution — scale that broke SQL
+- Section B: RDBMS Limitations at Web Scale
+- Section C: CAP Theorem & Consistency Trade-offs
+- Section D: The Four NoSQL Families
+- Section E: Data Modeling Philosophy
+- Section F: Summary & Resources
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The Scale Problem
+
+*How big is "web scale"?*
+| Platform | Metric | Scale |
+|----------|--------|-------|
+| Instagram | Monthly active users | 2 billion |
+| WhatsApp | Messages per day | 100 billion |
+| Netflix | Streaming hours per day | 250 million+ |
+| IoT global | Devices connected | 15 billion (2025) |
+
+Key question: Can a single SQL database handle this?
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The Four Vs of Big Data
+
+| V | Definition | Example |
+|---|-----------|---------|
+| Volume | Petabytes generated daily | Twitter: 500 GB/day |
+| Velocity | Real-time streams, millisecond ingestion | IoT sensors, clickstreams |
+| Variety | Structured + semi-structured + unstructured | JSON, images, logs |
+| Veracity | Inconsistency, noise, uncertainty | Duplicate sensor readings |
+
+Traditional RDBMS optimized for Volume + Variety is limited — not Velocity.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Data Types in Modern Applications
+
+| Data Type | Example | Natural Storage |
+|-----------|---------|-----------------|
+| Structured | Bank transactions | RDBMS |
+| Semi-structured | Product catalog (JSON) | Document DB |
+| Graph-structured | Social network | Graph DB |
+| Time-series | IoT sensor readings | Time-Series DB |
+| Vector | ML embeddings | Vector DB |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The NoSQL Timeline
+
+```
+2004  Google Bigtable paper
+2007  Amazon Dynamo paper
+2008  Apache Cassandra (Facebook → Apache)
+2009  Redis 1.0 released
+2009  "NoSQL" term coined at San Francisco meetup
+2012  Amazon DynamoDB (managed service)
+2017  Azure Cosmos DB GA (multi-model)
+2019  Pinecone (vector DB era begins)
+2022  pgvector, Atlas Vector Search mainstream
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Does "NoSQL" Mean?
+
+- Stands for "Not Only SQL" — not a rejection of SQL
+- Common traits: non-relational model, horizontal scalability
+- Schema-optional: flexible or per-record schema evolution
+- Often trades full ACID for performance or availability
+- Does **not** mean: no query language, no consistency, no transactions
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Why Not Just Scale SQL?
+
+- Read replicas: solve read scale, not write bottleneck
+- Sharding: complex, manual, application-managed logic
+- Cross-shard joins: prohibitively expensive at petabyte scale
+- Schema migrations: ALTER TABLE on 2B rows = hours of downtime
+- Single-node write = fundamental ceiling
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Impedance Mismatch
+
+*Object model vs. relational model:*
+| Concern | Object-Oriented Code | RDBMS Model |
+|---------|---------------------|-------------|
+| Blog post | One object with nested comments | Posts + Comments + Tags tables |
+| Fetch | One method call | 3 JOINs |
+| Schema change | Add field to class | ALTER TABLE (risky at scale) |
+| Nested data | Native | Normalize + JOIN |
+
+NoSQL models often match application objects naturally — fewer JOINs, one read.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Vertical vs. Horizontal Scaling
+
+```
+Vertical (Scale Up):          Horizontal (Scale Out):
+┌─────────────────┐           ┌────┐  ┌────┐  ┌────┐
+│  Big Server     │           │ S1 │  │ S2 │  │ S3 │
+│  64 CPU cores   │     vs.   └────┘  └────┘  └────┘
+│  2 TB RAM       │           ┌────┐  ┌────┐
+│  (has a ceiling)│           │ S4 │  │ S5 │
+└─────────────────┘           └────┘  └────┘
+Expensive; finite             Commodity servers; near-infinite
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# When Does RDBMS Still Win?
+
+- Strong ACID required: banking, financial transactions, payroll
+- Complex ad-hoc SQL reporting with unpredictable query shapes
+- Smaller datasets with well-defined schema and heavy joins
+- Team expertise: SQL, ORMs, migration tooling ecosystem
+- **Key message:** NoSQL complements RDBMS — it does not replace it
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: CAP Theorem & Consistency*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The CAP Theorem
+
+- Brewer's Theorem (2000): distributed system can guarantee at most 2 of 3:
+- **C — Consistency:** Every read returns the most recent write
+- **A — Availability:** Every request receives a (non-error) response
+- **P — Partition Tolerance:** System continues despite network partitions
+- Network partitions always occur in practice → choose C or A
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# CAP in Practice
+
+| Trade-off | Guarantee | Real Examples |
+|-----------|-----------|---------------|
+| CP (Consistency + Partition) | Consistent reads; may refuse requests during partition | HBase, Zookeeper, MongoDB (strong mode) |
+| AP (Availability + Partition) | Always responds; may return stale data | Cassandra, DynamoDB, CouchDB |
+| CA (Consistency + Availability) | Only valid without partitions | Single-node RDBMS |
+
+**Rule:** In distributed systems, P is not optional → you choose C or A.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# PACELC: Beyond CAP
+
+CAP only addresses partition scenarios. PACELC adds normal operation:
+
+| System | During Partition | Else (Normal) | Classification |
+|--------|-----------------|---------------|----------------|
+| DynamoDB | Availability | Low Latency | PA/EL |
+| Zookeeper | Consistency | Consistency | PC/EC |
+| Cassandra (QUORUM) | Consistency | Consistency | PC/EC |
+| Cassandra (ONE) | Availability | Low Latency | PA/EL |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# ACID vs. BASE
+
+| Property | ACID | BASE |
+|----------|------|------|
+| Full name | Atomicity, Consistency, Isolation, Durability | Basically Available, Soft state, Eventually consistent |
+| Concurrency model | Pessimistic locking | Optimistic / lock-free |
+| Failure response | Rollback all changes | Continue with stale data |
+| Scale orientation | Vertical | Horizontal |
+| Example systems | PostgreSQL, MySQL | Cassandra, DynamoDB |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Eventual Consistency Explained
+
+- Definition: "Given enough time without updates, all replicas converge"
+- Does NOT mean: "You may read garbage indefinitely"
+- Conflict resolution strategies when two nodes diverge:
+  - **Last-write-wins (LWW):** Keep write with latest timestamp
+  - **Vector clocks:** Track causal history per replica
+  - **CRDTs:** Mathematical merge functions (counters, sets)
+- Example: Amazon shopping cart (Dynamo paper, 2007)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Consistency Spectrum
+
+```
+Strong ─────────────────────────────────────────── Eventual
+   │ Linearizable │ Sequential │ Causal │ Monotonic │ Eventual │
+   │              │            │        │   Read    │          │
+ Zookeeper      RDBMS       Cosmos DB  DynamoDB    Cassandra
+                                       (session)   (ONE)
+```
+Stronger = safer, slower. Weaker = faster, may read stale.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: The Four NoSQL Families*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key-Value Stores
+
+- Model: dictionary/hash map — key → opaque value blob
+- Operations: GET, SET, DEL — O(1) average
+- Strengths: sub-millisecond reads/writes; horizontal scale
+- Weaknesses: no query by value; no range scans on value
+- Use cases: session caches, user preferences, rate limiting
+- Examples: **Redis**, **Amazon DynamoDB**, Memcached
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Document Databases
+
+- Model: key → structured document (JSON/BSON), schema-optional
+- Nested documents/arrays supported — no join required
+- Strengths: flexible schema evolution; natural OOP mapping
+- Weaknesses: no cross-document joins; eventual consistency
+- Use cases: product catalogs, user profiles, CMS, e-commerce
+- Examples: **MongoDB**, **Azure Cosmos DB**, Amazon DocumentDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Wide-Column Stores
+
+- Model: partition key → dynamic named columns with versioning
+- NOT the same as columnar analytics (Parquet, Redshift)
+- Strengths: extreme write throughput; time-series friendly; TTL
+- Weaknesses: limited query patterns; complex data modeling
+- Use cases: IoT metrics, messaging, ad-tech, audit logs
+- Examples: **Apache Cassandra**, Apache HBase, Google Bigtable
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Graph Databases
+
+- Model: nodes + directed typed relationships + properties on both
+- Index-free adjacency: each node holds direct pointers to neighbors
+- Strengths: multi-hop traversal in O(degree) per hop — no joins
+- Weaknesses: not suited for global scans or heavy analytics
+- Use cases: social networks, fraud detection, recommendations
+- Examples: **Neo4j**, Amazon Neptune, ArangoDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Extended Families
+
+| Type | Model | Examples | Use Case |
+|------|-------|----------|---------|
+| Vector DB | High-dimensional float vectors | Pinecone, Milvus, Weaviate | AI/ML, RAG, semantic search |
+| Time-Series DB | Timestamped measurements | InfluxDB, TimescaleDB | IoT, monitoring, metrics |
+| Search Engine | Inverted index | Elasticsearch, OpenSearch | Full-text, log analytics |
+| NewSQL | Distributed ACID + SQL | CockroachDB, TiDB | Global transactions |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Decision Framework
+
+```
+What is your PRIMARY query pattern?
+├─ Exact key lookup          → Key-Value Store (Redis, DynamoDB)
+├─ Flexible document queries → Document DB (MongoDB, Cosmos DB)
+├─ Write-heavy, time-ordered → Wide-Column (Cassandra, HBase)
+├─ Relationship traversal   → Graph DB (Neo4j, Neptune)
+├─ Full-text / semantic      → Search / Vector DB
+├─ Time-series metrics       → Time-Series DB (InfluxDB)
+└─ Complex SQL + transactions→ RDBMS (PostgreSQL)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cloud Managed Services Landscape
+
+| Cloud | Service | DB Type |
+|-------|---------|---------|
+| AWS | DynamoDB | Key-Value / Document |
+| AWS | DocumentDB | Document (MongoDB-compatible) |
+| Azure | Cosmos DB | Multi-model (5 APIs) |
+| Google Cloud | Bigtable | Wide-Column |
+| Google Cloud | Firestore | Document |
+| MongoDB | Atlas | Document |
+| Redis Ltd. | Redis Cloud | Key-Value / Cache |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: Data Modeling Philosophy*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Relational vs. NoSQL Modeling
+
+| Principle | Relational | NoSQL |
+|-----------|-----------|-------|
+| Starting point | Entity model (3NF) | Query patterns |
+| Data co-location | Normalize; join at query time | Store together what is read together |
+| Schema change | ALTER TABLE (risky) | Add field per document (safe) |
+| Trade-off | Flexible queries; expensive writes | Fast reads; denormalized writes |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Embedding vs. Referencing
+
+- **Embed** related data inside one document:
+  - Pro: single read, atomic updates, no round trips
+  - Con: 16 MB document limit; data duplication
+- **Reference** (store a foreign key):
+  - Pro: normalized; shared data not duplicated
+  - Con: application-side joins, multiple reads
+- Rule: embed when data is **read together**; reference when data is **shared** or **unbounded**
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Polyglot Persistence
+
+```
+E-Commerce Application
+         │
+┌────────┼──────────────────────────────────────┐
+│        │                                       │
+▼        ▼              ▼             ▼          ▼
+PostgreSQL  MongoDB    Redis       Elasticsearch  Neo4j
+(orders,    (product   (session,   (product      (product
+ payments)   catalog)   cart,       search)       recommen-
+             flexible   sub-ms)     full-text)    dations)
+```
+Trade-off: operational complexity vs. performance per workload.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Anti-Patterns to Avoid
+
+1. Using a document DB like a relational DB (over-normalizing)
+2. Choosing a key-value store when you need value-content queries
+3. Ignoring write amplification in wide-column stores (heavy deletes)
+4. Unbounded arrays in documents (→ 16 MB BSON limit)
+5. Selecting a database based on hype, not actual query patterns
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: Summary & Resources*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. NoSQL emerged to address scale, schema flexibility, and distribution needs
+2. CAP: during network partitions, choose consistency (CP) or availability (AP)
+3. ACID = pessimistic, transactional; BASE = optimistic, eventually consistent
+4. Four families: Key-Value, Document, Wide-Column, Graph — each optimal for a query pattern
+5. Polyglot persistence: use the right tool per workload within one application
+6. NoSQL modeling is query-first — design schema around access patterns, not entities
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ MongoDB documentation — official reference for document DB concepts
+  https://www.mongodb.com/docs/
+
+▸ AWS DynamoDB Developer Guide — key-value and single-table design
+  https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/
+
+▸ Martin Kleppmann — "Turning the database inside out" (Strange Loop 2014)
+  https://www.youtube.com/watch?v=fU9hR3kiOK0
+
+▸ Jepsen — Kyle Kingsbury's distributed systems consistency analysis
+  https://jepsen.io/
+
+▸ Apache Cassandra documentation — wide-column architecture
+  https://cassandra.apache.org/doc/latest/
+
+▸ Neo4j GraphAcademy — free graph database courses
+  https://graphacademy.neo4j.com/
+
+▸ ANN Benchmarks — compare approximate nearest neighbor algorithms
+  https://ann-benchmarks.com/
+```
+
+---
+</script>
+
+<script type="text/markdown" id="md-week08">
+# L08: Document Databases
+## *Document Databases*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Describe the document model and how BSON extends JSON.
+- Explain WiredTiger's MVCC, compression, and write-ahead logging.
+- Design MongoDB schemas using embedding vs. referencing patterns.
+- Configure and reason about replica sets and shard key selection.
+- Write aggregation pipeline queries with core stages.
+- Compare MongoDB, Azure Cosmos DB, and Amazon DocumentDB.
+
+> **Prerequisite:** Lecture 7 (NoSQL introduction, CAP, four families, polyglot persistence).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 8: Document Databases
+- Subtitle: Flexible Schema, Rich Queries & Production-Grade Design
+- Key technologies: MongoDB, Azure Cosmos DB, Amazon DocumentDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lecture 7
+
+- Four NoSQL families: Key-Value, Document, Wide-Column, Graph
+- CAP Theorem: CP vs. AP trade-offs during partitions
+- ACID vs. BASE: strong transactions vs. eventual consistency
+- Polyglot persistence: right tool per workload
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Describe the document model and BSON type system
+- Explain WiredTiger: MVCC, compression, journaling
+- Design schemas: embedding vs. referencing decision logic
+- Understand replica sets, elections, write concern
+- Write aggregation pipeline queries
+- Compare MongoDB, Cosmos DB, DocumentDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Is a Document Database?
+
+- Stores self-describing semi-structured documents (JSON/BSON/XML)
+- Each document can have different fields — schema-optional
+- Documents grouped into **collections** (analogous to tables)
+- Key capability: query on any field without pre-declared schema
+- Related data nested as sub-documents and arrays — no joins required
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# JSON vs. BSON
+
+| Feature | JSON | BSON |
+|---------|------|------|
+| Format | Text (human-readable) | Binary |
+| Type system | String, Number, Bool, Null, Array, Object | All JSON types + Date, ObjectId, Decimal128, Binary, Int32/Int64 |
+| Parse speed | Slower | Faster |
+| Size on wire | Larger | Smaller |
+| Role | Data interchange format | MongoDB internal storage & wire protocol |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Document Structure Example
+
+```json
+{
+  "_id":     ObjectId("64a1f2..."),
+  "title":   "Introduction to MongoDB",
+  "author":  { "name": "Alice", "email": "alice@uni.edu" },
+  "tags":    ["database", "nosql", "mongodb"],
+  "published": ISODate("2024-03-15"),
+  "views":   1523,
+  "comments": [
+    { "user": "Bob",   "text": "Great post!", "likes": 5 },
+    { "user": "Carol", "text": "Very helpful", "likes": 2 }
+  ]
+}
+```
+- All related data in **one document** = one read, no joins
+- `ObjectId`: 12-byte unique ID generated client-side (no round-trip)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: MongoDB Architecture*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# MongoDB Component Architecture
+
+```
+Client Application
+        │
+        ▼
+   mongos (query router, sharded clusters only)
+        │
+   ┌────┴────────────────────┐
+   ▼                         ▼
+Config Servers (metadata)   mongod shards (each = replica set)
+                                    │
+                              WiredTiger storage engine
+```
+- **mongod** — primary daemon; handles storage, queries, replication
+- **mongos** — routes queries to correct shards by shard key
+- **Config servers** — store cluster metadata (chunk ranges → shard mapping)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# WiredTiger Storage Engine
+
+| Feature | Detail |
+|---------|--------|
+| Concurrency | MVCC: document-level locking (not collection-level) |
+| Compression | Snappy (default), zlib, zstd — configurable per collection |
+| Write-Ahead Log | Journal synced every 50 ms; enables crash recovery |
+| Checkpointing | Full data written to disk every 60 s or when WAL reaches 2 GB |
+| Cache | 50% of RAM − 1 GB for WiredTiger in-memory cache |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# MongoDB Write & Read Path
+
+```
+WRITE:
+Client → mongos → Primary mongod
+      → WiredTiger journal (WAL) — durability
+      → WiredTiger cache (in-memory)
+      → Checkpoint to disk every 60 s
+      → Oplog entry (replication to secondaries)
+
+READ:
+Client → mongos (route by shard key) → Primary or Secondary
+      → Query planner: IXSCAN (index) or COLLSCAN (full scan)
+      → WiredTiger cache → disk if cache miss → BSON to client
+```
+Use `explain("executionStats")` to see chosen plan.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# MongoDB Indexes
+
+| Index Type | Purpose | Use Case |
+|-----------|---------|----------|
+| Single field | One field | Most common lookups |
+| Compound | Multi-field, ordered | Queries filtering on multiple fields |
+| Multikey | Array element indexing | Tags, embedded arrays |
+| Text | Tokenized full-text | String search |
+| TTL | Auto-delete by expiry date | Sessions, audit logs |
+| Hashed | Hash of field value | Even shard key distribution |
+| Wildcard | All sub-fields dynamically | Fully flexible schemas |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Replica Sets
+
+- HA unit: 1 primary + N secondaries (use odd count to ensure majority)
+- **Primary:** accepts all writes; secondaries replicate from oplog
+- **Secondaries:** serve reads (optional); vote in elections
+- **Election:** Raft-based — majority vote required; ~10–30 s for new primary
+- **Write concern `{w: "majority"}`** — wait for majority acknowledgment before ack
+- RPO ≈ 0 with `w: majority`; RTO ≈ 10–30 s
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Sharding Architecture
+
+- Horizontal write scale beyond single-replica-set capacity
+- Each shard = a replica set; data split into 64 MB chunks by shard key
+- **Balancer** (background): moves chunks to equalize shard sizes
+- **Shard key selection rules:**
+  - High cardinality — many distinct values
+  - Low frequency — no dominant single value
+  - Avoid monotonic keys (e.g., `created_at`) → inserts always hit one shard
+- Good examples: hashed `_id`, compound `(userId, timestamp)`
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Multi-Document Transactions
+
+```javascript
+// Single-document: always atomic (ACID guaranteed)
+// Multi-document transactions (MongoDB 4.0+):
+const session = client.startSession();
+await session.withTransaction(async () => {
+  await accounts.updateOne(
+    { _id: fromId }, { $inc: { balance: -amount } }, { session }
+  );
+  await accounts.updateOne(
+    { _id: toId }, { $inc: { balance: +amount } }, { session }
+  );
+});
+```
+- Multi-doc transactions have overhead — use sparingly
+- Best practice: design schema to avoid them (embed related data)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Aggregation Pipeline
+
+```javascript
+db.orders.aggregate([
+  { $match:  { status: "completed" }},          // filter (like WHERE)
+  { $lookup: { from: "products", ... }},         // left join
+  { $unwind: "$items" },                          // flatten arrays
+  { $group:  { _id: "$items.category",
+               total: { $sum: "$items.price" }}}, // aggregate
+  { $sort:   { total: -1 }},                      // sort descending
+  { $limit:  10 }                                 // top 10 only
+])
+```
+Replaces deprecated MapReduce (removed MongoDB 5.0+).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Aggregation Stages
+
+| Stage | Purpose | SQL Equivalent |
+|-------|---------|----------------|
+| `$match` | Filter documents | WHERE |
+| `$project` | Select / reshape fields | SELECT |
+| `$group` | Aggregate with accumulators | GROUP BY |
+| `$sort` | Order results | ORDER BY |
+| `$lookup` | Left outer join to another collection | JOIN |
+| `$unwind` | Deconstruct array fields | (no direct SQL equivalent) |
+| `$limit` / `$skip` | Pagination | LIMIT / OFFSET |
+| `$facet` | Multiple aggregations in one pass | (no direct SQL equivalent) |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: Schema Design Patterns*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The Fundamental Rule
+
+- In RDBMS: model entities first → write queries later
+- In MongoDB: **list all queries first → design schema to serve them**
+- Central question: "What data is read together?"
+- Central question: "What data is updated together?"
+- Data that is accessed together should be stored together
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Embedding vs. Referencing Decision Tree
+
+```
+Is the related data always fetched with the parent?
+  └─ Yes → EMBED
+
+Does the related data grow without bound?
+  └─ Yes → REFERENCE
+
+Is the related data shared across many documents?
+  └─ Yes → REFERENCE
+
+Is it a 1:1 or 1:few relationship?
+  └─ Yes → EMBED
+
+Is it a 1:many or many:many?
+  └─ Yes → REFERENCE (or embed with a count limit)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Embedding Pattern
+
+```json
+// Blog post with embedded comments (1:few — always read together)
+{
+  "_id": ObjectId("..."),
+  "title": "NoSQL Deep Dive",
+  "body": "...",
+  "comments": [
+    { "author": "Alice", "text": "Great article", "date": "2024-03-15" },
+    { "author": "Bob",   "text": "Very helpful",  "date": "2024-03-16" }
+  ]
+}
+```
+- Pro: one read fetches everything; atomic updates
+- Con: 16 MB BSON document limit; hard to paginate large comment lists
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Extended Reference Pattern
+
+```json
+// Order embeds critical customer fields — avoid lookup on common query
+{
+  "customerId":    ObjectId("..."),    // reference for full data
+  "customerName":  "Alice Chen",       // duplicated for order display
+  "customerEmail": "alice@uni.edu",    // duplicated for notifications
+  "items": [...],
+  "total": 249.99
+}
+```
+- Duplicate only fields needed by the most-common query
+- Accept that duplicated fields may be slightly stale — acceptable for orders
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Attribute Pattern
+
+```json
+// Product with variable attributes — avoids sparse optional columns
+{
+  "name": "USB-C Laptop Charger",
+  "specs": [
+    { "k": "wattage",   "v": 65,      "u": "W" },
+    { "k": "voltage",   "v": 20,      "u": "V" },
+    { "k": "connector", "v": "USB-C"            }
+  ]
+}
+```
+- Index on `specs.k` and `specs.v` for wildcard attribute queries
+- Solves "too many optional columns" without sparse rows
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Bucket Pattern
+
+```json
+// Sensor readings bucketed by hour — reduce document count 60:1
+{
+  "sensorId": "S001",
+  "hour":     "2024-03-15T14:00:00Z",
+  "readings": [
+    { "minute": 0, "temp": 22.1 },
+    { "minute": 1, "temp": 22.3 }
+  ],
+  "stats": { "avg": 22.2, "min": 21.8, "max": 22.9, "count": 60 }
+}
+```
+- Reduces document count from 60 per hour → 1 per hour per sensor
+- Pre-aggregated stats enable fast dashboard queries
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Schema Versioning Pattern
+
+```json
+// Handle multiple schema versions without migration downtime
+{ "schemaVersion": 1, "name": "Alice", "address": "123 Main St" }
+{ "schemaVersion": 2, "name": "Bob",
+  "address": { "street": "456 Oak Ave", "city": "NYC", "zip": "10001" } }
+```
+- Application handles all active versions simultaneously
+- Background job upgrades old documents gradually — zero downtime
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Common Anti-Patterns
+
+| Anti-Pattern | Problem | Fix |
+|-------------|---------|-----|
+| Massive arrays | Unbounded growth → 16 MB limit | Bucket or Reference pattern |
+| Over-normalization | N+1 queries (application-side joins) | Embed frequently co-read data |
+| Missing indexes | Full collection scan (COLLSCAN) | Run `explain()` on all queries |
+| Wrong shard key | Hot shard, uneven distribution | Hashed or compound key |
+| Ignoring document atomicity | Multi-doc transactions everywhere | Redesign to embed related data |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: Alternatives & Comparison*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Azure Cosmos DB
+
+- Microsoft's globally distributed, multi-model database
+
+| Feature | Detail |
+|---------|--------|
+| APIs | MongoDB, Cassandra, Gremlin, Table, Core (SQL) |
+| Global distribution | Any Azure region; multi-region writes available |
+| Consistency levels | 5 levels: Strong → Bounded Staleness → Session → Consistent Prefix → Eventual |
+| SLA | 99.999% availability; <10 ms reads, <15 ms writes (P99) |
+| Pricing model | Request Units (RU/s) — 1 RU ≈ cost of reading 1 KB by point lookup |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cosmos DB: 5 Consistency Levels
+
+```
+Strong ─────────────────────────────────────────── Eventual
+  │  Strong  │ Bounded  │ Session  │ Consistent │ Eventual │
+  │          │ Staleness│ (default)│ Prefix     │          │
+Highest                 Most                   Lowest
+Latency                 Practical              Latency
+```
+- **Session (default):** Monotonic reads within a session — most practical choice
+- **Bounded Staleness:** Read lag ≤ K versions or T seconds — predictable staleness
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Amazon DocumentDB
+
+- MongoDB-compatible managed service on AWS — not a MongoDB fork
+- Separate engine implementing MongoDB wire protocol
+- Architecture: decoupled compute (EC2) + storage (6 copies across 3 AZs)
+- Up to 15 read replicas; automated backup + restore
+- Limitation: Does not support all MongoDB aggregation stages or some newer features
+- When to use: teams fully on AWS wanting MongoDB API without MongoDB operations
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Document Database Comparison
+
+| Feature | MongoDB | Azure Cosmos DB | Amazon DocumentDB |
+|---------|---------|-----------------|-------------------|
+| Query Language | MQL (MongoDB Query Language) | SQL API / MQL / CQL | MongoDB MQL |
+| Multi-doc Transactions | Yes (v4.0+) | Yes | Yes |
+| Global Distribution | Atlas multi-region | Native (any Azure region) | Multi-region read replicas |
+| Consistency Levels | Tunable (5 levels) | 5 explicit levels | Strong / Eventual |
+| Managed Cloud | MongoDB Atlas | Azure Cosmos DB | AWS DocumentDB |
+| Open Source | Yes (Server Side Public License) | No | No |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: Lab & Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Lab: MongoDB CRUD
+
+```javascript
+// Insert
+db.products.insertOne({ name: "Laptop", price: 999, tags: ["electronics"] })
+
+// Find with filter + projection
+db.products.find({ price: { $gte: 500 } }, { name: 1, price: 1 })
+
+// Update (atomic increment)
+db.posts.updateOne({ _id: id }, { $inc: { views: 1 } })
+
+// Delete expired sessions
+db.sessions.deleteMany({ lastSeen: { $lt: new Date(Date.now() - 86400000) } })
+
+// Aggregation: average price by category
+db.products.aggregate([
+  { $group: { _id: "$category", avgPrice: { $avg: "$price" } } }
+])
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Lab: Index Verification with explain()
+
+```javascript
+// Create compound index for a common query pattern
+db.orders.createIndex({ userId: 1, createdAt: -1 })
+
+// Verify index is used (look for IXSCAN, not COLLSCAN)
+db.orders.find({ userId: "u123" })
+         .sort({ createdAt: -1 })
+         .explain("executionStats")
+
+// Key metrics to check:
+// totalDocsExamined   (should equal totalDocsReturned for full coverage)
+// executionTimeMillis (compare IXSCAN vs. COLLSCAN)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. Documents store related data together → single read, no joins
+2. BSON adds typed fields (ObjectId, Date, Decimal128) over JSON
+3. WiredTiger: MVCC + compression + WAL = ACID at document level
+4. Replica sets = high availability; sharding = horizontal write scale
+5. Schema design: query-first, not entity-first; embed what is read together
+6. Cosmos DB's 5 consistency levels and RU pricing model offer unique global flexibility
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ MongoDB Manual — comprehensive documentation and tutorials
+  https://www.mongodb.com/docs/manual/
+
+▸ MongoDB Learn (free courses, including M001 MongoDB Basics)
+  https://learn.mongodb.com/
+
+▸ Azure Cosmos DB documentation — consistency levels, global distribution
+  https://learn.microsoft.com/en-us/azure/cosmos-db/
+
+▸ MongoDB Building with Patterns — all 12 schema design patterns
+  https://www.mongodb.com/blog/post/building-with-patterns-a-summary
+
+▸ Amazon DocumentDB documentation
+  https://docs.aws.amazon.com/documentdb/latest/developerguide/
+
+▸ BSON Specification — official spec for binary JSON format
+  https://bsonspec.org/
+
+▸ Martin Fowler — Document Databases (short intro article)
+  https://martinfowler.com/bliki/DocumentDatabase.html
+```
+
+---
+</script>
+
+<script type="text/markdown" id="md-week09">
+# L09: Key-Value Stores
+## *Key-Value Stores*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain the key-value model and when to use it over other database types.
+- Describe Redis data structures and their internal memory encodings.
+- Compare Redis persistence options (RDB snapshot vs. AOF log).
+- Design DynamoDB single-table schemas driven by access patterns.
+- Distinguish Redis Cluster (horizontal scale) from Redis Sentinel (HA).
+- Apply caching patterns: cache-aside, write-through, write-behind.
+
+> **Prerequisite:** Lecture 7 (CAP, consistency models); Lecture 8 (document model, embedding vs. referencing).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 9: Key-Value Stores
+- Subtitle: Blazing Fast Storage — Caching, Sessions, and Beyond
+- Key technologies: Redis, Amazon DynamoDB, Memcached
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lecture 8
+
+- Document databases: flexible schema, BSON, aggregation pipeline
+- MongoDB: WiredTiger, replica sets, sharding, schema design patterns
+- Embedding vs. referencing: read together → embed; shared/unbounded → reference
+- Azure Cosmos DB: 5 consistency levels, Request Units (RU)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain the key-value model and its O(1) guarantee
+- Describe Redis data structures and internal encodings
+- Compare RDB vs. AOF persistence; Sentinel vs. Cluster
+- Design DynamoDB single-table schemas from access patterns
+- Apply cache-aside, write-through, write-behind patterns
+- Recognize cache pitfalls: stampede, avalanche, penetration
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Is a Key-Value Store?
+
+- Simplest NoSQL model: associative array — key → value (opaque bytes)
+- Core operations: `GET key`, `SET key value`, `DEL key` — O(1) average
+- Value is opaque to the store (just bytes) unless the store adds types
+- Horizontal scalability by key hashing across nodes
+- Redis extends this: typed values → "data structure server, not just cache"
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Why Speed Matters: Latency Comparison
+
+| Operation | Typical Latency | At 100K RPS |
+|-----------|----------------|-------------|
+| Database query (disk + SQL parse) | 5–50 ms | 500,000 ms DB-time/s = overload |
+| Redis GET (in-memory + RESP) | 0.1–0.5 ms | Handles 100K+ ops/s, single thread |
+| Redis (pipelining) | < 0.1 ms | Millions of ops/s |
+
+Cache reduces DB load by 10–100× for read-heavy workloads.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key-Value vs. Other Models
+
+| Dimension | Key-Value | Document | Wide-Column |
+|-----------|-----------|----------|-------------|
+| Query model | Key lookup only | Rich field queries | Key + column range |
+| Value content | Opaque blob (or typed in Redis) | Structured JSON | Column families |
+| Joins | None | None (app-side) | None |
+| Throughput | Highest | High | High |
+| Best for | Cache, session, leaderboard | Catalog, profiles | Metrics, time-series |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: Redis Internals*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Redis Architecture
+
+- Single-threaded event loop (I/O multiplexing via epoll/kqueue)
+- Why single-threaded: no lock contention → predictable, low latency
+- Redis 6.0+: threaded network I/O, but command processing still serialized
+- Memory-first: all data in RAM; persistence is optional
+- Protocol: RESP (Redis Serialization Protocol) — simple, text-based
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Data Structures: Strings & Hashes
+
+| Structure | Commands | Internal Encoding | Use Case |
+|-----------|---------|-------------------|----------|
+| String | `GET`, `SET`, `INCR`, `EXPIRE` | embstr (≤44 B), raw SDS, shared int | Counters, cache, feature flags |
+| Hash | `HSET`, `HGET`, `HGETALL`, `HINCRBY` | listpack (small), hashtable (large) | User profiles, config objects |
+
+```
+HSET user:1001 name "Alice" age 25
+HGET user:1001 name   → "Alice"
+HGETALL user:1001     → { name, age, ... }
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Data Structures: Lists & Sets
+
+| Structure | Commands | Internal Encoding | Use Case |
+|-----------|---------|-------------------|----------|
+| List | `LPUSH`, `RPUSH`, `LPOP`, `BLPOP` | listpack (small), quicklist (large) | Message queues, activity feeds |
+| Set | `SADD`, `SMEMBERS`, `SISMEMBER`, `SINTER` | listpack (small), hashtable (large) | Unique visitors, tags, permissions |
+
+```
+LPUSH queue "task1"    # producer
+BLPOP queue 30         # consumer (blocks up to 30s)
+SADD online:users "u1" "u2"
+SISMEMBER online:users "u2"   → 1 (O(1) test)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Data Structures: Sorted Sets
+
+```
+ZADD  leaderboard 9500 "Alice"
+ZADD  leaderboard 8800 "Bob"
+ZRANGE leaderboard 0 -1 WITHSCORES REV   # top scores descending
+ZRANK  leaderboard "Alice"                # rank position (0-indexed)
+ZINCRBY leaderboard 100 "Alice"           # add 100 to score
+```
+- Internal: **listpack** (small) or **skiplist + hashtable** (large)
+- Skiplist: O(log N) insert/delete; hashtable: O(1) score lookup
+- Use cases: leaderboards, priority queues, rate limiting by timestamp
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Data Structures: HyperLogLog & Streams
+
+| Structure | Purpose | Key Property | Use Case |
+|-----------|---------|--------------|---------|
+| HyperLogLog | Count unique items | 12 KB memory regardless of cardinality; ±0.81% error | Daily unique visitors, A/B testing |
+| Stream | Append-only log | Persistent; consumer groups; `XACK` | Event sourcing, IoT, audit log |
+
+```
+PFADD  visitors:2024-03 "u1" "u2" "u3"
+PFCOUNT visitors:2024-03   → approximate unique count
+
+XADD   events * type "login" userId "u1"   # auto-ID
+XREAD  COUNT 10 STREAMS events 0-0         # read from beginning
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Redis Persistence: RDB vs. AOF
+
+| | RDB (Snapshot) | AOF (Append-Only File) |
+|-|----------------|------------------------|
+| Method | Full dataset snapshot at intervals | Log every write command |
+| RPO (data loss risk) | Minutes (last snapshot) | ~1 second (`appendfsync everysec`) |
+| File size | Compact binary | Grows with command volume |
+| Startup time | Fast (load one file) | Slower (replay all commands) |
+| Best for | Backup / disaster recovery | Durability requirement |
+| Production recommendation | **RDB + AOF hybrid** — snapshots + log since last snapshot |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Redis HA and Scaling
+
+| Mode | Purpose | Mechanism | Write Scale? |
+|------|---------|-----------|-------------|
+| Standalone | Development / single node | — | No |
+| Sentinel | High availability | Quorum-based automatic failover | No (one primary) |
+| Cluster | Horizontal scale + HA | 16,384 hash slots across masters | Yes |
+
+**Redis Cluster:** `HASH_SLOT = CRC16(key) mod 16384` — client follows MOVED redirect.
+**Hash tags:** `{user:1001}.cart` and `{user:1001}.profile` → same slot → multi-key ops work.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Redis Use Cases Summary
+
+| Use Case | Data Structure | Pattern |
+|----------|---------------|---------|
+| Session storage | Hash or String | TTL-based expiry (`EXPIRE`) |
+| Leaderboard | Sorted Set | `ZADD` + `ZRANGE` |
+| Rate limiting | String (`INCR`) + TTL | Sliding window counter |
+| Job queue | List (`BLPOP`) | Reliable blocking queue |
+| Unique count (approx.) | HyperLogLog | `PFADD` + `PFCOUNT` |
+| Pub/Sub notifications | Pub/Sub | Fire-and-forget (no history) |
+| Event sourcing with history | Stream | Consumer groups + `XACK` |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: Amazon DynamoDB*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# DynamoDB Architecture
+
+- Fully managed, serverless key-value + document store by AWS
+- Based on Amazon Dynamo paper (2007): consistent hashing, quorum, vector clocks
+- Three-AZ replication by default; Global Tables for multi-region active-active
+- Two capacity modes:
+  - **Provisioned:** specify RCU + WCU per table (predictable, cheaper)
+  - **On-Demand:** auto-scales; pay per actual request (higher per-unit cost)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# DynamoDB Data Model
+
+| Concept | Meaning | Notes |
+|---------|---------|-------|
+| Table | Flat namespace of items | One or more required key attributes |
+| Item | Row-equivalent; up to 400 KB | Dynamic schema beyond key attributes |
+| Partition key (PK) | Hash key — determines node | Must be unique if used alone |
+| Sort key (SK) | Range key — ordering within partition | Enables range queries within partition |
+| Attributes | Key-value pairs per item | Untyped; no schema enforcement |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# DynamoDB Capacity Units
+
+| Unit | What It Represents |
+|------|-------------------|
+| 1 RCU (strongly consistent) | Read 1 item ≤ 4 KB |
+| 1 RCU (eventually consistent) | Read 2 items ≤ 4 KB (0.5 RCU each) |
+| 1 WCU | Write 1 item ≤ 1 KB |
+| Hot partition limit | 3,000 RCU / 1,000 WCU per partition |
+
+Design partition keys for **even distribution** — avoid hot partitions.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Single-Table Design Principle
+
+- Anti-pattern: one DynamoDB table per entity type (like RDBMS)
+- Best practice: one table for an entire application domain
+- Benefits: single read for multiple entity types; lower operational overhead
+- Key technique: **overloaded keys** — PK/SK carry entity type as prefix
+- "Query-pattern first" — define all access patterns before designing the table
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Single-Table Design Example
+
+```
+Table: ecommerce
+PK              │ SK               │ Attributes
+────────────────┼──────────────────┼───────────────────────
+USER#alice      │ PROFILE          │ name, email, address
+USER#alice      │ ORDER#2024-001   │ total, status, date
+USER#alice      │ ORDER#2024-002   │ total, status, date
+ORDER#2024-001  │ ITEM#PROD-001    │ qty, price
+PRODUCT#PROD-001│ DETAILS          │ name, price, category
+```
+- All orders for user: `PK = USER#alice, SK begins_with ORDER#`
+- All items in order: `PK = ORDER#2024-001, SK begins_with ITEM#`
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# DynamoDB Secondary Indexes
+
+| Index Type | Description | Cost |
+|-----------|-------------|------|
+| **GSI** (Global Secondary Index) | New PK/SK — query on non-key attributes | Additional WCU/RCU |
+| **LSI** (Local Secondary Index) | Same PK, alternate SK — range queries | Shares table throughput |
+| GSI limit | 20 per table | — |
+| LSI limit | 5 per table; must declare at table creation | — |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# DynamoDB Streams & Global Tables
+
+- **DynamoDB Streams:** Ordered time-limited log of item changes (24 h retention)
+  - Captures INSERT, MODIFY, REMOVE with old/new image
+  - Use: CDC to Elasticsearch, materialized view maintenance, audit logging
+- **DynamoDB Accelerator (DAX):** In-memory write-through cache; microsecond reads
+  - Read: DAX first → cache miss → DynamoDB → populate DAX
+  - Not for strongly consistent reads
+- **Global Tables:** Multi-region active-active; last-write-wins conflict resolution
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: Caching Patterns*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cache-Aside (Lazy Loading)
+
+```
+READ:
+  App → cache → HIT → return value
+             → MISS → query DB → write to cache → return value
+
+WRITE:
+  App → write to DB → invalidate (or update) cache key
+```
+- Most common pattern; application controls all cache logic
+- Pro: cache only populated on demand; cache failures are transparent
+- Con: first request is always a cache miss; brief stale window after write
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Write-Through & Write-Behind
+
+| Pattern | Write Path | Read Path | Pro | Con |
+|---------|-----------|-----------|-----|-----|
+| **Write-Through** | Write cache AND DB synchronously | Always in cache | Cache always consistent | Higher write latency; cache fills with cold data |
+| **Write-Behind (Write-Back)** | Write cache → async DB write | Always from cache | Lowest write latency; batching possible | Data loss risk if cache crashes before async write |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cache Pitfalls
+
+| Pitfall | Description | Solution |
+|---------|-------------|----------|
+| Cache stampede | Many simultaneous misses flood DB | Request coalescing / probabilistic early expiration |
+| Thundering herd | Cache restart → all misses flood DB | Gradual warm-up, circuit breaker |
+| Cache penetration | Queries for non-existent keys bypass cache | Cache null values; Bloom filter at cache layer |
+| Cache avalanche | Many TTLs expire simultaneously | Randomized TTL jitter |
+| Stale data | Cache not invalidated after update | CDC-driven invalidation |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: When to Use Key-Value*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# When to Use Key-Value Stores
+
+- Sub-millisecond lookup by exact key is a hard requirement
+- Session/token storage with auto-expiry (TTL)
+- Leaderboards, counters, queues, pub/sub (Redis)
+- Predictable, simple access patterns — always lookup by known key
+- **Do NOT use when:** you need complex multi-field queries, ad-hoc reporting, or highly relational data
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Memcached vs. Redis
+
+| Feature | Memcached | Redis |
+|---------|-----------|-------|
+| Data structures | Strings only | 10+ types (list, set, sorted set, stream…) |
+| Persistence | None | RDB + AOF |
+| Replication | None (client-side only) | Sentinel / Cluster |
+| Pub/Sub | No | Yes |
+| Max value size | 1 MB | 512 MB |
+| Use case | Pure cache, multi-threaded workloads | Cache + data structures + persistence |
+
+Use Memcached when: pure cache, no persistence needed, multi-threaded throughput is critical.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Case Studies in Brief
+
+| Company | Technology | Pattern | Scale |
+|---------|-----------|---------|-------|
+| Twitter | Redis | Rate limiting: `INCR {userId}:{endpoint}:{window}` + TTL | Millions of limit checks/s |
+| Lyft | DynamoDB + Streams | Driver location: PK=geohash, SK=driverId; Streams → Lambda | Real-time location at ride volume |
+| Meta | Memcached | Social graph + content cache; consistent hashing across server pool | 100+ TB RAM across thousands of nodes |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. Key-value stores offer O(1) lookups; Redis adds rich typed data structures
+2. Redis encodings (listpack → skiplist/hashtable) optimize memory automatically
+3. Redis Sentinel = HA with automatic failover; Redis Cluster = horizontal write scale
+4. DynamoDB: single-table design driven by access patterns; overloaded PK/SK
+5. Cache-aside is the most common pattern; write-behind for high-write throughput
+6. Design partition/shard keys for even distribution — avoid hot partitions
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ Redis documentation — data structures, persistence, clustering
+  https://redis.io/docs/
+
+▸ AWS DynamoDB Developer Guide — single-table design, GSI, streams
+  https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/
+
+▸ Redis University — free courses (RU101: Introduction to Redis Data Structures)
+  https://university.redis.com/
+
+▸ Scaling Memcache at Facebook — NSDI 2013 paper (thundering herd, leases)
+  https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf
+
+▸ Amazon DynamoDB deep dive — AWS re:Invent 2018 talk (single-table design)
+  https://www.youtube.com/watch?v=HaEPXoXVf2k
+
+▸ ANN Benchmarks — for context on key-value stores in the vector era
+  https://ann-benchmarks.com/
+
+▸ pgvector (GitHub) — vector search for PostgreSQL (contrast with Redis VSS)
+  https://github.com/pgvector/pgvector
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Preview: Lecture 10
+
+- Next: Wide-Column Stores — Apache Cassandra, HBase, Google Bigtable
+- Key new concepts: LSM-Tree write path, SSTable compaction, ring topology
+- Data modeling with CQL: partition key, clustering key, query-first design
+
+---
+</script>
+
+<script type="text/markdown" id="md-week10">
+# L10: Wide-Column Stores
+## *Wide-Column Stores*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain the wide-column data model and how it differs from relational and document.
+- Describe the LSM-Tree write path and read path through SSTables.
+- Design Cassandra tables query-first using CQL and understand partition + clustering keys.
+- Configure consistency levels and understand the quorum math (W + R > N).
+- Compare HBase vs. Cassandra for different use cases.
+- Avoid common Cassandra anti-patterns.
+
+> **Prerequisite:** Lectures 7–9 (CAP, ACID/BASE, document model, key-value model).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 10: Wide-Column Stores
+- Subtitle: LSM Trees, Ring Topology, and Massive Write Throughput
+- Key technologies: Apache Cassandra, Apache HBase, Google Bigtable, ScyllaDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lectures 8 & 9
+
+- Document DBs: schema-optional, embedding vs. referencing, aggregation pipeline
+- Key-value stores: Redis data structures, DynamoDB single-table design
+- Redis Cluster: consistent hashing, 16,384 hash slots
+- DynamoDB: provisioned vs. on-demand, GSI, Streams, DAX
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain the wide-column model: partition key, dynamic columns, sorting
+- Describe LSM-Tree: MemTable → WAL → SSTable → compaction cycle
+- Design Cassandra tables using CQL: query-first methodology
+- Understand tunable consistency and quorum math (W + R > N)
+- Compare Cassandra (AP/leaderless) vs. HBase (CP/master-region)
+- Avoid anti-patterns: unbounded partitions, ALLOW FILTERING, heavy deletes
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Is a Wide-Column Store?
+
+- Common misconception: NOT columnar analytics storage (Parquet, Redshift)
+- Model: rows identified by partition key; each row has dynamic named columns
+- Columns can vary per row; no fixed schema beyond column families
+- All data for one partition key stored contiguously on disk — efficient partition reads
+- Key design insight: optimized for sequential writes; sorted by column key within partition
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Wide-Column Timeline
+
+```
+2006  Google Bigtable paper — foundation of the model
+2007  Apache HBase — open-source Bigtable on Hadoop HDFS (Facebook)
+2008  Apache Cassandra — Facebook (Bigtable model + Dynamo distribution)
+2010  Cassandra donated to Apache Foundation
+2013  DataStax Enterprise — commercial Cassandra
+2019  Cassandra 4.0 — audit logging, incremental repair
+2022  ScyllaDB Cloud GA — C++ Cassandra-compatible, 10× throughput
+2023  Cassandra 5.0 — storage-attached indexes, vector search support
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Wide-Column vs. Other Models
+
+| Dimension | Relational | Document | Wide-Column |
+|-----------|-----------|----------|-------------|
+| Data model | Tables, rows, fixed columns | Collections, flexible documents | Column families; dynamic columns per row |
+| Schema | Fixed | Optional | Semi-fixed (families defined; columns dynamic) |
+| Query power | Full SQL, ad-hoc | Rich JSON field queries | Partition key + clustering key range only |
+| Write throughput | Moderate | High | Very high |
+| Distribution | Difficult | Moderate | Native |
+| Best for | ACID joins | Flexible queries | Write-heavy, time-ordered data |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: LSM-Tree Storage Architecture*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Why Not B-Trees for High Write Throughput?
+
+- B-Trees: update in-place → random disk writes (~5 ms/write on HDD)
+- Sequential disk write: ~0.1 ms — 50× faster than random
+- At 100K writes/s: B-Tree → 500 s of disk time per second → impossible
+- **LSM-Tree solution:** buffer writes in memory → flush as sequential batches
+- Used by: Cassandra, HBase, RocksDB, LevelDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# LSM-Tree Write & Read Path
+
+```
+WRITE:
+  Client write → MemTable (in-memory sorted structure)
+              → WAL (Write-Ahead Log — crash recovery)
+  When MemTable fills (~64 MB):
+              → Flush to SSTable (immutable, sorted, sequential write)
+
+READ:
+  1. Check MemTable (most recent data)
+  2. Check Bloom filter for each SSTable level (is key here?)
+  3. If bloom positive → binary search SSTable index → read data block
+  4. Merge results (latest version wins)
+  Problem: as SSTables accumulate → reads slow → Compaction needed
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Compaction Strategies
+
+| Strategy | Logic | Best Workload |
+|----------|-------|---------------|
+| **STCS** (Size-Tiered) | Merge SSTables of similar size | Write-heavy inserts |
+| **LEVELED (LCS)** | Fixed-size levels; compact into next level | Read-heavy; consistent read performance |
+| **TWCS** (Time-Window) | Group SSTables by time window; expire old | Time-series data with TTL |
+| **FIFO** | Delete oldest SSTables when size limit hit | Pure rolling-window time-series |
+
+Decision: TWCS + TTL = near-zero compaction overhead for IoT time-series.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Bloom Filters & Tombstones
+
+| Concept | Description | Impact |
+|---------|-------------|--------|
+| Bloom filter | Probabilistic: "key definitely NOT here" — false positives possible; no false negatives | Skip 99%+ of irrelevant SSTable reads |
+| Memory cost | ~10 bits/element for 1% false positive rate | Small fixed cost per SSTable |
+| Tombstone | DELETE writes a marker, not an erasure | Read must skip tombstones |
+| Tombstone risk | Accumulation → read performance degrades | Use TTL instead of DELETE |
+| `gc_grace_seconds` | Cassandra: 10 days before tombstone removal | Run repair within this window |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: Apache Cassandra Architecture*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cassandra Ring Topology
+
+- **Leaderless:** all nodes are peers — no primary, no coordinator bottleneck
+- Nodes on a conceptual ring; data assigned by consistent hashing of partition key
+- Each node owns a range of the hash space (token range)
+- **Virtual Nodes (vnodes):** each physical node owns 256 small non-contiguous ranges
+  - Benefit: adding a node automatically gets ~1/N of ranges; no manual token math
+  - Failure recovery: load spreads across many nodes, not just the next one
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Replication & Tunable Consistency
+
+| Setting | Meaning |
+|---------|---------|
+| `Replication Factor (RF)` | Number of copies of each partition (RF=3 for production) |
+| `SimpleStrategy` | Single datacenter; RF copies on next N ring nodes |
+| `NetworkTopologyStrategy` | Per-datacenter RF; rack-aware placement |
+| Write `ONE` | Ack after 1 replica writes — fastest, may read stale |
+| Write `QUORUM` | Ack after floor(RF/2)+1 writes — balanced |
+| Write `ALL` | Ack after all RF replicas write — safest, slowest |
+| Strong consistency | **W + R > N** (e.g., QUORUM write + QUORUM read with RF=3) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cassandra Write Path
+
+```
+Client → Coordinator Node
+Coordinator:
+  1. Hash partition key → identify replicas
+  2. Send write to all replicas in parallel
+  3. Each replica: CommitLog (WAL) → MemTable
+  4. Return ack when consistency level met (e.g., 2/3 for QUORUM)
+
+Async:
+  MemTable full → flush to SSTable
+  Hinted Handoff: if replica down, coordinator stores hint
+                  → delivers when replica recovers (≤3 h default)
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cassandra Read Path
+
+```
+Client → Coordinator
+Coordinator:
+  1. Hash partition key → identify replicas
+  2. Send full data request to fastest replica
+  3. Send digest requests to other replicas
+  4. Compare digest vs. full response
+  5. Mismatch → Read Repair (merge latest, update stale replicas)
+  6. Return merged result to client
+```
+Read Repair ensures eventual consistency without explicit repair job.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Lightweight Transactions (LWT)
+
+```cql
+-- Conditional insert (check-and-set using Paxos internally)
+INSERT INTO users (id, email)
+VALUES ('u1', 'alice@uni.edu')
+IF NOT EXISTS;
+
+-- Conditional update
+UPDATE accounts SET balance = 900
+WHERE id = 'acc1'
+IF balance = 1000;
+```
+- Uses 3-phase Paxos → ~4× slower than regular writes
+- Use sparingly: unique user registration, distributed locks
+- NOT a substitute for multi-partition ACID transactions
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: CQL & Data Modeling*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# CQL Data Model: Keys
+
+- **Partition Key:** determines which node stores the data (hash-based routing)
+  - Must distribute data evenly — avoid hot partitions
+  - Composite: `((city, year))` distributes by city+year combo
+- **Clustering Key:** determines sort order within a partition (on-disk sort)
+  - Enables efficient range queries within one partition
+  - Example: `created_at DESC` gives recent-first ordering for free
+- One Cassandra query = one partition read (ideally)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# CQL Table Design Example
+
+```cql
+-- "Get all orders for a user, sorted by date descending"
+CREATE TABLE orders_by_user (
+  user_id    UUID,
+  created_at TIMESTAMP,
+  order_id   UUID,
+  total      DECIMAL,
+  status     TEXT,
+  PRIMARY KEY ((user_id), created_at, order_id)
+) WITH CLUSTERING ORDER BY (created_at DESC);
+
+-- Query (uses partition key → efficient)
+SELECT * FROM orders_by_user
+WHERE user_id = ? AND created_at > '2024-01-01'
+ORDER BY created_at DESC LIMIT 10;
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# IoT Time-Series CQL Example
+
+```cql
+CREATE TABLE sensor_readings (
+  sensor_id TEXT,
+  bucket    TEXT,   -- 'YYYY-MM-DD:HH' prevents unbounded partition growth
+  ts        TIMESTAMP,
+  value     DOUBLE,
+  PRIMARY KEY ((sensor_id, bucket), ts)
+) WITH CLUSTERING ORDER BY (ts ASC)
+  AND default_time_to_live = 2592000;  -- 30-day TTL
+
+-- Query last hour for sensor
+SELECT ts, value FROM sensor_readings
+WHERE sensor_id = 'S001' AND bucket = '2024-03-15:14';
+```
+Bucket prevents partition > 100 MB. TTL eliminates need for DELETE.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cassandra Modeling Methodology
+
+```
+Step 1: Identify entities and relationships
+Step 2: List ALL queries the application needs
+Step 3: For each query → define one table with PK/CK that serves it
+Step 4: Accept denormalization — same data in multiple tables
+Step 5: One query = one table (ideally)
+
+Example:
+  Query: "Get orders for user by date" → Table: orders_by_user (PK=user_id)
+  Query: "Get pending orders"          → Table: orders_by_status (PK=status)
+  Same order data → duplicated in both tables → two write paths
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cassandra Anti-Patterns
+
+| Anti-Pattern | Problem | Fix |
+|-------------|---------|-----|
+| `SELECT *` without partition key | Full cluster scan — very slow | Always filter by partition key |
+| Unbounded partition | Single partition > 100 MB → memory issues | Add time bucket to partition key |
+| `ALLOW FILTERING` | Full table scan on multiple nodes | Redesign table for the query |
+| Heavy deletes | Tombstone accumulation → reads degrade | Use TTL instead of DELETE |
+| Too many secondary indexes | Write amplification, hot index nodes | Denormalize into separate tables |
+| Cross-partition transactions | Not supported by Cassandra | Single-partition design |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: HBase & Google Bigtable*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# HBase vs. Cassandra
+
+| Feature | HBase | Cassandra |
+|---------|-------|-----------|
+| Architecture | Master-Region (HMaster + RegionServers) | Leaderless peer ring |
+| Consistency | Strong (single master per region) | Tunable (eventual by default) |
+| HA | ZooKeeper-based failover | Any node handles any request |
+| Dependencies | HDFS + ZooKeeper | Self-contained |
+| Use case | Hadoop ecosystem; strong consistency; Bigtable API compat. | Multi-DC; AP workloads; simpler ops |
+| Operational complexity | High (3 systems: HDFS + HBase + ZooKeeper) | Medium |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Google Bigtable
+
+- Google's proprietary wide-column store; available as **Google Cloud Bigtable** (managed)
+- Components: tablet servers (compute) + Colossus (distributed storage) + Chubby (coordination)
+- Key differentiator: decoupled compute and storage → scale each independently
+- Row key sorted lexicographically — row key design is critical for performance
+- Hotspot avoidance: reverse domain names (`com.example.www`, not `www.example.com`)
+- Time-series: reverse timestamp as suffix → newest rows at the "top" of scans
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Wide-Column Product Comparison
+
+| Feature | Cassandra | HBase | Bigtable | ScyllaDB |
+|---------|-----------|-------|----------|----------|
+| Consistency | Tunable (AP default) | Strong (CP) | Strong (CP) | Tunable (AP) |
+| Architecture | Leaderless ring | Master-region | Tablet servers | Leaderless (C++) |
+| Query Language | CQL (SQL-like) | Java API / HBase Shell | SDK / cbt CLI | CQL (compatible) |
+| Dependencies | Self-contained | HDFS + ZooKeeper | Google Cloud | Self-contained |
+| Performance | High | High | Very high | Very high |
+| Best for | Multi-DC AP, time-series | Hadoop strong consistency | GCP/ML features | Cassandra drop-in, higher throughput |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: Case Studies & Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Case Studies in Brief
+
+| Company | System | Scale | Key Design Decision |
+|---------|--------|-------|---------------------|
+| Discord | Cassandra → ScyllaDB | 4 billion messages/day; 19+ PB | Partition: `(channel_id, bucket)` — 10-day buckets cap partition size |
+| Netflix | Cassandra multi-DC | 100M+ accounts; 200+ clusters | `LOCAL_QUORUM` everywhere; per-user partitioning |
+| Apple | Cassandra | 75,000+ nodes reported | vnodes critical for operational simplicity at this scale |
+| Google | Bigtable | Petabyte scale; ML feature store | Bigtable → Vertex AI: sub-10ms feature reads at millions of QPS |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Compaction Strategy Decision Tree
+
+```
+What is your workload?
+├─ Mostly inserts; time-ordered; TTL → TWCS (Time-Window)
+├─ Pure time-series; rolling delete by age → FIFO
+├─ Mixed reads/writes; no TTL → STCS (default)
+└─ Need consistent read performance → LEVELED (LCS)
+
+TWCS + TTL = best for IoT/time-series — near-zero compaction overhead
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Operations: Repair & Monitoring
+
+- **`nodetool repair`:** Run before `gc_grace_seconds` (10 days) expires to remove tombstones
+  - Cassandra 4.0+: incremental repair reduces time/impact
+- **Snapshot:** `nodetool snapshot` — copies SSTables for point-in-time backup
+- **Monitor:** read/write p99 latency, pending compactions, dropped messages, heap GC time
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# When to Use Wide-Column Stores
+
+| Use Wide-Column | Avoid Wide-Column |
+|----------------|-------------------|
+| > 100K writes/s per table | Complex ad-hoc queries across partitions |
+| Time-series or time-ordered data with TTL | ACID transactions across multiple partitions |
+| Natural partition key (user_id, device_id) | Heavy joins between entity types |
+| Multi-datacenter with tunable consistency | Exploratory schema that changes frequently |
+| Bounded, predictable partition sizes | Aggregation-heavy analytics workloads |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section G: Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. Wide-column stores use LSM-Trees → sequential writes → high write throughput
+2. Cassandra: leaderless ring + tunable consistency; AP by default; CQL for modeling
+3. HBase: master-region architecture; CP; strong consistency; requires HDFS + ZooKeeper
+4. Bigtable: Google's managed, strongly consistent, cloud-native option; tight Vertex AI integration
+5. CQL data modeling is query-first: one query = one table; accept denormalization
+6. Anti-patterns to avoid: unbounded partitions, ALLOW FILTERING, heavy deletes
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ Apache Cassandra documentation — architecture, CQL, operations
+  https://cassandra.apache.org/doc/latest/
+
+▸ DataStax — Cassandra tutorials and certification resources
+  https://www.datastax.com/learn/apache-cassandra-operations-in-kubernetes
+
+▸ Apache HBase Reference Guide — complete HBase documentation
+  https://hbase.apache.org/book.html
+
+▸ Google Cloud Bigtable documentation — schema design, performance
+  https://cloud.google.com/bigtable/docs/
+
+▸ How Discord Stores Billions of Messages (engineering blog)
+  https://discord.com/blog/how-discord-stores-billions-of-messages
+
+▸ YCSB — benchmark your chosen wide-column DB configuration
+  https://github.com/brianfrankcooper/YCSB
+
+▸ Bigtable paper — Chang et al., OSDI 2006 (foundational reading)
+  https://research.google/pubs/bigtable-a-distributed-storage-system-for-structured-data/
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Preview: Lecture 11
+
+- Next: Graph Databases — Neo4j, Cypher, graph algorithms, fraud detection
+- Key new concept: index-free adjacency — O(degree) traversal vs. O(table size) joins
+- Graph data modeling: nodes = nouns, relationships = verbs, properties on both
+
+---
+</script>
+
+<script type="text/markdown" id="md-week11">
+# L11: Graph Databases
+## *Graph Databases*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain the property graph model and index-free adjacency.
+- Write Cypher queries for graph pattern matching, variable-length paths, and aggregation.
+- Describe graph algorithm categories: centrality, community detection, pathfinding.
+- Design graph schemas for fraud detection and recommendation use cases.
+- Compare Neo4j, Amazon Neptune, and ArangoDB.
+- Recognize when graph databases are the wrong choice.
+
+> **Prerequisite:** Lectures 7–10 (NoSQL families, CAP, document model, key-value, wide-column).
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 11: Graph Databases
+- Subtitle: When Relationships Are the Data
+- Key technologies: Neo4j, Amazon Neptune, ArangoDB, Apache TinkerPop
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lecture 10
+
+- Wide-column stores: LSM-Tree write path, SSTables, compaction strategies
+- Cassandra: leaderless ring, tunable consistency (W + R > N), CQL modeling
+- HBase: master-region architecture; strong consistency; Hadoop ecosystem
+- Anti-patterns: unbounded partitions, ALLOW FILTERING, heavy deletes
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain property graph model: nodes, typed relationships, properties on both
+- Describe index-free adjacency: O(degree) per hop vs. O(table size) JOIN
+- Write Cypher: MATCH, WHERE, RETURN, CREATE, MERGE, variable-length paths
+- Describe GDS algorithm categories: centrality, community, pathfinding
+- Compare Neo4j, Neptune, ArangoDB
+- Identify when NOT to use a graph database
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The Relationship Problem
+
+- In RDBMS: relationships → foreign keys → JOINs at query time
+- Finding friends-of-friends-of-friends in SQL: 6+ JOINs, exponential cost as depth increases
+- Same query in Cypher: `MATCH (u)-[:FRIEND*3]-(other)` — constant time per hop
+- LinkedIn "People You May Know" → billions of graph hops per day
+- RDBMS index lookup cost: O(log N) per join; graph traversal: O(degree of node)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Graph Database Timeline
+
+```
+2000   Neo4j founded (Stockholm) — first graph-native database
+2007   Neo4j 1.0 released
+2011   Apache TinkerPop — vendor-neutral graph computing framework
+2012   Gremlin query language (TinkerPop standard)
+2017   Amazon Neptune GA — managed cloud graph DB (Gremlin + SPARQL)
+2022   Neo4j 5.0 — composite databases, Cypher 5
+2023   GraphRAG (Microsoft Research) — graph + LLM integration emerges
+2024   ISO GQL standard published — first formal graph query language standard
+```
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: The Property Graph Model*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Property Graph Model
+
+| Component | Description | Example |
+|-----------|-------------|---------|
+| **Node** | Entity; can have multiple labels | `(:Person)`, `(:Product)` |
+| **Relationship (Edge)** | Directed, typed, named | `[:BOUGHT]`, `[:KNOWS]` |
+| **Properties** | Key-value attributes on nodes AND relationships | `{name: "Alice"}`, `{since: 2020}` |
+
+- Properties on relationships distinguish graph DBs from pure graph theory
+- Example: `(:Alice)-[:BOUGHT {date: "2024-03", amount: 49.99}]->(:Laptop)`
+- A node can have multiple labels: `(:Person:Employee)`
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Property Graph vs. RDF
+
+| | Property Graph | RDF (Resource Description Framework) |
+|-|---------------|--------------------------------------|
+| Model | Nodes + edges + properties | Subject-Predicate-Object triples |
+| Query language | Cypher (Neo4j), Gremlin (TinkerPop) | SPARQL (W3C standard) |
+| Schema | Optional (labels + indexes) | Ontology (OWL, RDFS) |
+| Standard | ISO GQL (2024) | W3C standards |
+| Use case | Operational graphs (fraud, reco, supply chain) | Knowledge graphs, semantic web, AI ontologies |
+| Examples | Neo4j, JanusGraph | Stardog, GraphDB, Amazon Neptune (both) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Neo4j Storage: Index-Free Adjacency
+
+- Each node stores **direct pointers** to its relationships in storage
+- Traversal: follow linked list of relationship records — no index lookup
+- Cost per hop = O(degree of that node), not O(total graph size)
+- RDBMS JOIN cost = O(log N) per index lookup per hop → exponential at depth 5+
+- Node record (15 bytes): pointer to first relationship + first property
+- Relationship record (34 bytes): start node, end node, type, doubly-linked list pointers
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: Cypher Query Language*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cypher: Basic Syntax
+
+```cypher
+-- Node: (variable:Label {property: value})
+-- Relationship: -[:TYPE {property: value}]->
+
+-- Create nodes and relationship
+CREATE (a:Person {name: "Alice", age: 28})
+CREATE (b:Person {name: "Bob"})
+CREATE (a)-[:KNOWS {since: 2020}]->(b)
+
+-- Match and return
+MATCH (p:Person) WHERE p.age > 25
+RETURN p.name, p.age ORDER BY p.age DESC
+
+-- Match with relationship filter
+MATCH (p:Person)-[r:BOUGHT]->(prod:Product)
+WHERE prod.category = "Electronics"
+RETURN p.name, prod.name, r.amount
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cypher: Mutation & MERGE
+
+```cypher
+-- Update properties
+MATCH (p:Person {name: "Alice"})
+SET p.city = "Bandung", p.lastUpdated = datetime()
+
+-- Delete node and all its relationships
+MATCH (p:Person {name: "Bob"}) DETACH DELETE p
+
+-- MERGE: get or create (idempotent — safe to call multiple times)
+MERGE (p:Person {email: "alice@uni.edu"})
+ON CREATE SET p.name = "Alice", p.createdAt = datetime()
+ON MATCH  SET p.lastSeen = datetime()
+```
+MERGE is the most important write operation for idempotent graph ingestion.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cypher: Variable-Length Paths & Aggregation
+
+```cypher
+-- Friends within 2 hops
+MATCH (alice:Person {name:"Alice"})-[:FRIEND*1..2]-(others:Person)
+RETURN DISTINCT others.name
+
+-- Shortest path
+MATCH path = shortestPath(
+  (a:Person {name:"Alice"})-[:FRIEND*]-(b:Person {name:"Dave"})
+)
+RETURN length(path), [n IN nodes(path) | n.name] AS route
+
+-- Count friends per person
+MATCH (p:Person)-[:FRIEND]->(f)
+RETURN p.name, count(f) AS friendCount
+ORDER BY friendCount DESC LIMIT 10
+```
+Always bound variable-length paths (`*1..N`) — unbounded paths can cause out-of-memory.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cypher: Indexes & EXPLAIN
+
+```cypher
+-- Create property index
+CREATE INDEX person_name FOR (p:Person) ON (p.name)
+CREATE INDEX person_city_name FOR (p:Person) ON (p.city, p.name)
+
+-- Full-text index (Lucene-backed)
+CREATE FULLTEXT INDEX productSearch
+FOR (n:Product) ON EACH [n.name, n.description]
+
+-- View query plan
+EXPLAIN MATCH (p:Person {name:"Alice"})-[:FRIEND*1..2]->(other)
+RETURN other
+```
+EXPLAIN shows planned operations — use to verify index usage before running on production.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Transactions in Neo4j
+
+- Full ACID transactions — unlike most NoSQL databases
+- Write transactions: exclusive lock on modified nodes and relationships
+- Read transactions: MVCC — snapshot of graph at transaction start
+- **Causal consistency:** bookmarks ensure subsequent reads see prior writes
+- Use case: fund transfer, user registration, order placement with graph state update
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: Graph Algorithms (GDS Library)*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Why Graph Algorithms?
+
+- Cypher (pattern matching): "Find specific structure" — local queries
+- Graph algorithms: "Compute global properties of the graph" — whole-graph analysis
+- Algorithm categories:
+  1. **Centrality** — which nodes are most important/influential?
+  2. **Community Detection** — which nodes form natural clusters?
+  3. **Pathfinding** — shortest/cheapest path between nodes?
+  4. **Link Prediction** — which nodes are likely to connect?
+- Tool: **Neo4j Graph Data Science (GDS) library** (free, open-source)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Centrality & Community Algorithms
+
+| Algorithm | Measures | Use Case |
+|-----------|---------|---------|
+| **PageRank** | Influence: important if important nodes link to it | Key influencers in social networks, critical servers |
+| **Betweenness Centrality** | How often a node is on shortest paths | Bottleneck detection in supply chains, bridges |
+| **Degree Centrality** | Count of relationships per node | Highly connected users, product hubs |
+| **Louvain** | Community modularity — hierarchical | Customer segmentation, fraud ring detection |
+| **Label Propagation** | Nodes adopt majority neighbor label — fast | Initial community seeding |
+| **WCC** (Weakly Connected Components) | Find disconnected subgraphs | Detect isolated fraud networks |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Pathfinding Algorithms
+
+| Algorithm | Logic | Use Case |
+|-----------|-------|---------|
+| **Dijkstra** | Shortest weighted path source → destination | Route optimization, network latency |
+| **A\*** | Dijkstra + heuristic (faster when heuristic is good) | Geographic routing, game pathfinding |
+| **Min Spanning Tree** | Minimum edge weight to connect all nodes | Minimize infrastructure wiring cost |
+| **Common Neighbors** | Nodes likely to connect if many shared neighbors | Friend recommendations |
+| **Jaccard Similarity** | \|A∩B\| / \|A∪B\| for neighbor sets | Product similarity recommendations |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# GDS Workflow
+
+```cypher
+-- Step 1: Project in-memory graph
+CALL gds.graph.project(
+  'socialGraph', ['Person'], { FRIEND: { orientation: 'UNDIRECTED' } }
+)
+
+-- Step 2: Run algorithm
+CALL gds.pageRank.stream('socialGraph')
+YIELD nodeId, score
+WITH gds.util.asNode(nodeId) AS person, score
+RETURN person.name, score ORDER BY score DESC LIMIT 10
+
+-- Step 3: Write results back to graph
+CALL gds.pageRank.write('socialGraph', { writeProperty: 'pageRank' })
+
+-- Step 4: Drop projection
+CALL gds.graph.drop('socialGraph')
+```
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: Neptune & ArangoDB*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Amazon Neptune
+
+| Feature | Amazon Neptune |
+|---------|---------------|
+| Query languages | Gremlin (TinkerPop) + SPARQL (RDF/knowledge graphs) |
+| Storage | Cluster volume across 3 AZs (Aurora-style) |
+| Compute | Primary writer + up to 15 read replicas |
+| HA | Automated failover < 30 seconds |
+| Algorithms | Neptune Analytics (GDS-like, launched 2023) |
+| Best for | AWS ecosystem; applications needing both property graph and RDF/SPARQL |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Neo4j vs. Neptune vs. ArangoDB
+
+| Feature | Neo4j | Amazon Neptune | ArangoDB |
+|---------|-------|---------------|----------|
+| Query Language | Cypher | Gremlin / SPARQL | AQL (multi-model) |
+| Data Models | Graph (+ vector extension) | Graph + RDF | Document + KV + Graph |
+| Algorithm Library | GDS (rich, open-source) | Neptune Analytics | None built-in |
+| ACID Transactions | Full | Full | Full |
+| Deployment | Self-managed or Neo4j Aura (cloud) | AWS managed only | Self-managed or ArangoDB Cloud |
+| Best for | Richest algorithm set, enterprise, on-prem | AWS ecosystem, RDF needs | Multi-model polyglot apps |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: Design Patterns & Use Cases*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Graph Data Modeling Best Practices
+
+1. **Nodes = nouns:** Person, Product, Location, Event, Account
+2. **Relationships = verbs:** BOUGHT, KNOWS, LIVES_IN, USES, ATTENDED
+3. **Properties on relationships** = relationship metadata (date, amount, weight)
+4. Use **specific relationship types** — `:RELATED_TO` is useless; `:BOUGHT_ON_SALE` is precise
+5. A node can have **multiple labels:** `(:Person:Employee:Manager)`
+6. Model driven by **traversals you need** — not by ER diagram
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Fraud Detection Use Case
+
+```cypher
+-- Find accounts sharing multiple risk indicators with a flagged account
+MATCH (flagged:Account {id: 'ACC-001'})
+-[:USES|LIVES_AT|CALLED_FROM*1..3]-(suspicious:Account)
+WHERE suspicious.id <> flagged.id
+WITH suspicious, count(*) AS sharedIndicators
+WHERE sharedIndicators >= 2
+RETURN suspicious.id, suspicious.name, sharedIndicators
+ORDER BY sharedIndicators DESC
+```
+Schema: `Account`, `Device`, `IP`, `Address`, `Phone` nodes.
+`[:USES]`, `[:LIVES_AT]`, `[:CALLED_FROM]` relationships.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Case Studies in Brief
+
+| Company | Use Case | Graph Pattern | Result |
+|---------|---------|---------------|--------|
+| Banks (Neo4j) | Fraud ring detection | WCC finds accounts sharing device/IP/address | 30% more fraud detected; 60% fewer false positives |
+| Amazon (Neptune) | People You May Know | Common neighbors + Jaccard similarity | Millions of users; daily batch + real-time Gremlin |
+| Supply chain (ArangoDB) | Component traceability | Multi-hop: Material → Component → Product → Customer | Recall scope identified in seconds vs. hours |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Supernode Problem & Solution
+
+- **Supernode:** node with millions of relationships (celebrity, popular product)
+- Problem: traversal from any neighbor touches millions of rels → slow
+- Solutions:
+  1. **Filter by relationship type/property:** only walk `:CLOSE_FRIEND`, not all `:FOLLOWS`
+  2. **Bound traversal depth:** `*1..3` not `*` — prevents exhaustive expansion
+  3. **Modeling:** separate supernodes by bucketing events by time period
+  4. **Neo4j relationship indexes:** index properties on relationships to avoid full scan
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Graph Anti-Patterns
+
+| Anti-Pattern | Problem | Fix |
+|-------------|---------|-----|
+| Modeling everything as a graph | Overhead for flat lookups | Polyglot: use graph only for traversal |
+| Generic relationships (`:RELATED_TO`) | No semantic meaning; poor query performance | Specific, descriptive names |
+| No property indexes | Full node scan on label+property lookup | Create index on each lookup property |
+| Unbounded variable-length paths (`*`) | Exponential traversal; out of memory | Bound depth: `*1..4` |
+| Supernode traversal without filtering | Touching millions of relationships | Filter by type/property before traversal |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# When to Use Graph Databases
+
+| Use Graph DB | Do NOT Use Graph DB |
+|-------------|---------------------|
+| Multi-hop relationship traversal (social, supply chain) | Primarily flat queries with no traversal |
+| Pattern detection (fraud rings, network intrusion) | High write throughput requirements (use Cassandra) |
+| Path analysis (shortest path, all paths) | Very few relationship types, shallow depth |
+| Knowledge graph reasoning | Aggregation-heavy analytics (use a data warehouse) |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section G: Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# GraphRAG: Emerging Pattern
+
+- **Knowledge Graph:** graph of domain entities + relationships (ontology-based)
+- Modern pattern: knowledge graph as structured memory for LLMs
+  - RAG (Retrieval-Augmented Generation): query knowledge graph → inject into LLM
+  - GraphRAG (Microsoft, 2024): extract entities + relationships from docs → graph → LLM
+- Use case: enterprise search, drug discovery, compliance reasoning
+- Tools: Neo4j + LangChain, Amazon Neptune + AWS Bedrock
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. Graph DBs excel at multi-hop traversal — O(degree) per hop, not O(table size)
+2. Property graph model: nodes + directed typed relationships + properties on both
+3. Index-free adjacency: Neo4j stores direct pointers → no index lookup during traversal
+4. Cypher: declarative ASCII-art pattern matching — expressive and readable
+5. GDS algorithms: centrality, community detection, pathfinding — beyond pattern queries
+6. Fraud detection and recommendations are the two strongest graph DB use cases
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ Neo4j GraphAcademy — free courses (Cypher fundamentals, GDS, fraud detection)
+  https://graphacademy.neo4j.com/
+
+▸ Neo4j documentation — Cypher manual, GDS library, architecture
+  https://neo4j.com/docs/
+
+▸ Amazon Neptune documentation — Gremlin + SPARQL + Neptune Analytics
+  https://docs.aws.amazon.com/neptune/latest/userguide/
+
+▸ Graph Databases (O'Reilly, free to read online) — Robinson, Webber & Eifrém
+  https://graphdatabases.com/
+
+▸ Neo4j Fraud Detection use case guide
+  https://neo4j.com/use-cases/fraud-detection/
+
+▸ Microsoft GraphRAG — entity extraction + graph + LLM paper (2024)
+  https://github.com/microsoft/graphrag
+
+▸ Apache TinkerPop / Gremlin documentation
+  https://tinkerpop.apache.org/docs/current/reference/
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Preview: Lecture 12
+
+- Next: Distributed Systems, Performance & Operations
+- Topics: consistent hashing, quorum math, conflict resolution, Raft consensus
+- Performance: index design, caching layers, YCSB benchmarks, P99 latency
+- Operations: backup, monitoring, schema migration, security, multi-region
+
+---
+</script>
+
+<script type="text/markdown" id="md-week12">
+# L12: Distributed Systems & Performance
+## *Distributed Systems & Performance*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain distributed systems fundamentals: consistent hashing, replication, quorum math.
+- Describe conflict resolution strategies for multi-leader and leaderless systems.
+- Explain the Raft consensus algorithm and where it is used.
+- Apply performance optimization techniques: index design, caching layers, YCSB benchmarks.
+- Plan operational concerns: backup, monitoring, schema migration, multi-region.
+- Implement a minimum viable security posture for a NoSQL deployment.
+
+> **Prerequisite:** Lectures 7–11 (all NoSQL families); understanding of CAP, ACID/BASE, and the four data model families.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 12: Distributed Systems, Performance & Operations
+- Subtitle: Building, Scaling, and Operating Production NoSQL Systems
+- Topics: distributed theory, performance, reliability, security, operations
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lecture 11
+
+- Graph databases: property graph model, index-free adjacency
+- Cypher: pattern matching, variable-length paths, MERGE
+- GDS algorithms: centrality (PageRank), community (Louvain), pathfinding (Dijkstra)
+- Use cases: fraud detection, supply chain traceability, recommendations
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain consistent hashing; understand vnodes reduce resharding cost
+- Describe replication models: single-leader, multi-leader, leaderless
+- Apply quorum math: W + R > N guarantees strong consistency
+- Use index ESR rule and covering indexes for query optimization
+- Plan backup, monitoring, and security for a NoSQL system
+- Design a multi-region deployment: active-passive vs. active-active
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Why Distributed Theory Matters
+
+- NoSQL databases are designed for distributed operation from the start
+- Misunderstanding consistency guarantees causes production bugs:
+  - Reading stale data treated as authoritative
+  - Expecting "strong consistency" from eventually consistent settings
+  - Choosing wrong consistency level → performance or correctness issues
+- Understanding theory enables: correct level selection, failure planning, schema design
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: Distributed Fundamentals*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The 8 Fallacies of Distributed Computing
+
+*Peter Deutsch, Sun Microsystems, 1994:*
+1. The network is reliable
+2. Latency is zero
+3. Bandwidth is infinite
+4. The network is secure
+5. Topology doesn't change
+6. There is one administrator
+7. Transport cost is zero
+8. The network is homogeneous
+
+Every distributed database must handle violations of all 8. These are not theoretical — they happen in production.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Consistent Hashing
+
+- Problem: assign data to nodes such that adding/removing a node remaps the minimum keys
+- Solution: map both keys and nodes to positions on a virtual ring
+  - Each key routes to the first node clockwise from its hash position
+  - Adding a node: only keys between the new node and its predecessor migrate
+- Cost: O(K/N) keys remapped (vs. O(K) for naive modular hashing)
+- **Virtual nodes (vnodes):** each physical node owns multiple non-contiguous small ranges
+  - Adding a node: automatically receives ~1/N of all existing token ranges
+  - Used by: Cassandra (256 vnodes/node by default), Amazon DynamoDB
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Replication Models
+
+| Model | Writes | Consistency | HA | Write Scale |
+|-------|--------|-------------|-----|------------|
+| **Single-leader** | Leader only; async/sync to followers | Strong (sync) or Eventual (async) | Leader failure = downtime unless failover | Leader is bottleneck |
+| **Multi-leader** | Any of N leaders; replicate to others | Eventual (write conflicts possible) | No SPOF | Better |
+| **Leaderless** | Any W of N nodes; quorum | Tunable (W + R > N = strong) | Very high | Best |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Conflict Resolution Strategies
+
+| Strategy | Mechanism | Trade-off |
+|----------|-----------|-----------|
+| **Last-Write-Wins (LWW)** | Keep write with latest timestamp | Risk: clock skew → silent data loss |
+| **Multi-Value (siblings)** | Keep all conflicting versions; client resolves | Complex application logic |
+| **Vector Clocks** | Track causal history per-replica | Precise; complex to manage |
+| **CRDTs** | Mathematically merge-safe data types (counters, OR-Sets) | Limited to CRDT-compatible operations |
+| **Custom merge function** | Application-defined merge logic | Most flexible; most complex |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Raft Consensus Algorithm
+
+```
+Problem: How do distributed nodes agree on a single value (commit, leader)?
+
+Raft (Ongaro & Ousterhout, 2014):
+  1. Leader Election:  Candidate requests votes → wins if majority agrees → becomes leader
+  2. Log Replication:  Leader appends entry → sends to followers → commits when majority ack
+  3. Safety:           Only one leader per term; logs never diverge
+
+Used in:
+  etcd      → Kubernetes cluster state
+  ZooKeeper → Kafka, HBase coordination
+  MongoDB   → Replica set elections (Raft variant)
+  CockroachDB → Per-range consensus
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Quorum Reads & Writes
+
+| W | R | W + R | Consistency | Trade-off (RF=3) |
+|---|---|-------|-------------|-----------------|
+| 3 | 1 | 4 | Strong | Slow writes; fast reads |
+| 1 | 3 | 4 | Strong | Fast writes; slow reads |
+| 2 | 2 | 4 | Strong (QUORUM) | Balanced — production default |
+| 1 | 1 | 2 | Eventual | Fastest; may read stale |
+
+QUORUM = `floor(RF/2) + 1` = 2 for RF=3.
+Condition for strong consistency: **W + R > N**.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: Partitioning & Sharding*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Partitioning Strategies
+
+| Strategy | Mechanism | Pro | Con |
+|----------|-----------|-----|-----|
+| **Range** | Keys in contiguous ranges per shard | Efficient range scans | Hot spots on sequential keys |
+| **Hash** | Hash(key) mod N shards | Even distribution | No range queries across shards |
+| **Consistent hashing** | Hash ring with vnodes | Minimal resharding | Requires vnodes for balance |
+| **Composite** | Hash on one field; range on another | Balanced + range within shard | More complex routing |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Hot Spot Problem & Solutions
+
+- **Hot spot:** one shard receives disproportionate traffic → CPU/disk bottleneck
+- Common causes: sequential keys (new data goes to one shard), high-popularity items
+- Solutions:
+  1. Hash the partition key to randomize distribution
+  2. Add random suffix to hot keys: `productId_0` ... `productId_9` (then union reads)
+  3. Adaptive Capacity (DynamoDB, 2018): hot partitions automatically receive extra capacity
+  4. Design composite keys: `(region, userId)` to spread by region
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Cross-Shard Operations
+
+- **Scatter-gather query:** sent to all shards; coordinator merges results — expensive
+  - MongoDB without shard key filter → hits all shards
+- **Distributed joins:** two collections on different shards → `$lookup` = scatter-gather
+- **Design principle:** co-locate data that is queried together on the same shard
+- Rule: every high-frequency query should include the shard/partition key in its filter
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: Performance Optimization*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Index Design: The ESR Rule (MongoDB)
+
+- ESR = Equality → Sort → Range (order of index fields)
+- Query: `{status: "active", created_at: {$gt: t}}` sorted by `date`
+- Optimal index: `{status: 1, date: 1, created_at: 1}`
+- Rationale:
+  - Equality conditions narrow the set first (most selective)
+  - Sort fields next: avoids in-memory sort
+  - Range conditions last: range scans after filtering
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Covering Indexes
+
+```javascript
+// A covering index includes ALL fields needed by the query
+// → no document fetch required (index-only scan)
+
+// Index
+db.orders.createIndex({ userId: 1, status: 1, total: 1 })
+
+// Query that is "covered" (only uses indexed fields + _id excluded)
+db.orders.find(
+  { userId: "u1", status: "paid" },
+  { total: 1, _id: 0 }           // project only indexed fields
+)
+// Result: IXSCAN only — zero document lookups
+```
+Use `explain("executionStats")` to verify: `totalDocsExamined` should equal 0 for a covering scan.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Multi-Level Caching Architecture
+
+```
+Client Request
+       ↓
+CDN Cache           (static assets, public pages — edge, ms latency)
+       ↓ cache miss
+Application Cache   (Redis/Memcached — session, hot data, < 1 ms)
+       ↓ cache miss
+Database Cache      (WiredTiger page cache, Cassandra row cache — 1–10 ms)
+       ↓ cache miss
+Disk / SSD          (SSTables, data files — 0.1–10 ms, unlimited)
+```
+Caching reduces DB load by 10–100× for read-heavy workloads. Size page cache to fit "hot" working set.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# LSM-Tree vs. B-Tree Performance Profile
+
+| | LSM-Tree | B-Tree |
+|-|---------|--------|
+| Write throughput | Very high (sequential batched writes) | Moderate (random in-place update) |
+| Write amplification | High (compaction rewrites data) | Low |
+| Read performance | Slower (check MemTable + N SSTable levels) | Faster (single B-tree path) |
+| Space amplification | Higher (during compaction) | Lower |
+| Best for | Write-heavy, append-only workloads | Read-heavy, update-heavy workloads |
+| Used by | Cassandra, HBase, RocksDB | RDBMS, MongoDB (WiredTiger) |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Tail Latency: P99 and P999
+
+- **Mean latency** hides the worst user experience
+- **P99:** 99th percentile — 1 in 100 requests is slower than this value
+- **P999:** 1 in 1000 — critical for high-throughput systems (10M RPS = 10K slow requests/s)
+- Common causes of tail latency:
+  - JVM GC pauses (Cassandra, HBase, MongoDB — all Java-based)
+  - Compaction I/O contention in LSM-Tree systems
+  - Hot partitions or network jitter
+- Mitigation: **hedged requests** — send same request to 2 replicas; use first response
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# YCSB Workload Classification
+
+| Workload | Mix | Typical Use Case |
+|---------|-----|-----------------|
+| A | 50% reads, 50% updates | Session store |
+| B | 95% reads, 5% updates | Photo tagging |
+| C | 100% reads | User profile cache |
+| D | Latest data: reads + recent inserts | User status |
+| E | Range scans + inserts | Threaded conversations |
+| F | Read-modify-write | User counters |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: Operations & Reliability*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Backup Strategies by Database
+
+| Database | Backup Method | Point-in-Time Recovery | RPO |
+|---------|--------------|----------------------|-----|
+| MongoDB Atlas | Continuous (oplog-based) | Yes | ~1 s |
+| MongoDB self-managed | `mongodump` or filesystem snapshot | No | Hours |
+| Cassandra | `nodetool snapshot` + SSTable copy | No | Last snapshot |
+| DynamoDB | AWS Backup (continuous) | Yes | Seconds |
+| Redis | RDB snapshot | No | Configurable interval |
+| Redis AOF | Append-only log replay | Partial | ~1 s |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Multi-Region Deployment Patterns
+
+| Pattern | Writes | RTO | RPO | Cost |
+|---------|--------|-----|-----|------|
+| **Active-Passive** | Primary region only; secondary = warm standby | Minutes (manual/auto failover) | Seconds | Lower |
+| **Active-Active** | Multiple regions accept writes simultaneously | Seconds (no failover needed) | ~0 | Higher; conflict resolution required |
+
+Examples:
+- Cosmos DB: native active-active (consistency level handles conflicts)
+- Cassandra: multi-DC with `NetworkTopologyStrategy` + `LOCAL_QUORUM`
+- DynamoDB: Global Tables (last-write-wins conflict resolution)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Schema Migration in Production
+
+```
+Expand-Contract Pattern (zero-downtime migration):
+
+Phase 1 EXPAND:    Write both old + new field; read old field
+Phase 2 MIGRATE:   Background job migrates all old documents to new schema
+Phase 3 VERIFY:    Confirm all documents have the new field; spot-check
+Phase 4 CONTRACT:  Read new field; stop writing old field
+Phase 5 CLEANUP:   Remove old field (optional, async)
+```
+Each phase is independently deployable. Easy rollback at any phase.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Monitoring Key Metrics
+
+| Database | Critical Metric | Alert Threshold |
+|---------|----------------|-----------------|
+| MongoDB | Replication lag (`repl.lag`) | > 10 s |
+| MongoDB | WiredTiger cache fill | > 90% of max |
+| Cassandra | Read/Write p99 latency | > 10 ms |
+| Cassandra | Pending compactions | > 50 |
+| Cassandra | Dropped messages | > 0 |
+| DynamoDB | `ThrottledRequests` | > 0 |
+| DynamoDB | `ConsumedCapacity` vs provisioned | > 80% |
+| Redis | Memory usage vs. `maxmemory` | > 85% |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Incident Runbook: Common Scenarios
+
+| Incident | Symptom | Diagnosis | Resolution |
+|---------|---------|-----------|------------|
+| Cassandra compaction storm | High CPU + I/O; slow reads | `nodetool tpstats` → large pending compactions | Throttle compaction; add nodes |
+| MongoDB replication lag | Secondary reads stale | `rs.status()` lag > threshold | Check network; reduce secondary load |
+| DynamoDB throttling | `ThrottledRequests > 0` | CloudWatch metrics → hot partition | Increase capacity or enable autoscaling |
+| Redis OOM | Key evictions | `INFO memory` → `used_memory` > `maxmemory` | Increase memory or enable Redis Cluster |
+| Hot partition | Single shard CPU spike | Shard key distribution analysis | Add random suffix to hot keys |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: Security*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Authentication & Encryption
+
+| Database | Authentication | Authorization | Encryption In Transit | At Rest |
+|---------|---------------|---------------|-----------------------|---------|
+| MongoDB | SCRAM, X.509, LDAP | RBAC (collection level) | TLS (`tlsMode: requireTLS`) | WiredTiger encryption (Enterprise) / OS-level |
+| Cassandra | Password, cert, LDAP | Roles + keyspace/table grants | TLS (client + inter-node) | TDE via JVM or OS encryption |
+| DynamoDB | IAM roles + policies | IAM attribute-level conditions | HTTPS only (default) | AES-256 (AWS KMS, default) |
+| Redis | AUTH command | ACL v2 (command + key pattern) | TLS | Redis Cloud / ElastiCache encrypted |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Network Security Architecture
+
+```
+Internet
+    ↓ HTTPS only
+Load Balancer       (public subnet)
+    ↓
+Application Servers (private subnet)
+    ↓ internal port only (27017 / 9042 / 6379)
+Database Cluster    (private subnet — NO public IP)
+    │
+    └── Security Group rules:
+        Allow inbound only from app tier
+        VPC endpoints for managed services (DynamoDB, DocumentDB)
+        No direct internet exposure to any DB port
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# GDPR & Compliance Concerns
+
+- **Right to Erasure:** delete all personal data per user request
+  - Challenge: data in cache, replicas, and backups
+  - Solution: soft delete flag + background cleanup + backup retention policy
+- **Data Residency:** personal data must stay in defined geographic region
+  - Cosmos DB: per-region data placement API
+  - DynamoDB Global Tables: writes to specific region only
+- **Audit Logging:**
+  - MongoDB: `auditLog` (Enterprise); DynamoDB: CloudTrail; Cassandra: audit logging (v4.0+)
+  - Ship audit logs to SIEM (Splunk, ELK, Sentinel)
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section G: Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Consistency Level by Use Case
+
+| Use Case | Recommended Consistency | Reason |
+|---------|------------------------|--------|
+| Financial transaction | Strong (QUORUM / ALL) | Cannot tolerate stale reads |
+| User session data | Eventual (ONE) | Stale session is acceptable |
+| Social feed / timeline | Session consistency | User sees their own posts |
+| Product inventory write | Strong | Prevent overselling |
+| IoT sensor ingestion | Eventual (ONE) | Maximize write throughput |
+| Leaderboard display | Eventual | Approximate ranking is acceptable |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways
+
+1. Consistent hashing: O(K/N) remap cost vs O(K) — vnodes distribute evenly
+2. Strong consistency requires W + R > N; CAP trade-off is per-operation, not per-database
+3. LSM-Tree → high write throughput; B-Tree → better reads; multi-level caching bridges the gap
+4. Monitor P99/P999 latency — mean latency hides tail issues that users experience
+5. Security minimum: TLS in transit + encryption at rest + least-privilege RBAC
+6. Multi-region active-active enables global HA but requires explicit conflict resolution strategy
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ Designing Data-Intensive Applications — Martin Kleppmann (O'Reilly)
+  ISBN 978-1449373320 — comprehensive distributed systems reference
+
+▸ Raft consensus algorithm — original paper (Ongaro & Ousterhout, 2014)
+  https://raft.github.io/raft.pdf
+
+▸ Jepsen — distributed systems consistency analysis and database test reports
+  https://jepsen.io/
+
+▸ YCSB — Yahoo Cloud Serving Benchmark (GitHub)
+  https://github.com/brianfrankcooper/YCSB
+
+▸ MongoDB Security Checklist
+  https://www.mongodb.com/docs/manual/administration/security-checklist/
+
+▸ AWS DynamoDB backup and restore documentation
+  https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/BackupRestore.html
+
+▸ Conflict-free Replicated Data Types (CRDTs) — INRIA technical report
+  https://inria.hal.science/inria-00609399/
+
+▸ Raft visualization (interactive) — see consensus in action
+  https://thesecretlivesofdata.com/raft/
+```
+
+---
+</script>
+
+<script type="text/markdown" id="md-week13">
+# L13: Emerging Trends & Vector Databases
+## *Emerging Trends & Vector Databases*
+
+**ENCE614016 · Database System and Laboratory**
+
+### Learning Objectives
+
+- Explain why vector databases emerged for AI/ML workloads.
+- Describe embedding vectors and the approximate nearest neighbor (ANN) problem.
+- Compare HNSW, IVF, and IVF_PQ index algorithms for vector search.
+- Design a RAG (Retrieval-Augmented Generation) pipeline with a vector database.
+- Compare leading vector database architectures (Pinecone, Weaviate, Milvus, Qdrant).
+- Describe NewSQL and synthesize a technology selection framework for a full application stack.
+
+> **Prerequisite:** All prior lectures (L7–L12); basic familiarity with neural networks and LLMs is helpful but not required.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+
+# Lecture Title
+
+- Lecture 13: Emerging Trends, Vector Databases & The Future
+- Subtitle: When AI Meets Data — Vector Search, RAG, and Converging Databases
+- Key technologies: Pinecone, Weaviate, Milvus, Qdrant, CockroachDB, pgvector
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Recap: Lecture 12
+
+- Distributed systems: consistent hashing, replication models, quorum math
+- Performance: ESR index rule, covering indexes, LSM vs. B-Tree, caching layers
+- Operations: backup strategies, monitoring P99 latency, schema migration
+- Security: TLS + encryption at rest + least-privilege RBAC = minimum posture
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Learning Objectives
+
+- Explain why vector databases emerged for AI/ML workloads
+- Describe embedding vectors and the k-NN / ANN problem
+- Compare HNSW, IVF, IVF_PQ — recall vs. speed vs. memory trade-offs
+- Design a RAG ingestion + query pipeline
+- Compare Pinecone, Weaviate, Milvus, Qdrant, ChromaDB
+- Apply a 5-step database selection framework to a full application stack
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The AI Data Revolution
+
+- 2017: Transformer architecture ("Attention Is All You Need" — Vaswani et al.)
+- 2020: GPT-3 → large-scale language embeddings become practical
+- 2022: ChatGPT → mainstream AI; vector database demand explodes
+- 2023: RAG becomes the dominant production AI retrieval pattern
+- 2024–: Vector search added to MongoDB, PostgreSQL, Cassandra, Elasticsearch
+- New requirement: databases must store and search high-dimensional numerical vectors
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section B: Embeddings & Vector Representation*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Are Embedding Vectors?
+
+- Neural network transformation: text / image / audio → dense numerical vector
+- Property: **semantic similarity is preserved in vector space**
+  - "king" − "man" + "woman" ≈ "queen" (word2vec, 2013)
+  - Similar products cluster together; dissimilar products are far apart
+- The vector captures **meaning**, not surface-level keywords
+- Example: "comfortable running shoes" and "athletic footwear" → nearby vectors
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Text Embedding Models
+
+| Model | Dimensions | Context Window | Notes |
+|-------|-----------|----------------|-------|
+| OpenAI text-embedding-ada-002 | 1,536 | 8,191 tokens | General English; popular for RAG |
+| OpenAI text-embedding-3-large | 3,072 | 8,191 tokens | Higher accuracy; higher cost |
+| Cohere Embed v3 | 1,024 | 512 tokens | Multilingual; compact |
+| BAAI bge-m3 | 1,024 | 8,192 tokens | Open source; multilingual |
+| sentence-transformers/all-MiniLM-L6-v2 | 384 | 256 tokens | Fast; local; free |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Distance Metrics
+
+| Metric | Formula | Use Case |
+|--------|---------|---------|
+| **Cosine Similarity** | cos(θ) = (A·B)/(|A||B|) | Text embeddings — magnitude irrelevant |
+| **Euclidean Distance** | √Σ(Aᵢ − Bᵢ)² | Image embeddings; spatial data |
+| **Dot Product** | A·B = Σ(Aᵢ × Bᵢ) | Maximum inner product search (ads, recommendations) |
+| **Hamming** | Count of differing bits | Binary fingerprints, LSH |
+
+**Rule:** Match the metric to how the embedding model was trained. Most text models use cosine.
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section C: ANN Search Algorithms*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The ANN Problem
+
+- Naive exact search: O(N × D) per query — infeasible at scale
+  - N = 1M vectors, D = 1,536 dims, 10K queries/s → 1.5 × 10¹³ operations/s
+- **Approximate Nearest Neighbor (ANN):** trade tiny accuracy loss for massive speedup
+  - Build specialized index at write time → sublinear search at query time
+  - Recall: ANN finds 95–99% of true nearest neighbors (not 100%)
+- Key ANN algorithms: HNSW, IVF, IVF_PQ, DiskANN, ScaNN
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# HNSW: Hierarchical Navigable Small World
+
+```
+Layer 2 (sparse):  A ─────────── G
+Layer 1:           A ─── D ─── G ─── J
+Layer 0 (dense):   A─B─C─D─E─F─G─H─I─J─K
+
+Query: Start at random node in top layer
+       → greedy navigation toward query in each layer
+       → drill down to Layer 0 for exact search in local neighborhood
+```
+Parameters:
+- `M`: max connections per node (higher = better recall, more memory)
+- `ef_construction`: candidate set size at build time (accuracy vs. build speed)
+- `ef_search`: candidate set size at query time (accuracy vs. query speed)
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# IVF and IVF_PQ
+
+| Algorithm | Mechanism | Recall | Memory | Best For |
+|-----------|-----------|--------|--------|----------|
+| **IVF_FLAT** | k-means clusters; search `nprobe` nearest centroids | High (95%+) | Medium | Medium datasets, balanced |
+| **IVF_PQ** | IVF + Product Quantization compression (M sub-vectors, 1-byte codes) | Moderate (90%+) | Very low | Billion-scale; memory constrained |
+| **HNSW** | Multi-layer navigable graph | Very high (99%+) | High (full vectors in RAM) | RAM-available; high recall required |
+| **DiskANN** | HNSW-like graph stored on SSD; only centroids in RAM | High (98%+) | Low RAM | Billion-scale; cheaper than HNSW |
+
+PQ compression example: 1,536-dim float32 (6 KB) → 96-byte code (63× smaller).
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section D: Vector Database Architectures*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Vector DB Landscape Overview
+
+```
+Timeline:
+2019  FAISS open-sourced (Facebook AI Similarity Search)
+2019  Pinecone founded (first managed vector DB)
+2021  Weaviate 1.0 GA; Milvus 2.0 GA
+2022  Qdrant 1.0; ChromaDB (developer-friendly, open-source)
+2023  Pinecone serverless; pgvector popularity surges
+2024  Every major database adds vector search capability
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Pinecone & Weaviate
+
+| | Pinecone | Weaviate |
+|-|---------|---------|
+| Deployment | Managed only (serverless or pods) | Open-source + managed Weaviate Cloud |
+| Index types | HNSW (managed) | HNSW + quantization options |
+| Hybrid search | Dense + sparse (BM25) | Dense + BM25; tunable `alpha` |
+| Multi-modal | Text + sparse vectors | Text, image, code, audio (modular vectorizers) |
+| API | REST; client SDKs | GraphQL + REST |
+| Best for | Production managed; simplest ops | Open-source; multi-modal requirements |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Milvus & Qdrant
+
+| | Milvus | Qdrant |
+|-|--------|--------|
+| Language | Go | Rust (high performance, low latency) |
+| Deployment | Open-source + Zilliz Cloud | Open-source + Qdrant Cloud |
+| Architecture | Distributed: proxy, coordinator, worker nodes, object store | Standalone or distributed; mmapped on-disk mode |
+| Index types | HNSW, IVF variants, DiskANN, ScaNN | HNSW + sparse vectors (SPLADE) |
+| Filtering | Pre- and post-filtering | Payload indexing BEFORE vector search (reduces candidates) |
+| Best for | Cloud-native; billion-scale | Open-source; Rust performance; hybrid sparse+dense |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Hybrid Search: Sparse + Dense
+
+- **Dense vectors:** semantic similarity — captures meaning, not keywords
+- **Sparse vectors (BM25/SPLADE):** keyword importance weights — exact term match
+- Problem: dense-only misses exact keyword queries; sparse-only misses paraphrases
+- **Hybrid search:** combine both scores with tunable weight
+  - `final_score = α × dense_score + (1 − α) × sparse_score`
+  - `α = 0.75` → weight semantic higher; `α = 0.25` → weight keyword higher
+- Production finding: hybrid search outperforms either alone by 10–20% on recall@10
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Vector DB Comparison
+
+| Feature | Pinecone | Weaviate | Milvus | Qdrant | ChromaDB |
+|---------|---------|---------|-------|-------|---------|
+| Deployment | Managed only | OSS + Cloud | OSS + Cloud | OSS + Cloud | OSS (embedded / server) |
+| Hybrid search | Yes | Yes | Yes | Yes | Basic |
+| Sparse vectors | Yes | Yes | Yes | Yes | No |
+| Multi-vector | No | Yes | Yes | Yes | No |
+| Scaling | Serverless auto | Manual sharding | Distributed (cloud-native) | Manual / on-disk | Single node |
+| Best for | Production managed | Multi-modal, OSS | Billion-scale | Rust performance | Prototyping, local dev |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Vector Search in Traditional Databases
+
+| Database | Extension / Feature | Index Types | Notes |
+|---------|---------------------|-------------|-------|
+| PostgreSQL | pgvector | HNSW + IVF | Good for < 100M vectors; SQL integration |
+| MongoDB Atlas | Atlas Vector Search | HNSW | Integrated with Atlas Search (Lucene) |
+| Redis | Vector Similarity Search (VSS) | FLAT or HNSW | In-memory; fast; small-to-medium scale |
+| Cassandra 5.0 | SAI vector search | Custom ANN | Still early; good for Cassandra-native apps |
+| Elasticsearch | k-NN plugin | HNSW | Mature; good for combined text+vector |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section E: RAG Architecture*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# What Is RAG?
+
+- **Problems with plain LLMs:** knowledge cutoff, hallucination, no access to private data
+- **RAG (Retrieval-Augmented Generation):** ground LLM responses in retrieved, live context
+- Core idea: retrieve relevant documents → inject as context → LLM generates grounded answer
+- Why RAG over fine-tuning: real-time knowledge update (just update the vector DB); lower cost; lower hallucination risk
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# RAG Ingestion Pipeline
+
+```
+Documents (PDF, Word, HTML, DB records)
+        ↓ Document Loader (LangChain, LlamaIndex)
+Text Splitter → Chunks
+  (e.g., 512 tokens, 50-token overlap between chunks)
+        ↓ Embedding Model
+  Vector per chunk [0.12, -0.34, 0.89, ...]
+        ↓
+Vector DB  →  upsert(vector, text_chunk, metadata)
+  metadata: { source, date, doc_id, chunk_index }
+```
+Chunk overlap prevents context loss at boundaries.
+Metadata enables filtered retrieval by date, source, or document type.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# RAG Query Pipeline
+
+```
+User Query
+    ↓ embed with same model used at ingestion
+Query Vector
+    ↓ ANN search in vector DB (top-K chunks)
+Optional: filter by metadata (date > 2024, source = "policy.pdf")
+    ↓ optional Re-ranker (cross-encoder model re-scores by relevance)
+Context Assembly: chunks + user query → LLM prompt
+    ↓
+LLM (GPT-4, Claude, Llama 3) → generates answer
+    ↓ Post-processing: citations, output validation
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# RAG vs. Fine-Tuning
+
+| Dimension | RAG | Fine-Tuning |
+|-----------|-----|------------|
+| When to use | Dynamic knowledge, private data, factual accuracy | Domain-specific style, tone, task capability |
+| Cost | Low (inference + vector search) | High (GPU training + labeled data) |
+| Knowledge updates | Real-time (update vector DB) | Requires full or partial retraining |
+| Hallucination risk | Lower (grounded in retrieved context) | Higher (model memorizes training data) |
+| Latency | Higher (retrieval + LLM generation) | Lower (only LLM generation) |
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section F: NewSQL & Database Convergence*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# The NewSQL Bridge
+
+- Problem: NoSQL scales horizontally but lacks full ACID; RDBMS has ACID but poor horizontal scale
+
+| System | Compatibility | Consensus | Use Case |
+|--------|---------------|-----------|---------|
+| **CockroachDB** | PostgreSQL wire protocol | Raft (per 64 MB range) | Global financial apps, compliance |
+| **TiDB** | MySQL-compatible | Raft (TiKV storage) | Hybrid OLTP/OLAP |
+| **Google Spanner** | Proprietary + ANSI SQL | TrueTime API | Google Cloud, global external consistency |
+| **YugabyteDB** | PostgreSQL + Cassandra APIs | Raft | Multi-cloud distributed ACID |
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Database Convergence Trend
+
+| Database | Traditional Category | Added Capabilities (2022–2024) |
+|---------|---------------------|-------------------------------|
+| PostgreSQL | RDBMS | pgvector, jsonb, TimescaleDB extension |
+| MongoDB | Document DB | Atlas Vector Search, time-series collections, full-text search |
+| Cassandra 5.0 | Wide-Column | SAI vector search, improved analytics |
+| Elasticsearch | Search Engine | k-NN vector search, becomes general search DB |
+| Redis | Key-Value | RedisJSON, RedisSearch, Vector Similarity Search |
+
+Observation: the traditional NoSQL categories are blurring toward **multi-model** systems.
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Polyglot Full-Stack Architecture
+
+```
+Web / Mobile App
+        ↓
+API Gateway → Microservices (each owns its data store)
+
+├─ User Service        → PostgreSQL     (ACID, compliance)
+├─ Product Catalog     → MongoDB        (flexible schema)
+├─ Session / Cart      → Redis          (sub-ms, TTL)
+├─ Product Search      → Elasticsearch  (full-text + filters)
+├─ AI Recommendations  → Vector DB      (Pinecone / Weaviate)
+├─ Event Log / Audit   → Cassandra      (append-heavy, TTL)
+├─ Analytics / Reports → Snowflake      (data warehouse)
+└─ Social Graph/Fraud  → Neo4j          (traversal)
+
+Event Bus: Kafka (CDC + streaming between services)
+Observability: Prometheus + Grafana
+```
+
+---
+
+<div style="page-break-after: always;"></div>
+
+---
+
+## *Section G: Selection Framework & Course Summary*
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Database Selection Framework (5 Steps)
+
+```
+Step 1: Data Model
+  Relational  → PostgreSQL / MySQL
+  Documents   → MongoDB / Cosmos DB
+  Key-Value   → Redis / DynamoDB
+  Wide-Column → Cassandra / HBase
+  Graph       → Neo4j / Neptune
+  Vector      → Pinecone / Milvus / Weaviate
+  Time-Series → InfluxDB / TimescaleDB
+
+Step 2: Consistency Requirement
+  Strong ACID       → PostgreSQL, CockroachDB, MongoDB (multi-doc)
+  Tunable           → Cassandra, DynamoDB
+  Eventual OK       → Cassandra (ONE), DynamoDB (eventually consistent)
+
+Step 3: Scale Requirement
+  < 1 TB, < 10K RPS  → single-node RDBMS or document DB
+  Multi-TB, > 100K   → distributed NoSQL or NewSQL
+  Global multi-region → Cosmos DB, DynamoDB Global Tables, Cassandra multi-DC
+
+Step 4: Operational Constraint
+  Managed cloud preferred → Atlas, DynamoDB, Cosmos DB
+  On-premises required    → self-managed Cassandra, MongoDB, PostgreSQL
+
+Step 5: Start small, iterate
+  Begin with your PRIMARY use case → add stores as needs emerge
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Course Summary: L7–L13
+
+| Lecture | Topic | Key Technology | Optimized For |
+|---------|-------|---------------|---------------|
+| L07 | Introduction to NoSQL | All four families | Conceptual foundation; CAP; ACID/BASE |
+| L08 | Document Databases | MongoDB, Cosmos DB | Flexible schema; rich queries |
+| L09 | Key-Value Stores | Redis, DynamoDB | Sub-ms speed; sessions; caching |
+| L10 | Wide-Column Stores | Cassandra, HBase | Write throughput; time-series |
+| L11 | Graph Databases | Neo4j, Neptune | Relationship traversal; fraud |
+| L12 | Distributed Systems | Theory + Operations | Performance; reliability; security |
+| L13 | Emerging Trends | Vector DBs; RAG; NewSQL | AI/ML; convergence; the future |
+
+**Core principle across all lectures:**
+> "Choose your database based on query patterns, consistency needs, and operational constraints — not hype."
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Key Takeaways: Lecture 13
+
+1. Vector databases solve the AI/ML similarity search problem RDBMS cannot handle at scale
+2. Embeddings represent semantic meaning as dense vectors; ANN makes searching them fast
+3. HNSW: highest recall, RAM-heavy; IVF_PQ: memory-efficient, moderate recall
+4. RAG grounds LLM responses in retrieved context → reduces hallucination
+5. The database landscape is converging: every database is adding vector, JSON, and SQL
+6. NewSQL (CockroachDB, Spanner) bridges NoSQL horizontal scale + RDBMS ACID
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Final Anti-Patterns to Avoid
+
+1. Choosing a database because it is trending, not because it fits your query pattern
+2. Using a single database for all workloads when polyglot is simpler per-service
+3. Ignoring consistency level selection — "default" is rarely the right choice for all operations
+4. Over-engineering: start with PostgreSQL + Redis; add complexity only when justified
+5. Skipping benchmarking with your actual workload before committing to a database
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Read More & Explore
+
+```
+▸ ANN Benchmarks — compare HNSW, IVF, DiskANN, ScaNN on recall vs. throughput
+  https://ann-benchmarks.com/
+
+▸ Pinecone documentation — getting started, serverless, hybrid search
+  https://docs.pinecone.io/
+
+▸ Weaviate documentation — schema, modules, hybrid search
+  https://weaviate.io/developers/weaviate
+
+▸ pgvector (GitHub) — vector search extension for PostgreSQL
+  https://github.com/pgvector/pgvector
+
+▸ RAGAS — RAG evaluation framework (faithfulness, answer relevance)
+  https://github.com/explodinggradients/ragas
+
+▸ Lewis et al. (2020) — RAG paper (NeurIPS) — original RAG architecture
+  https://arxiv.org/abs/2005.11401
+
+▸ CockroachDB documentation — distributed SQL, multi-region setup
+  https://www.cockroachlabs.com/docs/stable/
+
+▸ Spanner paper — Corbett et al. (OSDI 2012) — globally distributed ACID
+  https://research.google/pubs/spanner-googles-globally-distributed-database/
+```
+
+<div style="page-break-after: always;"></div>
+
+---
+
+# Course Closing
+
+- **Follow for distributed systems:** Martin Kleppmann (@martinkl), Kyle Kingsbury (Jepsen, @aphyr)
+- **Follow for AI + data:** Jerry Liu (LlamaIndex), Harrison Chase (LangChain)
+- **Communities:** CMU Database Group talks (YouTube), MongoDB.local, Cassandra Summit, Devoxx
+- **Next steps:** Pick one database, read its architecture paper, run YCSB, break it on purpose
+
+---
+</script>
+
+<script>
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  tables: true
+});
+
+function renderWeek(id) {
+  const script = document.getElementById('md-' + id);
+  const target = document.getElementById('content-' + id);
+  if (!script || !target) return;
+  target.innerHTML = marked.parse(script.textContent);
+  target.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+}
+
+function showWeek(id) {
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  const panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll(`[data-week="${id}"]`).forEach(el => el.classList.add('active'));
+}
+
+// Render all weeks on load
+renderWeek("week07");
+  renderWeek("week08");
+  renderWeek("week09");
+  renderWeek("week10");
+  renderWeek("week11");
+  renderWeek("week12");
+  renderWeek("week13");
+
+// Tab buttons
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => showWeek(btn.dataset.week));
+});
+
+// Sidebar nav
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    showWeek(link.dataset.week);
+  });
+});
+</script>
+
+</body>
+</html>
+{% endraw %}
