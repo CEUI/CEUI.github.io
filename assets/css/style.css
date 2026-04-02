@@ -540,26 +540,30 @@ footer a:hover { text-decoration: underline; }
     .page-content { padding: 2.5rem 1.5rem 4rem; }
 }
 
-/* === SCROLL ANIMATIONS === */
-.fade-up {
+/* === SCROLL ANIMATIONS ===
+   Elements are visible by default (no-JS safe).
+   JS adds .js-animate to <body> before observing,
+   which opts elements into the hidden→visible transition.
+*/
+.js-animate .fade-up {
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
 }
 
-.fade-up.visible {
+.js-animate .fade-up.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 /* Stagger children inside a visible fade-up parent */
-.cards .card.fade-up:nth-child(2) { transition-delay: 0.1s; }
-.cards .card.fade-up:nth-child(3) { transition-delay: 0.2s; }
-.course-list .course-item.fade-up:nth-child(2) { transition-delay: 0.08s; }
-.course-list .course-item.fade-up:nth-child(3) { transition-delay: 0.16s; }
-.course-list .course-item.fade-up:nth-child(4) { transition-delay: 0.24s; }
-.people-grid .person.fade-up:nth-child(2) { transition-delay: 0.1s; }
-.people-grid .person.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.js-animate .cards .card.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.js-animate .cards .card.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.js-animate .course-list .course-item.fade-up:nth-child(2) { transition-delay: 0.08s; }
+.js-animate .course-list .course-item.fade-up:nth-child(3) { transition-delay: 0.16s; }
+.js-animate .course-list .course-item.fade-up:nth-child(4) { transition-delay: 0.24s; }
+.js-animate .people-grid .person.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.js-animate .people-grid .person.fade-up:nth-child(3) { transition-delay: 0.2s; }
 
 /* === FOCUS VISIBLE === */
 :focus-visible {

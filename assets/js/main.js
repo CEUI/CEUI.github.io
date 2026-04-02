@@ -2,18 +2,22 @@
    CEUI GitHub Pages — Main JS
    ============================================ */
 
-/* === SCROLL ANIMATIONS === */
+/* === SCROLL ANIMATIONS ===
+   Opt in to animations only after JS confirms it's running.
+   This prevents invisible content if the observer is slow or fails.
+*/
+document.body.classList.add('js-animate');
+
 const observer = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Unobserve after triggering to save resources
                 observer.unobserve(entry.target);
             }
         });
     },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    { threshold: 0.05, rootMargin: '0px 0px 0px 0px' }
 );
 
 document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));

@@ -1,13 +1,11 @@
 ---
 layout: default
 title: Courses
-description: Curriculum covering foundational programming, data science, networks, cybersecurity, and capstone engineering projects.
+description: Available courses in Computer Engineering at Universitas Indonesia.
 ---
 
 <section class="page-hero fade-up">
   <div class="section-label">Courses</div>
-  <h1 class="section-title">What We Teach</h1>
-  <p class="section-desc">Our curriculum covers foundational programming, data science, networks, cybersecurity, and capstone engineering projects.</p>
 </section>
 
 <section class="page-content">
@@ -22,14 +20,6 @@ description: Curriculum covering foundational programming, data science, network
       </div>
       <span style="margin-left:auto; color:var(--accent); font-size:1.1rem; flex-shrink:0;">→</span>
     </a>
-    {% else %}
-    <div class="course-item fade-up">
-      <span class="course-code">{{ course.code }}</span>
-      <div class="course-info">
-        <h3>{{ course.title }}</h3>
-        <p>{{ course.description }}</p>
-      </div>
-    </div>
     {% endif %}
     {% endfor %}
   </div>
