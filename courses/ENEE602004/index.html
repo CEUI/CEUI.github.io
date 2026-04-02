@@ -1,0 +1,343 @@
+---
+layout: default
+title: ENEE602004 — Algoritma Pemrograman
+description: C/C++ programming fundamentals covering data structures, searching, sorting, OOP, and network sockets for Electrical Engineering students at Universitas Indonesia.
+---
+
+<style>
+/* ── Course page extras ─────────────────────────── */
+.course-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.meta-badge.accent {
+  color: var(--gold);
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+/* Week cards grid — 2 cols on wide, 1 col on narrow */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+/* Week number badge inside card */
+.week-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-glow);
+  padding: 0.25rem 0.7rem;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  display: inline-block;
+  margin-bottom: 0.9rem;
+}
+
+/* Topics mini-list */
+.topics {
+  list-style: none;
+  margin: 0.75rem 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.topics li {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.topics li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Stagger animations for up to 7 week cards */
+.week-grid .card.fade-up:nth-child(2) { transition-delay: 0.06s; }
+.week-grid .card.fade-up:nth-child(3) { transition-delay: 0.12s; }
+.week-grid .card.fade-up:nth-child(4) { transition-delay: 0.18s; }
+.week-grid .card.fade-up:nth-child(5) { transition-delay: 0.24s; }
+.week-grid .card.fade-up:nth-child(6) { transition-delay: 0.30s; }
+.week-grid .card.fade-up:nth-child(7) { transition-delay: 0.36s; }
+
+/* Divider between sections */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+/* Getting started box */
+.start-box {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.75rem 2rem;
+  margin-top: 2rem;
+}
+
+.start-box h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+}
+
+.start-box code {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  margin-top: 0.5rem;
+  white-space: pre;
+  overflow-x: auto;
+}
+</style>
+
+<!-- ══════════════════════════════════════════
+     PAGE HERO
+══════════════════════════════════════════ -->
+<section class="page-hero fade-up">
+  <div class="section-label">ENEE602004</div>
+  <h1 class="section-title">Algoritma Pemrograman <em>dan Praktikum</em></h1>
+  <p class="section-desc">
+    Fundamental programming algorithms and data structures using C/C++,
+    with hands-on applications for Electrical Engineering systems.
+  </p>
+
+  <div class="course-meta">
+    <span class="meta-badge accent">Semester Ganjil 2025/2026</span>
+    <span class="meta-badge">👨‍🏫 Dr. Alfan Presekal</span>
+    <span class="meta-badge">⚡ Teknik Elektro · UI</span>
+    <span class="meta-badge">7 Weeks · C++17</span>
+  </div>
+
+  <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.75rem;">
+    <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" class="btn btn-primary">
+      View on GitHub →
+    </a>
+    <a href="#weeks" class="btn btn-outline">Jump to Syllabus ↓</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CONTENT
+══════════════════════════════════════════ -->
+<section class="page-content">
+
+  <!-- About -->
+  <div class="fade-up">
+    <div class="section-label">About This Course</div>
+    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">What You Will Learn</h2>
+    <p class="section-desc" style="max-width:720px;">
+      From low-level pointer manipulation and linked lists to object-oriented design and
+      real-time network communication — all grounded in Electrical Engineering applications
+      such as sensor logging, ADC calibration, BOM analysis, and embedded control.
+    </p>
+  </div>
+
+  <div class="cards fade-up" style="margin-bottom:0;">
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">🗂️</div>
+      <h3>Data Structures</h3>
+      <p>Linked lists, arrays, and pointer arithmetic for managing sensor data and embedded system state.</p>
+    </article>
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">⚡</div>
+      <h3>Algorithms</h3>
+      <p>Linear &amp; binary search, bubble/insertion/selection sort, complexity analysis O(n) vs O(log n).</p>
+    </article>
+    <article class="card">
+      <div class="card-icon" aria-hidden="true">🏗️</div>
+      <h3>Object-Oriented C++</h3>
+      <p>Encapsulation, inheritance, polymorphism, virtual dispatch, and smart pointers (unique_ptr).</p>
+    </article>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Weekly Syllabus -->
+  <div id="weeks" class="fade-up">
+    <div class="section-label">Syllabus</div>
+    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">Weekly Topics</h2>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0;">
+      Each week: slide notes · C++ demo code · EE application · Makefile
+    </p>
+  </div>
+
+  <div class="week-grid">
+
+    <!-- Week 09 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 09</span>
+      <div class="card-icon" aria-hidden="true">🔗</div>
+      <h3>Linked List</h3>
+      <ul class="topics">
+        <li>Node structure &amp; pointer chaining</li>
+        <li>Append, prepend, insert, delete</li>
+        <li>Traversal &amp; search</li>
+        <li>EE: temperature sensor log</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week09_linked_list"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 10 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 10</span>
+      <div class="card-icon" aria-hidden="true">🔍</div>
+      <h3>Searching Algorithms</h3>
+      <ul class="topics">
+        <li>Linear Search — O(n)</li>
+        <li>Binary Search — O(log n)</li>
+        <li>STL: find, binary_search, lower_bound</li>
+        <li>EE: ADC calibration table lookup</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week10_searching"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 11 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 11</span>
+      <div class="card-icon" aria-hidden="true">📊</div>
+      <h3>Sorting Algorithms</h3>
+      <ul class="topics">
+        <li>Bubble Sort &amp; Insertion Sort</li>
+        <li>Selection Sort &amp; std::sort</li>
+        <li>Complexity comparison</li>
+        <li>EE: median filter for ADC signal</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week11_sorting"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 12 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 12</span>
+      <div class="card-icon" aria-hidden="true">🏗️</div>
+      <h3>OOP (1) — Class &amp; Encapsulation</h3>
+      <ul class="topics">
+        <li>Class blueprint vs object instance</li>
+        <li>Abstraction &amp; encapsulation</li>
+        <li>Constructor, member-init list</li>
+        <li>EE: Resistor, Capacitor classes</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week12_oop1"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 13 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 13</span>
+      <div class="card-icon" aria-hidden="true">🧬</div>
+      <h3>OOP (2) — Inheritance</h3>
+      <ul class="topics">
+        <li>IS-A relationship &amp; base/derived class</li>
+        <li>public / protected / private access</li>
+        <li>Constructor &amp; destructor chain</li>
+        <li>EE: Potentiometer 3-level hierarchy</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week13_oop2"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 14 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 14</span>
+      <div class="card-icon" aria-hidden="true">🔮</div>
+      <h3>OOP (3) — Polymorphism</h3>
+      <ul class="topics">
+        <li>virtual keyword &amp; vtable dispatch</li>
+        <li>Abstract class &amp; pure virtual (= 0)</li>
+        <li>Virtual destructor &amp; memory safety</li>
+        <li>EE: BOM analyzer (Resistor/Cap/Inductor)</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week14_oop3"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+    <!-- Week 15 -->
+    <article class="card fade-up">
+      <span class="week-num">Week 15</span>
+      <div class="card-icon" aria-hidden="true">🌐</div>
+      <h3>Network Sockets</h3>
+      <ul class="topics">
+        <li>TCP vs UDP protocols</li>
+        <li>POSIX socket API: bind, listen, connect</li>
+        <li>Client–server architecture</li>
+        <li>EE: remote sensor data streaming</li>
+      </ul>
+      <a href="https://github.com/CEUI/ENEE602004/tree/main/week15_sockets"
+         target="_blank" rel="noopener" class="card-link">View Materials →</a>
+    </article>
+
+  </div><!-- /week-grid -->
+
+  <hr class="section-divider">
+
+  <!-- Getting Started -->
+  <div class="fade-up">
+    <div class="section-label">Getting Started</div>
+    <h2 class="section-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">Run the Demo Code</h2>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0;">
+      Requires <strong style="color:var(--text);">g++ with C++17</strong>.
+      Each week is self-contained — clone and compile with <code style="font-size:0.82rem; background:var(--surface); padding:0.1rem 0.4rem; border-radius:4px; border:1px solid var(--border);">make</code>.
+    </p>
+
+    <div class="start-box">
+      <h3>Clone &amp; compile</h3>
+      <code>git clone https://github.com/CEUI/ENEE602004.git
+cd ENEE602004/week09_linked_list
+make          # compile all demos
+./demo01      # run demo 1</code>
+    </div>
+
+    <div class="start-box" style="margin-top:1rem;">
+      <h3>Manual compilation</h3>
+      <code>g++ -std=c++17 -Wall -Isrc -o demo01 src/01_append_prepend.cpp src/sll_ops.cpp
+./demo01</code>
+    </div>
+
+    <div style="margin-top:1.75rem; display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="https://github.com/CEUI/ENEE602004" target="_blank" rel="noopener" class="btn btn-primary">
+        Open Repository →
+      </a>
+      <a href="/courses/" class="btn btn-outline">← All Courses</a>
+    </div>
+  </div>
+
+</section>

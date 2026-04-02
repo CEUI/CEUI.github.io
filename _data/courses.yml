@@ -2,8 +2,9 @@
 # Each entry: code, title, description
 
 - code: ENEE602004
-  title: Algoritma Pemrograman
-  description: Fundamentals of programming algorithms using C/C++
+  title: Algoritma Pemrograman dan Praktikum
+  description: Data structures, searching, sorting, OOP, and network sockets using C++17
+  url: /courses/ENEE602004/
 
 - code: ENCE604XXX
   title: Data Science for Engineering

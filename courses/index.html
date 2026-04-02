@@ -1,0 +1,36 @@
+---
+layout: default
+title: Courses
+description: Curriculum covering foundational programming, data science, networks, cybersecurity, and capstone engineering projects.
+---
+
+<section class="page-hero fade-up">
+  <div class="section-label">Courses</div>
+  <h1 class="section-title">What We Teach</h1>
+  <p class="section-desc">Our curriculum covers foundational programming, data science, networks, cybersecurity, and capstone engineering projects.</p>
+</section>
+
+<section class="page-content">
+  <div class="course-list">
+    {% for course in site.data.courses %}
+    {% if course.url %}
+    <a href="{{ course.url | relative_url }}" class="course-item fade-up" style="text-decoration:none;">
+      <span class="course-code">{{ course.code }}</span>
+      <div class="course-info">
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+      </div>
+      <span style="margin-left:auto; color:var(--accent); font-size:1.1rem; flex-shrink:0;">→</span>
+    </a>
+    {% else %}
+    <div class="course-item fade-up">
+      <span class="course-code">{{ course.code }}</span>
+      <div class="course-info">
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.description }}</p>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
